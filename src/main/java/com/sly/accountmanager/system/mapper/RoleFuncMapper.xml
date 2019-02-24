@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sly.accountmanager.system.mapper.RoleFuncMapper">
+	<!-- 保存角色功能关系 -->
+	<insert id="saveRoleFunc">
+		INSERT INTO T_SYS_ROLEFUNC (roleId,funcId,createTime,logicDel) VALUES
+		<foreach collection="funcIds" item="funcId" separator=",">
+			(#{roleId},#{funcId},NOW(),'N')
+		</foreach>
+	</insert>
+	
+	<!-- 删除角色功能关系 -->
+	<delete id="deleteRoleFunc" parameterType="string">
+		DELETE FROM `T_SYS_ROLEFUNC` WHERE T_SYS_ROLEFUNC.`roleId`=#{roleId}
+	</delete>
+	
+</mapper>

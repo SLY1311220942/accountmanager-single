@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sly.accountmanager.system.mapper.UserMapper">
+	<!-- 保存用户信息 -->
+	<insert id="saveUser" parameterType="com.sly.accountmanager.common.model.User">
+		INSERT INTO T_SYS_USER (userId,username,password,nickname,realname,phone,tel,email,
+		sex,createTime,updateTime,userTag,status,logicDel,remark) 
+		VALUES (#{userId},#{username},#{password},#{nickname},#{realname},#{phone},#{tel},
+		#{email},#{sex},#{createTime},#{updateTime},#{userTag},#{status},#{logicDel},#{remark});
+	</insert>
+
+
+	<!-- 根据用户id查询用户信息 -->
+	<select id="findUserById" parameterType="string" resultType="com.sly.accountmanager.common.model.User">
+		SELECT * FROM T_SYS_USER WHERE T_SYS_USER.`userId`=#{userId}
+	</select>
+	
+	<!-- 根据条件查询用户数量 -->
+	<select id="countUserList" parameterType="map" resultType="int">
+		SELECT COUNT(1) FROM T_SYS_USER TSU
+		<where>
+			TSU.`logicDel` = 'N'
+			<if test="user.userId != null and user.userId != ''">
+				AND TSU.`userId` = #{user.userId}
+			</if>
+			<if test="user.username != null and user.username !=''">
+				AND TSU.`username` LIKE CONCAT('%',#{user.username},'%')
+			</if>
+			<if test="user.nickname != null and user.nickname != ''">
+				AND TSU.`nickname` LIKE CONCAT('%',#{user.nickname},'%')
+			</if>
+			<if test="user.phone != null and user.phone != ''">
+				AND TSU.`phone` LIKE CONCAT('%',#{user.phone},'%')
+			</if>
+			<if test="user.tel != null and user.tel != ''">
+				AND TSU.`tel` LIKE CONCAT('%',#{user.tel},'%')
+			</if>
+			<if test="user.email != bull and user.email != ''">
+				AND TSU.`email` LIKE CONCAT('%',#{user.email},'%')
+			</if>
+			<if test="user.sex != null and user.sex != ''">
+				AND TSU.`sex` = #{user.sex}
+			</if>
+			<if test="user.startTime != null and user.startTime != ''">
+				AND TSU.`createTime` &gt;= #{user.startTime}
+			</if>
+			<if test="user.endTime != null and user.endTime != ''">
+				AND TSU.`createTime` &lt;= #{user.endTime}
+			</if>
+			<if test="user.userTag != null">
+				AND TSU.`userTag` = #{user.userTag}
+			</if>
+			<if test="user.status != null">
+				AND TSU.`status` = #{user.status}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 分页查询用户列表 -->
+	<select id="findUserList" parameterType="map" resultType="com.sly.accountmanager.common.model.User">
+		SELECT * FROM T_SYS_USER TSU
+		<where>
+			TSU.`logicDel` = 'N'
+			<if test="user.userId != null and user.userId != ''">
+				AND TSU.`userId` = #{user.userId}
+			</if>
+			<if test="user.username != null and user.username !=''">
+				AND TSU.`username` LIKE CONCAT('%',#{user.username},'%')
+			</if>
+			<if test="user.nickname != null and user.nickname != ''">
+				AND TSU.`nickname` LIKE CONCAT('%',#{user.nickname},'%')
+			</if>
+			<if test="user.phone != null and user.phone != ''">
+				AND TSU.`phone` LIKE CONCAT('%',#{user.phone},'%')
+			</if>
+			<if test="user.tel != null and user.tel != ''">
+				AND TSU.`tel` LIKE CONCAT('%',#{user.tel},'%')
+			</if>
+			<if test="user.email != bull and user.email != ''">
+				AND TSU.`email` LIKE CONCAT('%',#{user.email},'%')
+			</if>
+			<if test="user.sex != null and user.sex != ''">
+				AND TSU.`sex` = #{user.sex}
+			</if>
+			<if test="user.startTime != null and user.startTime != ''">
+				AND TSU.`createTime` &gt;= #{user.startTime}
+			</if>
+			<if test="user.endTime != null and user.endTime != ''">
+				AND TSU.`createTime` &lt;= #{user.endTime}
+			</if>
+			<if test="user.userTag != null">
+				AND TSU.`userTag` = #{user.userTag}
+			</if>
+			<if test="user.status != null">
+				AND TSU.`status` = #{user.status}
+			</if>
+		</where>
+		ORDER BY TSU.`createTime` DESC
+		LIMIT #{page.startNum},#{page.pageSize}
+	</select>
+	
+	<!-- 逻辑删除用户 -->
+	<update id="deleteUser" parameterType="string">
+		UPDATE T_SYS_USER TSU SET TSU.`logicDel`='N' WHERE TSU.`userId`=#{userId}
+	</update>
+	
+	<update id="updateUser" parameterType="com.sly.accountmanager.common.model.User">
+		UPDATE T_SYS_USER TSU 
+		<set>
+			<if test="username != null and username != ''">
+				TSU.`username`=#{username},
+			</if>
+			<if test="password != null and password != ''">
+				TSU.`password`=#{password},
+			</if>
+			<if test="nickname != null and nickname != ''">
+				TSU.`nickname`=#{nickname},
+			</if>
+			<if test="realname != null and realname != ''">
+				TSU.`realname`=#{realname},
+			</if>
+			<if test="phone != null and phone != ''">
+				TSU.`phone`=#{phone},
+			</if>
+			<if test="tel != null and tel != ''">
+				TSU.`tel`=#{tel},
+			</if>
+			<if test="email != null and email != ''">
+				TSU.`email`=#{email},
+			</if>
+			<if test="sex != null and sex != ''">
+				TSU.`sex`=#{sex},
+			</if>
+			<if test="updateTime != null and updateTime != ''">
+				TSU.`updateTime`=#{updateTime}
+			</if>
+			<if test="userTag != null">
+				TSU.`userTag`=#{userTag},
+			</if>
+			<if test="status != null">
+				TSU.`status`=#{status},
+			</if>
+			<if test="remark != null and remark != ''">
+				TSU.`remark`=#{remark},
+			</if>
+		</set>
+		WHERE TSU.`userId`=#{userId}
+	</update>
+	
+	<!-- 根据条件查询用户 -->
+	<select id="findUserByCondition" parameterType="com.sly.accountmanager.common.model.User" resultType="com.sly.accountmanager.common.model.User">
+		SELECT * FROM T_SYS_USER TSU 
+		<where>
+			<if test="username != null and username != ''">
+				AND TSU.`username` = #{username}
+			</if>
+			<if test="password != null and password != ''">
+				AND TSU.`password` = #{password}
+			</if>
+		</where>
+		LIMIT 1
+	</select>
+</mapper>

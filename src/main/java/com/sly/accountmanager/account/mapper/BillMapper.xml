@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sly.accountmanager.account.mapper.BillMapper">
+	<!-- 保存账单信息 -->
+	<insert id="saveBill" parameterType="com.sly.accountmanager.account.model.Bill">
+		INSERT INTO `T_ACCOUNT_BILL`(revexpType,billTypeId,billTypeName,billTime,billAmount,
+		billDetail,remark,createTime,updateTime,deleteTime,userId,userName,logicDel) 
+		VALUES(#{revexpType},#{billTypeId},#{billTypeName},#{billTime},#{billAmount},#{billDetail},
+		#{remark},#{createTime},#{updateTime},#{deleteTime},#{userId},#{userName},#{logicDel})
+	</insert>
+	
+	<!-- 逻辑删除账单信息 -->
+	<update id="deleteBill" parameterType="int">
+		UPDATE `T_ACCOUNT_BILL` TAB SET TAB.`logicDel`='Y',TAB.`deleteTime`=NOW() WHERE TAB.`billId`=#{billId}
+	</update>
+	
+	<!-- 修改账单信息 -->
+	<update id="updateBill" parameterType="com.sly.accountmanager.account.model.Bill">
+		UPDATE `T_ACCOUNT_BILL` TAB
+		<set>
+			<if test="billTypeId != null and billTypeId != ''">
+				TAB.`billTypeId` = #{billTypeId},
+			</if>
+			<if test="billTypeName !=null and billTypeName != ''">
+				TAB.`billTypeName` = #{billTypeName},
+			</if>
+			<if test="billTime != null and billTime != ''">
+				TAB.`billTime` = #{billTime},
+			</if>
+			<if test="billAmount != null">
+				TAB.`billAmount` = #{billAmount},
+			</if>
+			<if test="billDetail != null and billDetail != ''">
+				TAB.`billDetail` = #{billDetail},
+			</if>
+			<if test="remark != null and remark != ''">
+				TAB.`remark` = #{remark},
+			</if>
+			<if test="updateTime != null and updateTime != ''">
+				TAB.`updateTime` = #{updateTime},
+			</if>
+			<if test="deleteTime != null and deleteTime != ''">
+				TAB.`deleteTime` = #{deleteTime},
+			</if>
+			<if test="logicDel != null and logicDel != ''">
+				TAB.`logicDel` = #{logicDel},
+			</if>
+		</set>
+		WHERE TAB.`billId`=#{billId}
+	</update>
+	
+	<!-- 根据账单id查询信息 -->
+	<select id="findBillById" parameterType="int" resultType="com.sly.accountmanager.account.model.Bill">
+		SELECT * FROM `T_ACCOUNT_BILL` TAB WHERE TAB.`billId`=#{billId}
+	</select>
+	
+	<!-- 统计分页查询账单列表数量 -->
+	<select id="countBillList" parameterType="map" resultType="int">
+		SELECT COUNT(1) FROM `T_ACCOUNT_BILL` TAB
+		<where>
+			TAB.`userId` = #{bill.userId}
+			AND TAB.`logicDel` = 'N'
+			<if test="bill.billTypeId != null and bill.billTypeId != ''">
+				AND TAB.`billTypeId` = #{bill.billTypeId}
+			</if>
+			<if test="bill.billTypeName != null and bill.billTypeName != ''">
+				AND TAB.`billTypeName` LIKE CONCAT('%',#{bill.billTypeName},'%') 
+			</if>
+			<if test="bill.startBillTime != null and bill.startBillTime != ''">
+				AND UNIX_TIMESTAMP(TAB.`billTime`) &gt;= UNIX_TIMESTAMP(#{bill.startBillTime})
+			</if>
+			<if test="bill.endBillTime != null and bill.endBillTime != ''">
+				AND UNIX_TIMESTAMP(TAB.`billTime`) &lt;= UNIX_TIMESTAMP(#{bill.endBillTime})
+			</if>
+			<if test="bill.minBillAmount != null">
+				AND TAB.`billAmount` &gt;= #{bill.minBillAmount}
+			</if>
+			<if test="bill.maxBillAmount != null">
+				AND TAB.`billAmount` &lt;= #{bill.maxBillAmount}
+			</if>
+			<if test="bill.billDetail != null and bill.billDetail != ''">
+				AND TAB.`billDetail` LIKE CONCAT('%',#{bill.billDetail},'%') 
+			</if>
+			<if test="bill.remark != null and bill.remark != ''">
+				AND TAB.`remark` LIKE CONCAT('%',#{bill.remark},'%')
+			</if>
+			<if test="bill.startCreateTime != null and bill.startCreateTime != ''">
+				AND UNIX_TIMESTAMP(TAB.`createTime`) &gt;= UNIX_TIMESTAMP(#{bill.startCreateTime})
+			</if>
+			<if test="bill.endCreateTime != null and bill.endCreateTime != ''">
+				AND UNIX_TIMESTAMP(TAB.`createTime`) &lt;= UNIX_TIMESTAMP(#{bill.endCreateTime})
+			</if>
+			<if test="bill.startDeleteTime != null and bill.startDeleteTime != ''">
+				AND UNIX_TIMESTAMP(TAB.`deleteTime`) &gt;= UNIX_TIMESTAMP(#{bill.startDeleteTime})
+			</if>
+			<if test="bill.endDeleteTime != null and bill.endDeleteTime != ''">
+				AND UNIX_TIMESTAMP(TAB.`deleteTime`) &lt;= UNIX_TIMESTAMP(#{bill.endDeleteTime})
+			</if>
+		</where>
+	</select>
+	
+	<!-- 分页查询账单列表 -->
+	<select id="findBillList" parameterType="map" resultType="com.sly.accountmanager.account.model.Bill">
+		SELECT * FROM `T_ACCOUNT_BILL` TAB
+		<where>
+			TAB.`userId` = #{bill.userId}
+			AND TAB.`logicDel` = 'N'
+			<if test="bill.billTypeId != null and bill.billTypeId != ''">
+				AND TAB.`billTypeId` = #{bill.billTypeId}
+			</if>
+			<if test="bill.billTypeName != null and bill.billTypeName != ''">
+				AND TAB.`billTypeName` LIKE CONCAT('%',#{bill.billTypeName},'%') 
+			</if>
+			<if test="bill.startBillTime != null and bill.startBillTime != ''">
+				AND UNIX_TIMESTAMP(TAB.`billTime`) &gt;= UNIX_TIMESTAMP(#{bill.startBillTime})
+			</if>
+			<if test="bill.endBillTime != null and bill.endBillTime != ''">
+				AND UNIX_TIMESTAMP(TAB.`billTime`) &lt;= UNIX_TIMESTAMP(#{bill.endBillTime})
+			</if>
+			<if test="bill.minBillAmount != null">
+				AND TAB.`billAmount` &gt;= #{bill.minBillAmount}
+			</if>
+			<if test="bill.maxBillAmount != null">
+				AND TAB.`billAmount` &lt;= #{bill.maxBillAmount}
+			</if>
+			<if test="bill.billDetail != null and bill.billDetail != ''">
+				AND TAB.`billDetail` LIKE CONCAT('%',#{bill.billDetail},'%') 
+			</if>
+			<if test="bill.remark != null and bill.remark != ''">
+				AND TAB.`remark` LIKE CONCAT('%',#{bill.remark},'%')
+			</if>
+			<if test="bill.startCreateTime != null and bill.startCreateTime != ''">
+				AND UNIX_TIMESTAMP(TAB.`createTime`) &gt;= UNIX_TIMESTAMP(#{bill.startCreateTime})
+			</if>
+			<if test="bill.endCreateTime != null and bill.endCreateTime != ''">
+				AND UNIX_TIMESTAMP(TAB.`createTime`) &lt;= UNIX_TIMESTAMP(#{bill.endCreateTime})
+			</if>
+			<if test="bill.startDeleteTime != null and bill.startDeleteTime != ''">
+				AND UNIX_TIMESTAMP(TAB.`deleteTime`) &gt;= UNIX_TIMESTAMP(#{bill.startDeleteTime})
+			</if>
+			<if test="bill.endDeleteTime != null and bill.endDeleteTime != ''">
+				AND UNIX_TIMESTAMP(TAB.`deleteTime`) &lt;= UNIX_TIMESTAMP(#{bill.endDeleteTime})
+			</if>
+		</where>
+		ORDER BY TAB.`createTime` DESC 
+		LIMIT #{page.startNum},#{page.pageSize}
+	</select>
+</mapper>

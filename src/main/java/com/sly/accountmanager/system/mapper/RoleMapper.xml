@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sly.accountmanager.system.mapper.RoleMapper">
+	<!-- 保存角色信息 -->
+	<insert id="saveRole" parameterType="com.sly.accountmanager.system.model.Role">
+		INSERT INTO T_SYS_ROLE (roleId,userId,username,roleName,createTime,updateTime,isOpen,logicDel,remark) 
+		VALUES (#{roleId},#{userId},#{username},#{roleName},#{createTime},#{updateTime},#{isOpen},#{logicDel},#{remark});
+	</insert>
+	
+	<!-- 逻辑删除角色 -->
+	<update id="deleteRole" parameterType="string">
+		UPDATE T_SYS_ROLE TSR SET TSR.`logicDel`='Y' WHERE TSR.`roleId`=#{roleId};
+	</update>
+	
+	<!-- 修改角色 -->
+	<update id="updateRole" parameterType="com.sly.accountmanager.system.model.Role">
+		UPDATE T_SYS_ROLE TSR
+		<set>
+			<if test="roleName != null and roleName != ''">
+				TSR.`roleName`=#{roleName},
+			</if>
+			<if test="isOpen != null and isOpen != ''">
+				TSR.`isOpen`=#{isOpen},
+			</if>
+			<if test="logicDel != null and logicDel != ''">
+				TSR.`logicDel`=#{logicDel},
+			</if>
+			<if test="remark != null and remark != ''">
+				TSR.`remark`=#{remark},
+			</if>
+			<if test="updateTime != null and updateTime != ''">
+				TSR.`updateTime`=#{updateTime},
+			</if>
+		</set>
+		WHERE TSR.`roleId`=#{roleId};
+	</update>
+	
+	<!-- 根据角色id查询角色 -->
+	<select id="findRoleById" parameterType="string" resultType="com.sly.accountmanager.system.model.Role">
+		SELECT * FROM T_SYS_ROLE WHERE T_SYS_ROLE.`roleId`=#{roleId}
+	</select>
+	
+	<!-- 统计分页查询角色数量 -->
+	<select id="countRoleList" parameterType="map" resultType="int">
+		SELECT COUNT(1) FROM T_SYS_ROLE TSR
+		<where>
+			TSR.`logicDel` = 'N'
+			<if test="role.roleId != null and role.roleId != ''">
+				AND TSR.`roleId` = #{role.roleId}
+			</if>
+			<if test="role.userId != null and role.userId != ''">
+				AND TSR.`userId` = #{role.userId}
+			</if>
+			<if test="role.username != null and role.username != ''">
+				AND TSR.`username` LIKE CONCAT('%',#{role.username},'%')
+			</if>
+			<if test="role.roleName != null and role.roleName != ''">
+				AND TSR.`roleName` LIKE CONCAT('%',#{role.roleName},'%')
+			</if>
+			<if test="role.isOpen != null">
+				AND TSR.`isOpen` = #{role.isOpen}
+			</if>
+			<if test="role.startTime != null and role.startTime != ''">
+				AND TSR.`createTime` &gt;= #{role.startTime}
+			</if>
+			<if test="role.endTime != null and role.endTime != ''">
+				AND TSR.`createTime` &lt;= #{role.endTime}
+			</if>
+			<if test="role.remark != null and role.remark != ''">
+				AND TSR.`remark` LIKE CONCAT('%',#{role.remark},'%')
+			</if>
+		</where>
+	</select>
+	
+	<!-- 分页查询角色列表 -->
+	<select id="findRoleList" parameterType="map" resultType="com.sly.accountmanager.system.model.Role">
+		SELECT * FROM T_SYS_ROLE TSR
+		<where>
+			TSR.`logicDel` = 'N'
+			<if test="role.roleId != null and role.roleId != ''">
+				AND TSR.`roleId` = #{role.roleId}
+			</if>
+			<if test="role.userId != null and role.userId != ''">
+				AND TSR.`userId` = #{role.userId}
+			</if>
+			<if test="role.username != null and role.username != ''">
+				AND TSR.`username` LIKE CONCAT('%',#{role.username},'%')
+			</if>
+			<if test="role.roleName != null and role.roleName != ''">
+				AND TSR.`roleName` LIKE CONCAT('%',#{role.roleName},'%')
+			</if>
+			<if test="role.isOpen != null">
+				AND TSR.`isOpen` = #{role.isOpen}
+			</if>
+			<if test="role.startTime != null and role.startTime != ''">
+				AND TSR.`createTime` &gt;= #{role.startTime}
+			</if>
+			<if test="role.endTime != null and role.endTime != ''">
+				AND TSR.`createTime` &lt;= #{role.endTime}
+			</if>
+			<if test="role.remark != null and role.remark != ''">
+				AND TSR.`remark` LIKE CONCAT('%',#{role.remark},'%')
+			</if>
+		</where>
+		ORDER BY TSR.`createTime` DESC
+		LIMIT #{page.startNum},#{page.pageSize}
+	</select>
+	
+	<!-- 查询所有角色 -->
+	<select id="findAllRole" resultType="com.sly.accountmanager.system.model.Role">
+		SELECT * FROM T_SYS_ROLE TSR 
+		<where>
+			TSR.`logicDel` = 'N' 
+			AND TSR.`isOpen` = 1
+		</where>
+	</select>
+	
+	<!-- 查询用户角色id -->
+	<select id="findUserAllRoleIds" parameterType="string" resultType="string">
+		SELECT 
+			DISTINCT TSR.`roleId`
+		FROM T_SYS_USER TSU 
+		LEFT JOIN T_SYS_USERROLE TSUR ON TSU.`userId`=TSUR.`userId`
+		LEFT JOIN T_SYS_ROLE TSR ON TSUR.`roleId`=TSR.`roleId`
+		<where>
+			TSR.`logicDel`='N' 
+			AND TSUR.`logicDel`='N' 
+			AND TSU.`logicDel`='N'
+			AND TSU.`userId`=#{userId}
+		</where>
+	</select>
+</mapper>

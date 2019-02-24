@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sly.accountmanager.system.mapper.FuncMapper">
+	<!-- 保存功能信息 -->
+	<insert id="saveFunc" parameterType="com.sly.accountmanager.system.model.Func">
+		INSERT INTO T_SYS_FUNC (funcId,userId,username,funcName,funcIcon,funcUrl,funcTag,parentId,
+		createTime,updateTime,funcSort,isOpen,logicDel,funcType,remark) 
+		VALUES(#{funcId},#{userId},#{username},#{funcName},#{funcIcon},#{funcUrl},#{funcTag},#{parentId},
+		#{createTime},#{updateTime},#{funcSort},#{isOpen},#{logicDel},#{funcType},#{remark})
+	</insert>
+	
+	<!-- 逻辑删除功能 -->
+	<update id="deleteFunc" parameterType="string">
+		UPDATE `T_SYS_FUNC` TSF SET TSF.`logicDel`='Y',TSF.`updateTime`=NOW() WHERE TSF.`funcId`=#{funcId}
+	</update>
+	
+	<!-- 修改功能 -->
+	<update id="updateFunc" parameterType="com.sly.accountmanager.system.model.Func">
+		UPDATE `T_SYS_FUNC` TSF
+		<set>
+			<if test="funcName != null and funcName != ''">
+				TSF.`funcName` = #{funcName},
+			</if>
+			<if test="funcIcon != null">
+				TSF.`funcIcon` = #{funcIcon},
+			</if>
+			<if test="funcUrl != null and funcUrl != ''">
+				TSF.`funcUrl` = #{funcUrl},
+			</if>
+			<if test="funcTag != null and funcTag != ''">
+				TSF.`funcTag` = #{funcTag},
+			</if>
+			<!-- <if test="parentId != null and parentId != ''">
+				TSF.`parentId` = #{parentId},
+			</if> -->
+			<if test="updateTime != null and updateTime != ''">
+				TSF.`updateTime` = #{updateTime},
+			</if>
+			<if test="funcSort != null">
+				TSF.`funcSort` = #{funcSort},
+			</if>
+			<if test="isOpen != null">
+				TSF.`isOpen` = #{isOpen},
+			</if>
+			<if test="funcType != null">
+				TSF.`funcType` = #{funcType},
+			</if>
+			<if test="remark != null">
+				TSF.`remark` = #{remark},
+			</if>
+		</set>
+		WHERE funcId=#{funcId}
+	</update>
+	
+	<!-- 根据功能id查询功能 -->
+	<select id="findFuncById" parameterType="string" resultType="com.sly.accountmanager.system.model.Func">
+		SELECT * FROM `T_SYS_FUNC` TSF WHERE TSF.`funcId`=#{funcId}
+	</select>
+	
+	<!-- 查询顶层功能 -->
+	<select id="findTopFunc" resultType="com.sly.accountmanager.system.model.Func">
+		SELECT * FROM `T_SYS_FUNC` TSF 
+		<where>
+			TSF.`logicDel`='N'
+			<!-- 系统内置查所有 -->
+			<if test="funcType == 0">
+				AND (TSF.`parentId` IS NULL OR TSF.`parentId`='')
+			</if>
+			<!-- 非系统内置,排除系统内置0 -->
+			<if test="funcType == 1">
+				(TSF.`parentId` IS NULL OR TSF.`parentId`='')
+				AND TSF.`funcType` &lt;&gt; 0
+			</if>
+		</where>
+		ORDER BY TSF.`funcSort` ASC
+	</select>
+	
+	<!-- 查询子节点 -->
+	<select id="findChildFunc" resultType="com.sly.accountmanager.system.model.Func">
+		SELECT * FROM `T_SYS_FUNC` TSF 
+		<where>
+			<!-- 系统内置查所有 -->
+			<if test="funcType == 0">
+				TSF.`parentId` = #{funcId}
+			</if>
+			<!-- 非系统内置,排除系统内置0 -->
+			<if test="funcType == 1">
+				TSF.`parentId` = #{funcId}
+				AND TSF.`funcType` &lt;&gt; 0
+			</if>
+			AND TSF.`logicDel`='N'
+		</where>
+		ORDER BY TSF.`funcSort` ASC
+	</select>
+	
+	<!-- 查询用户的功能列表父节点 -->
+	<select id="findUserTopFunc" resultType="com.sly.accountmanager.system.model.Func">
+		SELECT
+			DISTINCT(TSF.`funcId`),TSF.`userId`,TSF.`username`,TSF.`funcName`,
+			TSF.`funcIcon`,TSF.`funcUrl`,TSF.`funcTag`,TSF.`parentId`,TSF.`createTime`,
+			TSF.`updateTime`,TSF.`funcSort`,TSF.`isOpen`,TSF.`logicDel`,TSF.`funcType`,
+			TSF.`remark`
+		FROM T_SYS_USER TSU 
+		LEFT JOIN T_SYS_USERROLE TSUR ON TSU.`userId` = TSUR.`userId`
+		LEFT JOIN T_SYS_ROLE TSR ON TSUR.`roleId` = TSR.`roleId`
+		LEFT JOIN T_SYS_ROLEFUNC TSRF ON TSUR.`roleId` = TSRF.`roleId` 
+		LEFT JOIN T_SYS_FUNC TSF ON TSRF.`funcId` = TSF.`funcId`
+		WHERE TSU.`userId` = #{userId}
+		AND TSR.`logicDel` = 'N' 
+		AND TSF.`isOpen` = 1 AND TSF.`logicDel` = 'N'
+		AND (TSF.`parentId` IS NULL OR TSF.`parentId` = '')
+		<!-- 非系统内置,排除系统内置0 -->
+		<if test="funcType == 1">
+			AND TSF.`funcType` &lt;&gt; 0
+		</if>
+		ORDER BY TSF.`funcSort` ASC
+	</select>
+	
+	<!-- 查询用户子节点 -->
+	<select id="findUserChildFunc" resultType="com.sly.accountmanager.system.model.Func">
+		SELECT
+			DISTINCT(TSF.`funcId`),TSF.`userId`,TSF.`username`,TSF.`funcName`,
+			TSF.`funcIcon`,TSF.`funcUrl`,TSF.`funcTag`,TSF.`parentId`,TSF.`createTime`,
+			TSF.`updateTime`,TSF.`funcSort`,TSF.`isOpen`,TSF.`logicDel`,TSF.`funcType`,
+			TSF.`remark`
+		FROM T_SYS_USER TSU 
+		LEFT JOIN T_SYS_USERROLE TSUR ON TSU.`userId` = TSUR.`userId`
+		LEFT JOIN T_SYS_ROLE TSR ON TSUR.`roleId` = TSR.`roleId`
+		LEFT JOIN T_SYS_ROLEFUNC TSRF ON TSUR.`roleId` = TSRF.`roleId` 
+		LEFT JOIN T_SYS_FUNC TSF ON TSRF.`funcId` = TSF.`funcId`
+		WHERE TSU.`userId` = #{userId}
+		AND TSR.`logicDel` = 'N' 
+		AND TSF.`isOpen` = 1 AND TSF.`logicDel` = 'N'
+		AND TSF.`parentId` = #{funcId}
+		<!-- 非系统内置,排除系统内置0 -->
+		<if test="funcType == 1">
+			AND TSF.`funcType` &lt;&gt; 0
+		</if>
+		ORDER BY TSF.`funcSort` ASC
+	</select>
+	
+	<!-- 批量删除功能 -->
+	<update id="deleteFuncList">
+		UPDATE `T_SYS_FUNC` TSF SET TSF.`logicDel` = 'Y',TSF.`updateTime` = NOW() 
+		WHERE TSF.`funcId` IN 
+		<foreach collection="list" item="func" open="(" close=")" separator="," >
+			#{func.funcId}
+		</foreach>
+	</update>
+	
+	<!--  查询查询角色功能id -->
+	<select id="findRoleAllFuncIds" parameterType="string" resultType="string">
+		SELECT 
+			DISTINCT TSF.`funcId`
+		FROM T_SYS_ROLE TSR 
+		LEFT JOIN T_SYS_ROLEFUNC TSRF ON TSR.`roleId`=TSRF.`roleId`
+		LEFT JOIN T_SYS_FUNC TSF ON TSRF.`funcId`=TSF.`funcId`
+		<where>
+			TSR.`logicDel`='N' 
+			AND TSR.`roleId`=#{roleId}
+			AND TSRF.`logicDel`='N'
+			AND TSF.`logicDel`='N'	
+		</where>
+	</select>
+</mapper>

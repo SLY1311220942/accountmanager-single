@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>jQuery treetable</title>
+    <link rel="stylesheet" href="css/screen.css" media="screen" />
+    <link rel="stylesheet" href="css/jquery.treetable.css" />
+    <link rel="stylesheet" href="css/jquery.treetable.theme.default.css" />
+  </head>
+  <body>
+    <div id="main">  
+      <table id="example-advanced">
+        <caption>
+          <a href="#" onclick="jQuery('#example-advanced').treetable('expandAll'); return false;">Expand all</a>
+          <a href="#" onclick="jQuery('#example-advanced').treetable('collapseAll'); return false;">Collapse all</a>
+        </caption>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Kind</th>
+            <th>Size</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr data-tt-id='1'><td><span class='file'>Acknowledgements.rtf</span></td><td>File</td><td>480.95 KB</td></tr>
+      <tr data-tt-id='2'><td><span class='folder'>CHUD</span></td><td>Folder</td><td>--</td></tr>
+      <tr data-tt-id='2-1' data-tt-parent-id='2'><td><span class='folder'>amber</span></td><td>Folder</td><td>--</td></tr>
+      <tr data-tt-id='2-1-1' data-tt-parent-id='2-1'><td><span class='file'>AmberTraceFormats.pdf</span></td><td>File</td><td>124.46 KB</td></tr>
+      <tr data-tt-id='2-2' data-tt-parent-id='2'><td><span class='folder'>BigTop</span></td><td>Folder</td><td>--</td></tr>
+      <tr data-tt-id='2-2-1' data-tt-parent-id='2-2'><td><span class='file'>BigTopUserGuide.pdf</span></td><td>File</td><td>1314.71 KB</td></tr>
+      <tr data-tt-id='2-3' data-tt-parent-id='2'><td><span class='folder'>Saturn</span></td><td>Folder</td><td>--</td></tr>
+      <tr data-tt-id='2-3-1' data-tt-parent-id='2-3'><td><span class='file'>SaturnUserGuide.pdf</span></td><td>File</td><td>694.29 KB</td></tr>
+      <tr data-tt-id='2-4' data-tt-parent-id='2'><td><span class='folder'>simg4</span></td><td>Folder</td><td>--</td></tr>
+    
+      <tr data-tt-id='3'><td><span class='folder'>DocSets</span></td><td>Folder</td><td>--</td></tr>
+      <tr data-tt-id='3-1' data-tt-parent-id='3'><td><span class='folder'>com.apple.ADC_Reference_Library.CoreReference.docset</span></td><td>Folder</td><td>--</td></tr>
+      <tr data-tt-id='3-1-1' data-tt-parent-id='3-1'><td><span class='folder'>Contents</span></td><td>Folder</td><td>--</td></tr>
+      <tr data-tt-id='3-1-1-1' data-tt-parent-id='3-1-1'><td><span class='file'>Info.plist</span></td><td>File</td><td>1.23 KB</td></tr>
+      <tr data-tt-id='3-1-1-2' data-tt-parent-id='3-1-1'><td><span class='folder'>Resources</span></td><td>Folder</td><td>--</td></tr>
+      <tr data-tt-id='3-1-1-3' data-tt-parent-id='3-1-1'><td><span class='file'>version.plist</span></td><td>File</td><td>0.44 KB</td></tr>
+      
+      <tr data-tt-id='4'><td><span class='file'>iPhone SDK License.rtf</span></td><td>File</td><td>37.93 KB</td></tr>
+      <tr data-tt-id='5'><td><span class='folder'>Perl</span></td><td>Folder</td><td>--</td></tr>
+      <tr data-tt-id='5-1' data-tt-parent-id='5'><td><span class='folder'>wxPerl</span></td><td>Folder</td><td>--</td></tr>
+      <tr data-tt-id='5-1-1' data-tt-parent-id='5-1'><td><span class='file'>INSTALL.pod</span></td><td>File</td><td>8.26 KB</td></tr>
+      <tr data-tt-id='5-1-2' data-tt-parent-id='5-1'><td><span class='file'>todo.txt</span></td><td>File</td><td>2.3 KB</td></tr>
+      <tr data-tt-id='6'><td><span class='folder'>Python</span></td><td>Folder</td><td>--</td></tr>
+      <tr data-tt-id='6-1' data-tt-parent-id='6'><td><span class='folder'>PyObjC</span></td><td>Folder</td><td>--</td></tr>
+     
+      <tr data-tt-id='6-2' data-tt-parent-id='6'><td><span class='folder'>wxPython</span></td><td>Folder</td><td>--</td></tr>
+      <tr data-tt-id='7'><td><span class='folder'>RubyCocoa</span></td><td>Folder</td><td>--</td></tr>
+      <tr data-tt-id='8'><td><span class='folder'>wxWidgets</span></td><td>Folder</td><td>--</td></tr>
+      <tr data-tt-id='9'><td><span class='file'>Xcode Tools License.rtf</span></td><td>File</td><td>18.79 KB</td></tr>
+        </tbody>
+      </table> 
+    </div> 
+    <script src="jquery.js"></script>
+    <script src="jquery.treetable.js"></script>
+    <script>
+        
+      $("#example-basic").treetable({ expandable: true });
+
+      $("#example-basic-static").treetable();
+
+      $("#example-basic-expandable").treetable({ expandable: true });
+
+      $("#example-advanced").treetable({ expandable: true });
+
+      // Highlight selected row
+      $("#example-advanced tbody").on("mousedown", "tr", function() {
+        $(".selected").not(this).removeClass("selected");
+        $(this).toggleClass("selected");
+      });
+
+      $("form#reveal").submit(function() {
+        var nodeId = $("#revealNodeId").val()
+
+        try {
+          $("#example-advanced").treetable("reveal", nodeId);
+        }
+        catch(error) {
+          alert(error.message);
+        }
+
+        return false;
+      });
+    </script>
+  </body>
+</html>
