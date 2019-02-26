@@ -1,5 +1,10 @@
 package com.sly.accountmanager.common.message.account;
 
+/**
+ * _账单信息类
+ * @author sly
+ * @time 2019年2月26日
+ */
 public class BillMessage {
 	/**
 	 * 账单金额不超过10位整数,最多保留2位小数

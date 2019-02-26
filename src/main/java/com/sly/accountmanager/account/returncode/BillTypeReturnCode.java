@@ -9,6 +9,15 @@ import com.sly.accountmanager.common.returncode.IReturnCode;
  * @time 2018年11月19日
  */
 public enum BillTypeReturnCode implements IReturnCode{
+	/**
+	 * 查询顶层账单类型列表失败
+	 */
+	BILLTYPE_QUERY_TOPLIST_FAILED(10008000,"查询顶层账单类型列表失败!"), 
+	/**
+	 * 保存账单类型信息失败
+	 */
+	BILLTYPE_ADD_FAILED(10008001,"保存账单类型信息失败!"),
+	
 	;
 
 	/**

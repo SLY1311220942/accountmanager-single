@@ -34,4 +34,13 @@ public class OperateModel {
 	 * 系统-字典码
 	 */
 	public static final String SYSTEM_DICCODE_MODEL = "系统-字典码";
+	
+	/**
+	 * 账单-账单
+	 */
+	public static final String ACCOUNT_BILL_MODEL = "账单-账单";
+	/**
+	 * 账单-账单类型
+	 */
+	public static final String ACCOUNT_BILLTYPE_MODEL = "账单-账单类型";
 }

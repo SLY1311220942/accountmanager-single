@@ -11,6 +11,11 @@ import com.sly.accountmanager.common.regex.AccountRegex;
 import com.sly.accountmanager.common.regex.Regex;
 import com.sly.accountmanager.common.result.BaseResult;
 
+/**
+ * _账单验证类
+ * @author sly
+ * @time 2019年2月26日
+ */
 @Component
 public class BillValidate {
 	/**

@@ -75,10 +75,6 @@ public class BillController {
 			User sessionUser = (User) request.getSession().getAttribute(CommonConstant.SESSION_USER);
 			bill.setUserId(sessionUser.getUserId());
 			
-			//处理参数
-			
-			
-			
 			//封装参数
 			Map<String, Object> params = new HashMap<>(16);
 			params.put("bill", bill);
@@ -140,7 +136,7 @@ public class BillController {
 			//封装参数
 			User sessionUser = (User) request.getSession().getAttribute(CommonConstant.SESSION_USER);
 			OperateLog operateLog = new OperateLog(NetWorkUtils.getBrowserInfo(request),
-					NetWorkUtils.getClientIp(request), OperateModel.SYSTEM_USER_MODEL, sessionUser);
+					NetWorkUtils.getClientIp(request), OperateModel.ACCOUNT_BILL_MODEL, sessionUser);
 			
 			BaseResult result = billService.saveBill(bill, sessionUser, operateLog);
 			
@@ -179,7 +175,7 @@ public class BillController {
 			//封装参数
 			User sessionUser = (User) request.getSession().getAttribute(CommonConstant.SESSION_USER);
 			OperateLog operateLog = new OperateLog(NetWorkUtils.getBrowserInfo(request),
-					NetWorkUtils.getClientIp(request), OperateModel.SYSTEM_USER_MODEL, sessionUser);
+					NetWorkUtils.getClientIp(request), OperateModel.ACCOUNT_BILL_MODEL, sessionUser);
 			
 			BaseResult result = billService.deleteBill(billId, sessionUser, operateLog);
 			
@@ -237,7 +233,7 @@ public class BillController {
 			//封装参数
 			User sessionUser = (User) request.getSession().getAttribute(CommonConstant.SESSION_USER);
 			OperateLog operateLog = new OperateLog(NetWorkUtils.getBrowserInfo(request),
-					NetWorkUtils.getClientIp(request), OperateModel.SYSTEM_USER_MODEL, sessionUser);
+					NetWorkUtils.getClientIp(request), OperateModel.ACCOUNT_BILL_MODEL, sessionUser);
 			
 			BaseResult result = billService.updateBill(bill, sessionUser, operateLog);
 			
