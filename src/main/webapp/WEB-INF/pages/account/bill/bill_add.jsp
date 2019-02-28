@@ -59,6 +59,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 													<label class="col-sm-4 control-label" style="text-align: right; float: left;">收支类型：</label>
 													<div class="col-sm-8">
 														<select class="form-control" id="revexpType" name="revexpType">
+															<option value="">请选择</option>	
 															<option value="0">支出</option>	
 															<option value="1">收入</option>	
 														</select>
@@ -130,7 +131,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script>
 		$(function() {
 			validator();
-			
+			loadBillType();
 			$('#billTime').datetimepicker({
 		    	language:'zh-CN',
 		    	todayHighlight: true,

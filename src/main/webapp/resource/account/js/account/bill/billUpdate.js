@@ -15,9 +15,37 @@ function loadBill(){
 				$("#billAmount").val(bill.billAmount);
 				$("#billDetail").val(bill.billDetail);
 				$("#remark").val(bill.remark);
+				loadExistBillType(bill.billTypeId)
 			}else if(data.status == 300){
 				eval(data.dataMap.evalStr);
 			}else{
+				layer.alert(data.message, { icon: 2 });
+			}
+		}
+	});
+}
+
+function loadExistBillType(billTypeId){
+	$.ajax({
+		type: "post",
+		url: webRoot + "/account/billType/findAllTopBillType",
+		dataType: "json",
+		data: {
+			isAjax: 1
+		},
+		success: function(data) {
+			if(data.status == 200) {
+				var html = new StringBuffer();
+				html.append('<option value="">请选择</option>');
+				for(var i = 0; i < data.rows.length; i++) {
+					html.append('<option value="' + data.rows[i].billTypeId + '">' + data.rows[i].billTypeName + '</option>');
+				}
+				
+				$("#billTypeId").html(html.toString());
+				$("#billTypeId").val(billTypeId);
+			} else if(data.status == 300) {
+				eval(data.dataMap.evalStr);
+			} else {
 				layer.alert(data.message, { icon: 2 });
 			}
 		}
@@ -38,6 +66,7 @@ function billUpdate() {
 				revexpType: $.trim($("#revexpType").val()),
 				billTime: $.trim($("#billTime").val()),
 				billAmount: $.trim($("#billAmount").val()),
+				billTypeId: $.trim($("#billTypeId").val()),
 				billDetail: $.trim($("#billDetail").val()),
 				remark: $.trim($("#remark").val()),
 				token: $.trim($("#token").val()),

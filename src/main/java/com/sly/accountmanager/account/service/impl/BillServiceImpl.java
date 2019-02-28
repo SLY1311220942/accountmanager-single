@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import com.sly.accountmanager.common.exception.ServiceCustomException;
 import com.sly.accountmanager.common.message.Message;
 import com.sly.accountmanager.common.model.OperateLog;
 import com.sly.accountmanager.common.model.User;
+import com.sly.accountmanager.common.redisHelper.RedisHelper;
 import com.sly.accountmanager.common.result.BaseResult;
 import com.sly.accountmanager.common.utils.DateUtils;
 import com.sly.accountmanager.system.mapper.OperateLogMapper;
@@ -40,6 +42,9 @@ public class BillServiceImpl implements BillService {
 	private BillMapper billMapper;
 	@Autowired
 	private OperateLogMapper operateLogMapper;
+	
+	@Autowired
+	private RedisHelper redisHelper;
 	
 	/**
 	 * 保存账单信息
@@ -61,6 +66,9 @@ public class BillServiceImpl implements BillService {
 			bill.setUserId(sessionUser.getUserId());
 			bill.setUserName(sessionUser.getUsername());
 			bill.setLogicDel(CommonConstant.LOGICDEL_N);
+			if(StringUtils.isNotBlank(bill.getBillTypeId())) {
+				bill.setBillTypeName(redisHelper.findBillTypeById(bill.getBillTypeId()).getBillTypeName());
+			}
 			billMapper.saveBill(bill);
 			
 			//记录操作日志
@@ -114,6 +122,9 @@ public class BillServiceImpl implements BillService {
 			//组装数据
 			String updateTime = DateUtils.formateTime(new Date());
 			bill.setUpdateTime(updateTime);
+			if(StringUtils.isNotBlank(bill.getBillTypeId())) {
+				bill.setBillTypeName(redisHelper.findBillTypeById(bill.getBillTypeId()).getBillTypeName());
+			}
 			billMapper.updateBill(bill);
 			
 			//记录操作日志

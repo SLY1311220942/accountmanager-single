@@ -80,6 +80,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 														<input type="text" class="form-control " id="billAmount" name="billAmount">
 													</div>
 												</div>
+												<div class="form-group col-md-6  column ui-sortable">
+													<label class="col-sm-4 control-label" style="text-align: right; float: left;">账单类型：</label>
+													<div class="col-sm-8">
+														<select class="form-control" id="billTypeId" name="billTypeId">
+															<option value="">请选择</option>
+														</select>
+													</div>
+												</div>
 											</div>
 
 											<div class="row">

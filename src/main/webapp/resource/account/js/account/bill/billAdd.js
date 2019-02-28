@@ -1,3 +1,32 @@
+
+function loadBillType() {
+	$.ajax({
+		type: "post",
+		url: webRoot + "/account/billType/findAllTopBillType",
+		dataType: "json",
+		data: {
+			isAjax: 1
+		},
+		success: function(data) {
+			if(data.status == 200) {
+				var html = new StringBuffer();
+				html.append('<option value="">请选择</option>');
+				for(var i = 0; i < data.rows.length; i++) {
+					html.append('<option value="' + data.rows[i].billTypeId + '">' + data.rows[i].billTypeName + '</option>');
+				}
+				
+				$("#billTypeId").html(html.toString());
+				
+			} else if(data.status == 300) {
+				eval(data.dataMap.evalStr);
+			} else {
+				layer.alert(data.message, { icon: 2 });
+			}
+		}
+	});
+}
+
+
 function billAdd() {
 	var bootstrapValidator = $("#billAddForm").data('bootstrapValidator');
 	bootstrapValidator.validate();
@@ -27,7 +56,7 @@ function billAdd() {
 						parent.layer.close(index);
 					});
 				} else if(data.status == 300) {
-					eval(data.dataMap.evalStr)
+					eval(data.dataMap.evalStr);
 				} else {
 					layer.alert(data.message, { icon: 2 });
 				}

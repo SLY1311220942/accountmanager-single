@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.alibaba.fastjson.JSON;
 import com.sly.accountmanager.account.mapper.BillTypeMapper;
 import com.sly.accountmanager.account.model.BillType;
-import com.sly.accountmanager.account.returncode.BillReturnCode;
 import com.sly.accountmanager.account.returncode.BillTypeReturnCode;
 import com.sly.accountmanager.account.service.BillService;
 import com.sly.accountmanager.account.service.BillTypeService;
@@ -23,6 +22,7 @@ import com.sly.accountmanager.common.exception.ServiceCustomException;
 import com.sly.accountmanager.common.message.Message;
 import com.sly.accountmanager.common.model.OperateLog;
 import com.sly.accountmanager.common.model.User;
+import com.sly.accountmanager.common.redisHelper.RedisHelper;
 import com.sly.accountmanager.common.result.BaseResult;
 import com.sly.accountmanager.common.utils.DateUtils;
 import com.sly.accountmanager.common.utils.UUIDUtils;
@@ -44,9 +44,12 @@ public class BillTypeServiceImpl implements BillTypeService {
 	@Autowired
 	private OperateLogMapper operateLogMapper;
 	
+	@Autowired
+	private RedisHelper redisHelper;
+	
 	
 	/**
-	 * _查询顶层账单类型列表
+	 * _查询顶层账单类型列表(区分用户)
 	 * @param params(billType,page)
 	 * @return
 	 * @author sly
@@ -94,11 +97,50 @@ public class BillTypeServiceImpl implements BillTypeService {
 			operateLog.setOperatorContent(content);
 			operateLogMapper.saveOperateLog(operateLog);
 			
+			//更新redis缓存
+			redisHelper.putBillType(billType);
+			
 			return new BaseResult(ResultStatus.SUCCESS, Message.SAVE_SUCCESS);
 		} catch (Exception e) {
 			logger.error(ExceptionUtils.getStackTrace(e));
 			throw new ServiceCustomException(BillTypeReturnCode.BILLTYPE_ADD_FAILED, e);
 		}
+	}
+
+	/**
+	 * _查询所以顶层账单类型列表(区分用户)
+	 * @param userId
+	 * @return
+	 * @author sly
+	 * @time 2019年2月27日
+	 */
+	@Override
+	public BaseResult findAllTopBillType(String userId) {
+		try {
+			List<BillType> rows = billTypeMapper.findAllTopBillType(userId);
+			return new BaseResult(ResultStatus.SUCCESS, Message.QUERY_SUCCESS, rows.size(), rows);
+		} catch (Exception e) {
+			logger.error(ExceptionUtils.getStackTrace(e));
+			throw new ServiceCustomException(BillTypeReturnCode.BILLTYPE_QUERY_ALLTOPLIST_FAILED, e);
+		}
+	}
+
+	/**
+	 * _查询所有账单(不区分用户)
+	 * @return
+	 * @author sly
+	 * @time 2019年2月27日
+	 */
+	@Override
+	public BaseResult loadAllBillType() {
+		try {
+			List<BillType> rows = billTypeMapper.loadAllBillType();
+			return new BaseResult(ResultStatus.SUCCESS, Message.QUERY_SUCCESS, rows.size(), rows);
+		} catch (Exception e) {
+			logger.error(ExceptionUtils.getStackTrace(e));
+			throw new ServiceCustomException(BillTypeReturnCode.BILLTYPE_QUERY_ALL_FAILED, e);
+		}
+		
 	}
 	
 }

@@ -5,11 +5,13 @@
 	<select id="findTopBillTypeCount" parameterType="map" resultType="int">
 		SELECT 
 			COUNT(1) 
-		FROM `T_ACCOUNT_BILLTYPE` TAB 
+		FROM `T_ACCOUNT_BILLTYPE` TABT 
 		<where>
-			TAB.`parentTypeId` IS NULL
+			TABT.`parentTypeId` IS NULL
+			AND TABT.`userId` = #{billType.userId}
+			AND TABT.`logicDel` = 'N'
 			<if test="billType.billTypeName != null and billType.billTypeName != ''">
-				AND TAB.`billTypeName` LIKE CONCAT('%',#{billType.billTypeName},'%')
+				AND TABT.`billTypeName` LIKE CONCAT('%',#{billType.billTypeName},'%')
 			</if>
 		</where>
 	</select>
@@ -18,11 +20,13 @@
 	<select id="findTopBillTypeList" parameterType="map" resultType="com.sly.accountmanager.account.model.BillType">
 		SELECT 
 			* 
-		FROM `T_ACCOUNT_BILLTYPE` TAB 
+		FROM `T_ACCOUNT_BILLTYPE` TABT 
 		<where>
-			TAB.`parentTypeId` IS NULL
+			TABT.`parentTypeId` IS NULL
+			AND TABT.`userId` = #{billType.userId}
+			AND TABT.`logicDel` = 'N'
 			<if test="billType.billTypeName != null and billType.billTypeName != ''">
-				AND TAB.`billTypeName` LIKE CONCAT('%',#{billType.billTypeName},'%')
+				AND TABT.`billTypeName` LIKE CONCAT('%',#{billType.billTypeName},'%')
 			</if>
 		</where>
 		ORDER BY createTime DESC 
@@ -34,6 +38,30 @@
 		INSERT INTO `T_ACCOUNT_BILLTYPE`(billTypeId,billTypeName,parentTypeId,createTime,userId,userName,logicDel) 
 		VALUES(#{billTypeId},#{billTypeName},#{parentTypeId},#{createTime},#{userId},#{userName},#{logicDel})
 	</insert>
+	
+	<!-- _查询所以顶层账单类型列表 -->
+	<select id="findAllTopBillType" parameterType="string" resultType="com.sly.accountmanager.account.model.BillType">
+		SELECT 
+			* 
+		FROM `T_ACCOUNT_BILLTYPE` TABT 
+		<where>
+			TABT.`parentTypeId` IS NULL
+			AND TABT.`userId` = #{userId}
+			AND TABT.`logicDel` = 'N'
+		</where>
+		ORDER BY createTime DESC
+	</select>
+	
+	<!-- _查询所有账单(不区分用户) -->
+	<select id="loadAllBillType" resultType="com.sly.accountmanager.account.model.BillType">
+		SELECT 
+			* 
+		FROM `T_ACCOUNT_BILLTYPE` TABT 
+		<where>
+			TABT.`parentTypeId` IS NULL
+			AND TABT.`logicDel` = 'N'
+		</where>
+	</select>
 	
 	
 </mapper>
