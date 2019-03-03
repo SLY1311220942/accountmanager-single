@@ -29,7 +29,14 @@ public enum BillReturnCode implements IReturnCode {
 	/**
 	 * 查询账单列表失败
 	 */
-	BILL_QUERY_LIST_FAILED(10007004, "查询账单列表失败!"),;
+	BILL_QUERY_LIST_FAILED(10007004, "查询账单列表失败!"), 
+	/**
+	 * 导入账单失败
+	 */
+	BILL_IMPORT_FAILED(10007005,"导入账单失败!"),
+	
+	
+	;
 
 	/**
 	 * 错误code

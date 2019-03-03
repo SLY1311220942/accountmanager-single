@@ -91,9 +91,10 @@
 
 								</div>
 
-								<div style="margin-left: 46%;margin-bottom: 10px;">
+								<div style="margin-left: 43%;margin-bottom: 10px;">
 									<button type="button" onclick="billSearch()" class="btn btn-info" style="margin-bottom: 10px;margin-top: 10px;">查&nbsp;&nbsp;&nbsp;询</button>
 									<button type="button" onclick="toBillAdd()" class="btn btn-info" style="margin-bottom: 10px;margin-top: 10px;">新&nbsp;&nbsp;&nbsp;增</button>
+									<button type="button" onclick="toBillImport()" class="btn btn-info" style="margin-bottom: 10px;margin-top: 10px;">导&nbsp;&nbsp;&nbsp;入</button>
 								</div>
 							</div>
 							<!-- 数据列表 -->

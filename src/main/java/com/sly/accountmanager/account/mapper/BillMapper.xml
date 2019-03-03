@@ -145,4 +145,25 @@
 		ORDER BY TAB.`createTime` DESC 
 		LIMIT #{page.startNum},#{page.pageSize}
 	</select>
+	
+	<!-- 修改账单的账单类型名称 -->
+	<update id="updateBillTypeName" parameterType="com.sly.accountmanager.account.model.BillType">
+		UPDATE `T_ACCOUNT_BILL` SET billTypeName=#{billTypeName} WHERE `T_ACCOUNT_BILL`.`billTypeId`=#{billTypeId}
+	</update>
+	
+	<!-- 删除账单的账单类型名称 -->
+	<update id="deleteBillTypeName" parameterType="string">
+		UPDATE `T_ACCOUNT_BILL` SET billTypeName=NULL,billTypeId=NULL WHERE `T_ACCOUNT_BILL`.`billTypeId`=#{billTypeId}
+	</update>
+	
+	<!-- 批量保存账单信息 -->
+	<insert id="saveBillList" parameterType="list">
+		INSERT INTO `T_ACCOUNT_BILL`(revexpType,billTypeId,billTypeName,billTime,billAmount,
+		billDetail,remark,createTime,updateTime,deleteTime,userId,userName,logicDel) VALUES
+		<foreach collection="list" item="bill" separator=",">
+			(#{bill.revexpType},#{bill.billTypeId},#{bill.billTypeName},#{bill.billTime},#{bill.billAmount},#{bill.billDetail},
+			#{bill.remark},#{bill.createTime},#{bill.updateTime},#{bill.deleteTime},#{bill.userId},#{bill.userName},#{bill.logicDel})
+		</foreach>
+	</insert>
+	
 </mapper>

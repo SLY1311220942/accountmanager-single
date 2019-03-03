@@ -137,7 +137,7 @@ public class BillTypeController {
 	}
 
 	/**
-	 * 
+	 * 新增账单类型页面
 	 * @param request
 	 * @param response
 	 * @param billType
@@ -180,6 +180,127 @@ public class BillTypeController {
 		} catch (Exception e) {
 			logger.error(ExceptionUtils.getStackTrace(e));
 			return new BaseResult(ResultStatus.FAILED, BillTypeReturnCode.BILLTYPE_ADD_FAILED);
+		}
+	}
+	
+	
+	/**
+	 * _去修改账单类型页面
+	 * @param request
+	 * @param response
+	 * @param billTypeId
+	 * @return
+	 * @author sly
+	 * @time 2019年3月1日
+	 */
+	@RequestMapping("/billType/toBillTypeUpdate")
+	public String toBillTypeUpdate(HttpServletRequest request, HttpServletResponse response,String billTypeId) {
+		String token = TokenUtils.genToken();
+		request.getSession().setAttribute(AccountToken.ACCOUNT_BILLTYPE_UPDATE_TOKEN, token);
+		request.setAttribute(AccountToken.ACCOUNT_BILLTYPE_UPDATE_TOKEN, token);
+		request.setAttribute("billTypeId", billTypeId);
+		return "/account/billType/billType_update.jsp";
+	}
+	
+	/**
+	 * _修改账单类型
+	 * @param request
+	 * @param response
+	 * @param billType
+	 * @param token
+	 * @return
+	 * @author sly
+	 * @time 2019年3月1日
+	 */
+	@ResponseBody
+	@RequestMapping("/billType/billTypeUpdate")
+	public BaseResult billTypeUpdate(HttpServletRequest request, HttpServletResponse response,BillType billType,
+			String token) {
+		try {
+			// 验证token
+			String accountBillTypeUpdateToken = (String) request.getSession()
+					.getAttribute(AccountToken.ACCOUNT_BILLTYPE_UPDATE_TOKEN);
+			if (accountBillTypeUpdateToken == null || !accountBillTypeUpdateToken.equals(token)) {
+				return new BaseResult(ResultStatus.FAILED, Message.TOKEN_OUT);
+			}
+			
+			// 验证参数
+			BaseResult validateResult = billTypeValidate.validateBillTypeUpdate(billType);
+			if (validateResult.getStatus() != 200) {
+				return validateResult;
+			}
+			
+			// 封装参数
+			User sessionUser = (User) request.getSession().getAttribute(CommonConstant.SESSION_USER);
+			OperateLog operateLog = new OperateLog(NetWorkUtils.getBrowserInfo(request),
+					NetWorkUtils.getClientIp(request), OperateModel.ACCOUNT_BILLTYPE_MODEL, sessionUser);
+			
+			BaseResult result = billTypeService.updateBillType(billType, sessionUser, operateLog);
+			
+			// 添加成功移除token
+			if (result.getStatus() == ResultStatus.SUCCESS) {
+				request.getSession().removeAttribute(AccountToken.ACCOUNT_BILLTYPE_UPDATE_TOKEN);
+			}
+			
+			return result;
+		} catch (Exception e) {
+			logger.error(ExceptionUtils.getStackTrace(e));
+			return new BaseResult(ResultStatus.FAILED, BillTypeReturnCode.BILLTYPE_UPDATE_FAILED);
+		}
+
+	}
+	
+	/**
+	 * _根据ID查询账单类型详情
+	 * @param request
+	 * @param response
+	 * @param billTypeId
+	 * @return
+	 * @author sly
+	 * @time 2019年3月1日
+	 */
+	@ResponseBody
+	@RequestMapping("/billType/findBillTypeById")
+	public BaseResult findBillTypeById(HttpServletRequest request, HttpServletResponse response,String billTypeId) {
+		try {
+			BaseResult result = billTypeService.findBillTypeById(billTypeId);
+			return result;
+		} catch (Exception e) {
+			logger.error(ExceptionUtils.getStackTrace(e));
+			return new BaseResult(ResultStatus.FAILED, BillTypeReturnCode.BILLTYPE_QUERY_BYID_FAILED);
+		}
+	}
+	
+	/**
+	 * _删除账单类型信息
+	 * @param request
+	 * @param response
+	 * @param billTypeId
+	 * @return
+	 * @author sly
+	 * @time 2019年3月2日
+	 */
+	@ResponseBody
+	@RequestMapping("/billType/billTypeDelete")
+	public BaseResult billTypeDelete(HttpServletRequest request, HttpServletResponse response,String billTypeId) {
+		try {
+			//验证参数
+			BaseResult validateResult = billTypeValidate.validateBillTypeDelete(billTypeId);
+			if(validateResult.getStatus() != 200) {
+				return validateResult;
+			}
+			
+			// 封装参数
+			User sessionUser = (User) request.getSession().getAttribute(CommonConstant.SESSION_USER);
+			OperateLog operateLog = new OperateLog(NetWorkUtils.getBrowserInfo(request),
+					NetWorkUtils.getClientIp(request), OperateModel.ACCOUNT_BILLTYPE_MODEL, sessionUser);
+			
+			BaseResult result = billTypeService.deleteBillType(billTypeId,sessionUser,operateLog);
+			
+			return result;
+		} catch (Exception e) {
+			logger.error(ExceptionUtils.getStackTrace(e));
+			return new BaseResult(ResultStatus.FAILED, BillTypeReturnCode.BILLTYPE_DELETE_FAILED);
 		}
 	}
 }

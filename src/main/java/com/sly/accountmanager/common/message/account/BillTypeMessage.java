@@ -17,5 +17,15 @@ public class BillTypeMessage {
 	 * 账单类型名称不能为空
 	 */
 	public static final String BILLTYPENAME_IS_NOT_NULL = "账单类型名称不能为空!";
+	
+	/**
+	 * 账单类型ID不能为空
+	 */
+	public static final String BILLTYPEID_IS_NOT_NULL = "账单类型ID不能为空!";
+	
+	/**
+	 * 账单类型ID不合法
+	 */
+	public static final String BILLTYPEID_IS_NOT_VALIDATE = "账单类型ID不合法!";
 
 }

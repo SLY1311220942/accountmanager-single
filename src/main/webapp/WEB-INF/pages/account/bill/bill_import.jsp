@@ -8,13 +8,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <head>
         <base href="<%=basePath%>">
 
-		<title>新增账单类型</title>
+		<title>导入账单</title>
 
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<%@include file="/WEB-INF/pages/include/inheader.jsp" %>
+		<link rel="stylesheet" href="${pageContext.request.contextPath }/resource/datetimepicker/css/bootstrap-datetimepicker.css">
 		<link rel="stylesheet" href="${pageContext.request.contextPath }/resource/bootstrap-validator/css/bootstrapValidator.min.css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath }/resource/bootstrap-fileinput/css/fileinput.min.css" />
 		<style>
 			.wrap1 {
 				position: relative;
@@ -47,30 +49,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<!-- 查询版块 -->
 							<div class="wrap1">
 								<h4 class="title">
-								修改账单类型
+								导入账单
 								</h4>
 								<div class="col-md-12 column ui-sortable" style="margin-top: 20px;">
-									<form class="form-horizontal required-validate" id="billTypeUpdateForm">
-										<input type="hidden" id="token" name="token" value="${ACCOUNT_BILLTYPE_UPDATE_TOKEN}" />
-										<input type="hidden" id="billTypeId" name="billTypeId" value="${billTypeId}" />
+									<form class="form-horizontal required-validate" id="billImportForm">
+										<input type="hidden" id="token" name="token" value="${ACCOUNT_BILL_IMPORT_TOKEN}" />
 										<div class="view">
-
 											<div class="row">
 												<div class="form-group col-md-6  column ui-sortable">
-													<label class="col-sm-4 control-label" style="text-align: right; float: left;">账单类型名称：</label>
+													<label class="col-sm-4 control-label" style="text-align: right; float: left;">选择文件：</label>
 													<div class="col-sm-8">
-														<input type="text" class="form-control " id="billTypeName" name="billTypeName">
+														<input id="file" name="file" type="file" class="file">
+														<p class="help-block">只支持xls、xlsx格式，大小不超过1.0M</p>
 													</div>
 												</div>
 											</div>
 											
+											<div class="row">
+												<div class="form-group col-md-6  column ui-sortable">
+													<label class="col-sm-4 control-label" style="text-align: right; float: left;"></label>
+													<div class="col-sm-8">
+														<button type="button" onclick="downloadTemplet()" class="btn btn-info" style="margin-bottom: 10px;margin-top: 10px;">模&nbsp;板&nbsp;下&nbsp;载</button>
+													</div>
+												</div>
+											</div>
 										</div>
 									</form>
 
 								</div>
 
 								<div style="margin-left: 48%;margin-bottom: 10px;">
-									<button type="button" onclick="billTypeUpdate()" class="btn btn-info" style="margin-bottom: 10px;margin-top: 10px;">提&nbsp;&nbsp;&nbsp;交</button>
+									<button type="button" onclick="billImport()" class="btn btn-info" style="margin-bottom: 10px;margin-top: 10px;">提&nbsp;&nbsp;&nbsp;交</button>
 								</div>
 							</div>
 						</div>
@@ -82,13 +91,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  	<%@include file="/WEB-INF/pages/include/infooter.jsp" %>
  	<script src="${pageContext.request.contextPath }/resource/bootstrap-validator/js/bootstrapValidator.min.js"></script>
 	<script src="${pageContext.request.contextPath }/resource/bootstrap-validator/local/zh_CN.js"></script>
-	<script src="${pageContext.request.contextPath }/resource/account/js/account/billType/billTypeUpdate.js"></script>
+	<script src="${pageContext.request.contextPath }/resource/bootstrap-fileinput/js/fileinput.js"></script>
+	<script src="${pageContext.request.contextPath }/resource/bootstrap-fileinput/js/locales/zh.js"></script>
+	<script src="${pageContext.request.contextPath }/resource/account/js/account/bill/billImport.js"></script>
 	<script>
-		$(function() {
-			loadbillType();
-			validator();
-			
-		});
-		
+		initFileUpload();
 	</script>
 </html>

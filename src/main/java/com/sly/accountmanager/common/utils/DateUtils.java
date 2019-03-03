@@ -30,8 +30,9 @@ public class DateUtils {
 	 * @time 2018年12月22日
 	 */
 	public static String formateTime(Date date) {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String format = simpleDateFormat.format(date);
 		return format;
 	}
+	
 }

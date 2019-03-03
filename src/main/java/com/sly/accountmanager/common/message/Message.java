@@ -56,6 +56,14 @@ public class Message {
 	 */
 	public static final String VALIDATE_PASSED = "参数验证通过!";
 	/**
+	 * 导入成功
+	 */
+	public static final String IMPORT_SUCCESS = "导入成功!";
+	/**
+	 * 导入失败
+	 */
+	public static final String IMPORT_FAILED = "导入失败!";
+	/**
 	 * 用户名或密码错误
 	 */
 	public static String LOGIN_INFORMATION_ERROR = "用户名或密码错误!";

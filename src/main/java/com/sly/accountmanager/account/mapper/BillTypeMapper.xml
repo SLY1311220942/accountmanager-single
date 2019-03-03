@@ -63,5 +63,18 @@
 		</where>
 	</select>
 	
+	<!-- 修改账单类型 -->
+	<update id="updateBillType" parameterType="com.sly.accountmanager.account.model.BillType">
+		UPDATE `T_ACCOUNT_BILLTYPE` SET billTypeName=#{billTypeName} WHERE `T_ACCOUNT_BILLTYPE`.`billTypeId`=#{billTypeId}
+	</update>
 	
+	<!-- 根据账单类型ID查询账单 -->
+	<select id="findBillTypeById" parameterType="string" resultType="com.sly.accountmanager.account.model.BillType">
+		SELECT * FROM `T_ACCOUNT_BILLTYPE` TABT WHERE TABT.`billTypeId`=#{billTypeId}
+	</select>
+	
+	<!-- 根据ID删除账单类型 -->
+	<delete id="deleteBillType" parameterType="string">
+		DELETE FROM `T_ACCOUNT_BILLTYPE` WHERE `T_ACCOUNT_BILLTYPE`.`billTypeId`=#{billTypeId}
+	</delete>
 </mapper>

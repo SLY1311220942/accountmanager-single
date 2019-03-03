@@ -180,5 +180,31 @@ public class BillServiceImpl implements BillService {
 			throw new ServiceCustomException(BillReturnCode.BILL_QUERY_LIST_FAILED, e);
 		}
 	}
+
+	/**
+	 * _批量保存账单信息
+	 * @param bills
+	 * @param sessionUser
+	 * @param operateLog
+	 * @return
+	 * @author sly
+	 * @time 2019年3月2日
+	 */
+	@Override
+	public BaseResult batchSaveBill(List<Bill> bills, User sessionUser, OperateLog operateLog) {
+		try {
+			billMapper.saveBillList(bills);
+			//记录操作日志
+			String content = "账单管理:用户 " + sessionUser.getUsername() + " 于 " 
+					+ bills.get(0).getCreateTime() + " 批量导入账单信息";
+			operateLog.setOperatorContent(content);
+			operateLogMapper.saveOperateLog(operateLog);
+			
+			return new BaseResult(ResultStatus.SUCCESS, Message.IMPORT_SUCCESS);
+		} catch (Exception e) {
+			logger.error(ExceptionUtils.getStackTrace(e));
+			return new BaseResult(ResultStatus.FAILED, BillReturnCode.BILL_IMPORT_FAILED);
+		}
+	}
 	
 }

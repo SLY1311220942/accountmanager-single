@@ -54,7 +54,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										<div class="view">
 											<div class="row">
 												<div class="form-group col-md-6  column ui-sortable">
-													<label class="col-sm-4 control-label" style="text-align: right; float: left;">收支类型：</label>
+													<label class="col-sm-4 control-label" style="text-align: right; float: left;">账单类型名称：</label>
 													<div class="col-sm-8">
 														<input readonly="readonly" style="border: none;background: white;padding-top: 6px;" type="text" id="revexpType" name="revexpType" value="" />
 													</div>

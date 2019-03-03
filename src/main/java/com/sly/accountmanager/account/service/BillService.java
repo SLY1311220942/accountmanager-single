@@ -1,5 +1,6 @@
 package com.sly.accountmanager.account.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.sly.accountmanager.account.model.Bill;
@@ -64,4 +65,15 @@ public interface BillService {
 	 * @time 2018年11月19日
 	 */
 	BaseResult findBillList(Map<String, Object> params);
+	
+	/**
+	 * 批量保存账单信息
+	 * @param bills
+	 * @param sessionUser
+	 * @param operateLog
+	 * @return
+	 * @author sly
+	 * @time 2019年3月2日
+	 */
+	BaseResult batchSaveBill(List<Bill> bills, User sessionUser, OperateLog operateLog);
 }

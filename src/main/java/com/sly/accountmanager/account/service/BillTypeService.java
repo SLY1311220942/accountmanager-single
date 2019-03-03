@@ -55,5 +55,36 @@ public interface BillTypeService {
 	 * @time 2019年2月27日
 	 */
 	BaseResult loadAllBillType();
+	
+	/**
+	 * _需改账单类型信息
+	 * @param billType
+	 * @param sessionUser
+	 * @param operateLog
+	 * @return
+	 * @author sly
+	 * @time 2019年3月1日
+	 */
+	BaseResult updateBillType(BillType billType, User sessionUser, OperateLog operateLog);
+	
+	/**
+	 * _根据ID查询账单类型详情
+	 * @param billTypeId
+	 * @return
+	 * @author sly
+	 * @time 2019年3月1日
+	 */
+	BaseResult findBillTypeById(String billTypeId);
+	
+	/**
+	 * _删除账单类型信息
+	 * @param billTypeId
+	 * @param sessionUser
+	 * @param operateLog
+	 * @return
+	 * @author sly
+	 * @time 2019年3月2日
+	 */
+	BaseResult deleteBillType(String billTypeId, User sessionUser, OperateLog operateLog);
 
 }

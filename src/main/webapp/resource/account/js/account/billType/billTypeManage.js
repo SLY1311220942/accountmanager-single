@@ -92,7 +92,7 @@ function loadBillTypeList() {
 
 function operateFormatter(value, row, index) {
 	return [
-		'<a class="btn btn-xs btn-info detail" type="button" href="javaScript:void(0)" > <span>&nbsp;详情</span></a>',
+		/*'<a class="btn btn-xs btn-info detail" type="button" href="javaScript:void(0)" > <span>&nbsp;详情</span></a>',*/
 		'<a class="btn btn-xs btn-warning update" type="button" href="javaScript:void(0)" style="margin-left: 5px;"> <span>&nbsp;修改</span></a>',
 		'<a class="btn btn-xs btn-danger delete" type="button" href="javaScript:void(0)" style="margin-left: 5px;"> <span>&nbsp;删除</span></a>'
 	].join('');
@@ -100,7 +100,7 @@ function operateFormatter(value, row, index) {
 
 window.operateEvents = {
 	'click .detail': function(e, value, row, index) {
-		var Jurl = webRoot + "/account/billType/toBillTypeDetail?billId=" + row.billId;
+		var Jurl = webRoot + "/account/billType/toBillTypeDetail?billTypeId=" + row.billTypeId;
 		layer.open({
 			type: 2,
 			skin: 'layui-layer-rim', //加上边框
@@ -109,7 +109,7 @@ window.operateEvents = {
 		});
 	},
 	'click .update': function(e, value, row, index) {
-		var Jurl = webRoot + "/account/billType/toBillTypeUpdate?billId=" + row.billId;
+		var Jurl = webRoot + "/account/billType/toBillTypeUpdate?billTypeId=" + row.billTypeId;
 		layer.open({
 			type: 2,
 			skin: 'layui-layer-rim', //加上边框
@@ -118,7 +118,7 @@ window.operateEvents = {
 		});
 	},
 	'click .delete': function(e, value, row, index) {
-		layer.confirm('确定删除该账单?', {
+		layer.confirm('确定删除该账单类型?', {
 			btn: ['確定', '取消'] //按钮
 		}, function() {
 			$.ajax({
@@ -126,7 +126,7 @@ window.operateEvents = {
 				url: webRoot + "/account/billType/billTypeDelete",
 				dataType: "json",
 				data: {
-					billId: row.billId,
+					billTypeId: row.billTypeId,
 					isAjax: 1
 				},
 				success: function(data) {

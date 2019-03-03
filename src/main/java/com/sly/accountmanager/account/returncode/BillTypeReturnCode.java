@@ -24,7 +24,19 @@ public enum BillTypeReturnCode implements IReturnCode {
 	/**
 	 * 查询所有单类型列表失败
 	 */
-	BILLTYPE_QUERY_ALL_FAILED(10008003, "查询所有单类型列表失败!"),
+	BILLTYPE_QUERY_ALL_FAILED(10008003, "查询所有单类型列表失败!"), 
+	/**
+	 * 修改账单类型信息失败
+	 */
+	BILLTYPE_UPDATE_FAILED(10008004, "修改账单类型信息失败!"), 
+	/**
+	 * 查询账单类型失败
+	 */
+	BILLTYPE_QUERY_BYID_FAILED(10008005, "查询账单类型失败!"), 
+	/**
+	 * 删除账单类型信息失败
+	 */
+	BILLTYPE_DELETE_FAILED(10008006, "删除账单类型信息失败!"),
 
 	;
 

@@ -187,6 +187,16 @@ function toBillAdd() {
 	});
 }
 
+function toBillImport() {
+	var Jurl = webRoot + "/account/bill/toBillImport";
+	layer.open({
+		type: 2,
+		skin: 'layui-layer-rim', //加上边框
+		area: ['100%', '100%'], //宽高
+		content: Jurl
+	});
+}
+
 /**
  * 账单时间初始化 start
  */

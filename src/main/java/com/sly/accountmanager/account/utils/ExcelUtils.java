@@ -1,14 +1,9 @@
 package com.sly.accountmanager.account.utils;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -17,14 +12,13 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  * excel工具类
@@ -36,69 +30,6 @@ public class ExcelUtils {
 	public static final String EXCEL_XLS = "xls";
 	public static final String EXCEL_XLSX = "xlsx";
 	
-	/**
-	 * 测试类
-	 * @param args
-	 * @author sly
-	 * @time 2019年1月12日
-	 */
-	public void test() {
-		//组装测试数据
-		Map<String, String> params = new HashMap<>(16);
-		params.put("theme_1", "主题一");
-		params.put("theme_2", "主题二");
-		params.put("theme_3", "主题三");
-		params.put("theme_5", "主题五");
-		params.put("theme_6", "主题六");
-		
-		Workbook wb = null;
-		InputStream inputStream = null;
-		File file = new File("D:\\测试\\Excel值替换模板.xlsx");
-		OutputStream outputStream = null;
-		try {
-			if(file.getName().endsWith(EXCEL_XLS)) {
-				inputStream = new FileInputStream(file);
-				wb = new HSSFWorkbook(inputStream);
-			}else if(file.getName().endsWith(EXCEL_XLSX)) {
-				inputStream = new FileInputStream(file);
-				wb = new XSSFWorkbook(inputStream);
-			}else {
-				System.out.println("不是Excel");
-				return ;
-			}
-			
-			//获取字节数组 Excel宽度为9
-			byte[] bytes = getExcelBinary(wb, 9, params);
-			outputStream = new FileOutputStream(new File("D:\\测试\\Excel值替换结果.xlsx"));
-			outputStream.write(bytes);
-			
-		} catch (Exception e) {
-			logger.error(ExceptionUtils.getStackTrace(e));
-			throw new RuntimeException(ExceptionUtils.getStackTrace(e));
-		} finally {
-			if(outputStream != null) {
-				try {
-					outputStream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			if(wb != null) {
-				try {
-					wb.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			if (inputStream != null) {
-				try {
-					inputStream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
 	
 	/**
 	 * Excel值替换
@@ -164,7 +95,6 @@ public class ExcelUtils {
 			}
 			
 			wb.write(byteArrayOutputStream);
-			@SuppressWarnings("null")
 			byte[] byteArray = byteArrayOutputStream.toByteArray();
 			return byteArray;
 		} catch (Exception e) {
@@ -198,17 +128,75 @@ public class ExcelUtils {
 	 * @time 2018年11月30日
 	 */
 	public static String getCellValue(Cell cell){    
-	    if(cell == null) return "";    
-	    if(cell.getCellTypeEnum() == CellType.STRING){    
-	        return cell.getStringCellValue();    
-	    }else if(cell.getCellTypeEnum() == CellType.BOOLEAN){    
-	        return String.valueOf(cell.getBooleanCellValue());    
-	    }else if(cell.getCellTypeEnum() == CellType.FORMULA){    
-	        return cell.getCellFormula() ;    
-	    }else if(cell.getCellTypeEnum() == CellType.NUMERIC){    
-	        return String.valueOf(cell.getNumericCellValue());    
-	    }
-	    return "";    
+		if (cell == null) {
+			return "";
+		} else if (cell.getCellTypeEnum() == CellType.STRING) {
+			return cell.getStringCellValue();
+		} else if (cell.getCellTypeEnum() == CellType.BOOLEAN) {
+			return String.valueOf(cell.getBooleanCellValue());
+		} else if (cell.getCellTypeEnum() == CellType.FORMULA) {
+			return cell.getCellFormula();
+		} else if (cell.getCellTypeEnum() == CellType.NUMERIC) {
+			if(HSSFDateUtil.isCellDateFormatted(cell)) {
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				return sdf.format(cell.getDateCellValue());
+			}
+			return String.valueOf(cell.getNumericCellValue());
+		} else if(cell.getCellTypeEnum() == CellType.ERROR) {
+			return String.valueOf(cell.getErrorCellValue());
+		}
+		return "";
+	}
+	
+	/**
+	 * 获取合并单元格区域
+	 * @author sly
+	 * @time 2018年11月30日
+	 * @param sheet
+	 * @return
+	 */
+	public static List<CellRangeAddress> getCombineRange(Sheet sheet){
+		List<CellRangeAddress> calist = new ArrayList<>();
+		int regions = sheet.getNumMergedRegions();
+		for (int i = 0; i < regions; i++) {
+			CellRangeAddress ca = sheet.getMergedRegion(i);
+			calist.add(ca);
+		}
+		return calist;
+	}
+	
+	/**
+	 * 获取合并单元格的值
+	 * @param caList
+	 * @param x 列
+	 * @param y 行
+	 * @return
+	 * @author sly
+	 * @time 2019年3月1日
+	 */
+	public static String getCombineCellValue(Sheet sheet, int x, int y) {
+		List<CellRangeAddress> caList = getCombineRange(sheet);
+		
+		int cax1 = 0;
+		int cax2 = 0;
+		int cay1 = 0;
+		int cay2 = 0;
+		for (int i = 0; i < caList.size(); i++) {
+			CellRangeAddress ca = caList.get(i);
+			cax1 = ca.getFirstColumn();
+			cax2 = ca.getLastColumn();
+			cay1 = ca.getFirstRow();
+			cay2 = ca.getLastRow();
+			if (x >= cax1 && x <= cax2) {
+				if (y >= cay1 && y <= cay2) {
+					Row row = sheet.getRow(cay1);
+					Cell cell = row.getCell(cax1);
+					return getCellValue(cell);
+				}
+			}
+		}
+		
+		return "";
 	}
 	
 	/**

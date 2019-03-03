@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
+import com.sly.accountmanager.account.mapper.BillMapper;
 import com.sly.accountmanager.account.mapper.BillTypeMapper;
 import com.sly.accountmanager.account.model.BillType;
 import com.sly.accountmanager.account.returncode.BillTypeReturnCode;
@@ -43,6 +44,8 @@ public class BillTypeServiceImpl implements BillTypeService {
 	private BillTypeMapper billTypeMapper;
 	@Autowired
 	private OperateLogMapper operateLogMapper;
+	@Autowired
+	private BillMapper billMapper;
 	
 	@Autowired
 	private RedisHelper redisHelper;
@@ -141,6 +144,96 @@ public class BillTypeServiceImpl implements BillTypeService {
 			throw new ServiceCustomException(BillTypeReturnCode.BILLTYPE_QUERY_ALL_FAILED, e);
 		}
 		
+	}
+
+	/**
+	 * _修改账单类型信息
+	 * @param billType
+	 * @param sessionUser
+	 * @param operateLog
+	 * @return
+	 * @author sly
+	 * @time 2019年3月1日
+	 */
+	@Override
+	public BaseResult updateBillType(BillType billType, User sessionUser, OperateLog operateLog) {
+		try {
+			String updateTime = DateUtils.formateTime(new Date());
+			//修改前
+			BillType oldBillType = billTypeMapper.findBillTypeById(billType.getBillTypeId());
+			//修改账单类型
+			billTypeMapper.updateBillType(billType);
+			//修改后
+			BillType newBillType = billTypeMapper.findBillTypeById(billType.getBillTypeId());
+			//修改相关账单的账单类型名称
+			billMapper.updateBillTypeName(billType);
+			
+			//记录操作日志
+			String content = "账单管理:用户 " + sessionUser.getUsername() + " 于 " + updateTime + " 修改账单类型,修改前:"
+					+ JSON.toJSONString(oldBillType) + "修改后:" + JSON.toJSONString(newBillType);
+			operateLog.setOperatorContent(content);
+			operateLogMapper.saveOperateLog(operateLog);
+			
+			//更新redis缓存
+			redisHelper.putBillType(newBillType);
+			
+			return new BaseResult(ResultStatus.SUCCESS, Message.UPDATE_SUCCESS);
+		} catch (Exception e) {
+			logger.error(ExceptionUtils.getStackTrace(e));
+			throw new ServiceCustomException(BillTypeReturnCode.BILLTYPE_UPDATE_FAILED, e);
+		}
+		
+	}
+
+
+	/**
+	 * _根据ID查询账单类型详情
+	 * @param billTypeId
+	 * @return
+	 * @author sly
+	 * @time 2019年3月1日
+	 */
+	@Override
+	public BaseResult findBillTypeById(String billTypeId) {
+		try {
+			BillType billType = billTypeMapper.findBillTypeById(billTypeId);
+			return new BaseResult(ResultStatus.SUCCESS, Message.QUERY_SUCCESS, "billType", billType);
+		} catch (Exception e) {
+			logger.error(ExceptionUtils.getStackTrace(e));
+			throw new ServiceCustomException(BillTypeReturnCode.BILLTYPE_QUERY_BYID_FAILED, e);
+		}
+	}
+
+
+	/**
+	 * _删除账单类型信息
+	 * @param billTypeId
+	 * @param sessionUser
+	 * @param operateLog
+	 * @return
+	 * @author sly
+	 * @time 2019年3月2日
+	 */
+	@Override
+	public BaseResult deleteBillType(String billTypeId, User sessionUser, OperateLog operateLog) {
+		try {
+			BillType billType = billTypeMapper.findBillTypeById(billTypeId);
+			//删除账单类型
+			billTypeMapper.deleteBillType(billTypeId);
+			//删除账单的账单类型名称
+			billMapper.deleteBillTypeName(billTypeId);
+			
+			//记录操作日志
+			String content = "账单管理:用户 " + sessionUser.getUsername() + " 于 " + DateUtils.formateTime(new Date())
+					+ " 删除账单类型,删除的账单类型为:" + JSON.toJSONString(billType);
+			operateLog.setOperatorContent(content);
+			operateLogMapper.saveOperateLog(operateLog);
+			
+			return new BaseResult(ResultStatus.SUCCESS, Message.DELETE_SUCCESS);
+		} catch (Exception e) {
+			logger.error(ExceptionUtils.getStackTrace(e));
+			throw new ServiceCustomException(BillTypeReturnCode.BILLTYPE_DELETE_FAILED, e);
+		}
 	}
 	
 }
