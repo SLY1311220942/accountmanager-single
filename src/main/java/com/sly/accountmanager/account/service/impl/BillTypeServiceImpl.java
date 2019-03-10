@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,7 +39,7 @@ import com.sly.accountmanager.system.mapper.OperateLogMapper;
 @Transactional(rollbackFor=Exception.class)
 public class BillTypeServiceImpl implements BillTypeService {
 	
-	private Logger logger = Logger.getLogger(BillService.class);
+	private static final Logger logger = LoggerFactory.getLogger(BillService.class);
 	
 	@Autowired
 	private BillTypeMapper billTypeMapper;

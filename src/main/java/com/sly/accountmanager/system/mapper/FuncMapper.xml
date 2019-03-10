@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sly.accountmanager.system.mapper.FuncMapper">
 	<!-- 保存功能信息 -->
-	<insert id="saveFunc" parameterType="com.sly.accountmanager.system.model.Func">
+	<insert id="saveFunc" parameterType="Func">
 		INSERT INTO T_SYS_FUNC (funcId,userId,username,funcName,funcIcon,funcUrl,funcTag,parentId,
 		createTime,updateTime,funcSort,isOpen,logicDel,funcType,remark) 
 		VALUES(#{funcId},#{userId},#{username},#{funcName},#{funcIcon},#{funcUrl},#{funcTag},#{parentId},
@@ -15,7 +15,7 @@
 	</update>
 	
 	<!-- 修改功能 -->
-	<update id="updateFunc" parameterType="com.sly.accountmanager.system.model.Func">
+	<update id="updateFunc" parameterType="Func">
 		UPDATE `T_SYS_FUNC` TSF
 		<set>
 			<if test="funcName != null and funcName != ''">
@@ -53,12 +53,12 @@
 	</update>
 	
 	<!-- 根据功能id查询功能 -->
-	<select id="findFuncById" parameterType="string" resultType="com.sly.accountmanager.system.model.Func">
+	<select id="findFuncById" parameterType="string" resultType="Func">
 		SELECT * FROM `T_SYS_FUNC` TSF WHERE TSF.`funcId`=#{funcId}
 	</select>
 	
 	<!-- 查询顶层功能 -->
-	<select id="findTopFunc" resultType="com.sly.accountmanager.system.model.Func">
+	<select id="findTopFunc" resultType="Func">
 		SELECT * FROM `T_SYS_FUNC` TSF 
 		<where>
 			TSF.`logicDel`='N'
@@ -76,7 +76,7 @@
 	</select>
 	
 	<!-- 查询子节点 -->
-	<select id="findChildFunc" resultType="com.sly.accountmanager.system.model.Func">
+	<select id="findChildFunc" resultType="Func">
 		SELECT * FROM `T_SYS_FUNC` TSF 
 		<where>
 			<!-- 系统内置查所有 -->
@@ -94,7 +94,7 @@
 	</select>
 	
 	<!-- 查询用户的功能列表父节点 -->
-	<select id="findUserTopFunc" resultType="com.sly.accountmanager.system.model.Func">
+	<select id="findUserTopFunc" resultType="Func">
 		SELECT
 			DISTINCT(TSF.`funcId`),TSF.`userId`,TSF.`username`,TSF.`funcName`,
 			TSF.`funcIcon`,TSF.`funcUrl`,TSF.`funcTag`,TSF.`parentId`,TSF.`createTime`,
@@ -117,7 +117,7 @@
 	</select>
 	
 	<!-- 查询用户子节点 -->
-	<select id="findUserChildFunc" resultType="com.sly.accountmanager.system.model.Func">
+	<select id="findUserChildFunc" resultType="Func">
 		SELECT
 			DISTINCT(TSF.`funcId`),TSF.`userId`,TSF.`username`,TSF.`funcName`,
 			TSF.`funcIcon`,TSF.`funcUrl`,TSF.`funcTag`,TSF.`parentId`,TSF.`createTime`,

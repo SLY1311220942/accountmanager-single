@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.log4j.Logger;
+
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -19,6 +19,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * excel工具类
@@ -26,7 +28,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
  * @time 2019年1月12日
  */
 public class ExcelUtils {
-	private static Logger logger = Logger.getLogger(ExcelUtils.class);
+	private static final Logger logger = LoggerFactory.getLogger(ExcelUtils.class);
 	public static final String EXCEL_XLS = "xls";
 	public static final String EXCEL_XLSX = "xlsx";
 	

@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,14 +29,14 @@ import com.sly.accountmanager.system.returncode.LoginReturnCode;
 import com.sly.accountmanager.system.service.LoginService;
 
 /**
- * 登录controller
+ * _登录controller
  * @author 13112
  * @time 2018年11月25日
  */
 @Controller
 @RequestMapping("/system")
 public class LoginController {
-	private Logger logger = Logger.getLogger(LoginController.class);
+	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 	
 	@Autowired
 	private LoginService loginService;
@@ -43,7 +44,7 @@ public class LoginController {
 	private WebRedisHelper webRedisHelper;
 	
 	/**
-	 * 
+	 * _去登陆页面
 	 * @param request
 	 * @param response
 	 * @return
@@ -62,7 +63,7 @@ public class LoginController {
 	}
 	
 	/**
-	 * 登录
+	 * _登录
 	 * @param request
 	 * @param response
 	 * @param a997d08b3 用户名

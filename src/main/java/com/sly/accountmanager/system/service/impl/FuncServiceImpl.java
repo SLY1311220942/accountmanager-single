@@ -5,7 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import com.sly.accountmanager.common.message.Message;
 import com.sly.accountmanager.common.model.OperateLog;
 import com.sly.accountmanager.common.model.User;
 import com.sly.accountmanager.common.model.ZtreeNode;
+import com.sly.accountmanager.common.redisHelper.RedisHelper;
 import com.sly.accountmanager.common.result.BaseResult;
 import com.sly.accountmanager.common.utils.DateUtils;
 import com.sly.accountmanager.common.utils.UUIDUtils;
@@ -32,14 +34,14 @@ import com.sly.accountmanager.system.service.FuncService;
 import com.sly.accountmanager.system.utils.UserServiceZtreeFactory;
 
 /**
- * 功能service实现
+ * _功能service实现
  * @author sly
  * @time 2018-11-12
  */
 @Service
 @Transactional(rollbackFor = { Exception.class })
 public class FuncServiceImpl implements FuncService {
-	private Logger logger = Logger.getLogger(FuncService.class);
+	private static final Logger logger = LoggerFactory.getLogger(FuncService.class);
 	
 	@Autowired
 	private FuncMapper funcMapper;
@@ -50,9 +52,11 @@ public class FuncServiceImpl implements FuncService {
 	
 	@Autowired
 	private UserServiceZtreeFactory userServiceZtreeFactory;
+	@Autowired
+	private RedisHelper redisHelper;
 	
 	/**
-	 * 保存功能信息
+	 * _保存功能信息
 	 * @param func
 	 * @param sessionUser
 	 * @param operateLog
@@ -87,7 +91,7 @@ public class FuncServiceImpl implements FuncService {
 	}
 	
 	/**
-	 * 逻辑删除功能
+	 * _逻辑删除功能
 	 * @param funcId
 	 * @param sessionUser
 	 * @param operateLog
@@ -100,6 +104,7 @@ public class FuncServiceImpl implements FuncService {
 		try {
 			//未完成
 			funcMapper.deleteFunc(funcId);
+			redisHelper.deleteAllUserFunc();
 			return new BaseResult(ResultStatus.SUCCESS, Message.DELETE_SUCCESS);
 		} catch (Exception e) {
 			logger.error(ExceptionUtils.getStackTrace(e));
@@ -108,7 +113,7 @@ public class FuncServiceImpl implements FuncService {
 	}
 	
 	/**
-	 * 修改功能
+	 * _修改功能
 	 * @param func
 	 * @param sessionUser
 	 * @param operateLog
@@ -130,6 +135,7 @@ public class FuncServiceImpl implements FuncService {
 			operateLog.setOperatorContent(content);
 			operateLogMapper.saveOperateLog(operateLog);
 			
+			redisHelper.deleteAllUserFunc();
 			return new BaseResult(ResultStatus.SUCCESS, Message.UPDATE_SUCCESS);
 		} catch (Exception e) {
 			logger.error(ExceptionUtils.getStackTrace(e));
@@ -138,7 +144,7 @@ public class FuncServiceImpl implements FuncService {
 	}
 	
 	/**
-	 * 根据功能id查询功能
+	 * _根据功能id查询功能
 	 * @param funcId
 	 * @return
 	 * @author sly
@@ -157,7 +163,7 @@ public class FuncServiceImpl implements FuncService {
 	}
 
 	/**
-	 * 查询功能树
+	 * _查询功能树
 	 * @param userId
 	 * @return
 	 * @author sly
@@ -199,7 +205,7 @@ public class FuncServiceImpl implements FuncService {
 	}
 	
 	/**
-	 * 递归查询功能子节点
+	 * _递归查询功能子节点
 	 * @param funcId
 	 * @param funcType
 	 * @return
@@ -227,7 +233,7 @@ public class FuncServiceImpl implements FuncService {
 	}
 	
 	/**
-	 * 删除功能及其子节点
+	 * _删除功能及其子节点
 	 * @param funcId
 	 * @param sessionUser
 	 * @param operateLog
@@ -261,7 +267,7 @@ public class FuncServiceImpl implements FuncService {
 	}
 	
 	/**
-	 * 获取所有子节点的功能list,非层级结构
+	 * _获取所有子节点的功能list,非层级结构
 	 * @param funcs
 	 * @param allFuncs
 	 * @return
@@ -279,7 +285,7 @@ public class FuncServiceImpl implements FuncService {
 	}
 	
 	/**
-	 * 提交删除子节点功能数
+	 * _提交删除子节点功能数
 	 * @param allFuncs
 	 * @param sessionUser
 	 * @param operateLog
@@ -301,7 +307,7 @@ public class FuncServiceImpl implements FuncService {
 	}
 
 	/**
-	 * 查询用户功能
+	 * _查询用户功能
 	 * @param userId
 	 * @param funcType
 	 * @return
@@ -331,7 +337,7 @@ public class FuncServiceImpl implements FuncService {
 	}
 	
 	/**
-	 * 递归查询用户功能子节点
+	 * _递归查询用户功能子节点
 	 * @param userId
 	 * @param funcId
 	 * @param funcType
@@ -360,7 +366,7 @@ public class FuncServiceImpl implements FuncService {
 	}
 
 	/**
-	 * 查询全部功能
+	 * _查询全部功能
 	 * @return
 	 * @author sly
 	 * @time 2018年12月18日
@@ -368,6 +374,7 @@ public class FuncServiceImpl implements FuncService {
 	@Override
 	public BaseResult findAllFunc() {
 		try {
+			
 			//查询所有包括系统内置
 			int funcType = 0;
 			//查询所有顶层功能
@@ -390,7 +397,7 @@ public class FuncServiceImpl implements FuncService {
 	}
 
 	/**
-	 * 查询全部功能树
+	 * _查询全部功能树
 	 * @return
 	 * @author sly
 	 * @time 2018年12月20日
@@ -423,7 +430,7 @@ public class FuncServiceImpl implements FuncService {
 	}
 	
 	/**
-	 * 查询所有顶层功能
+	 * _查询所有顶层功能
 	 * @return
 	 * @author sly
 	 * @time 2018年12月20日
@@ -443,7 +450,7 @@ public class FuncServiceImpl implements FuncService {
 	}
 	
 	/**
-	 * 查询所有子功能
+	 * _查询所有子功能
 	 * @param funcId
 	 * @return
 	 * @author sly
@@ -463,7 +470,7 @@ public class FuncServiceImpl implements FuncService {
 	}
 
 	/**
-	 * 查询角色的功能
+	 * _查询角色的功能
 	 * @param roleId
 	 * @return
 	 * @author sly

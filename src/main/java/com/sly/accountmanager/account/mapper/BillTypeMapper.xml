@@ -17,7 +17,7 @@
 	</select>
 	
 	<!-- 查询顶层账单类型分页列表 -->
-	<select id="findTopBillTypeList" parameterType="map" resultType="com.sly.accountmanager.account.model.BillType">
+	<select id="findTopBillTypeList" parameterType="map" resultType="BillType">
 		SELECT 
 			* 
 		FROM `T_ACCOUNT_BILLTYPE` TABT 
@@ -34,13 +34,13 @@
 	</select>
 	
 	<!-- 保存账单类型 -->
-	<insert id="saveBillType" parameterType="com.sly.accountmanager.account.model.BillType">
+	<insert id="saveBillType" parameterType="BillType">
 		INSERT INTO `T_ACCOUNT_BILLTYPE`(billTypeId,billTypeName,parentTypeId,createTime,userId,userName,logicDel) 
 		VALUES(#{billTypeId},#{billTypeName},#{parentTypeId},#{createTime},#{userId},#{userName},#{logicDel})
 	</insert>
 	
 	<!-- _查询所以顶层账单类型列表 -->
-	<select id="findAllTopBillType" parameterType="string" resultType="com.sly.accountmanager.account.model.BillType">
+	<select id="findAllTopBillType" parameterType="string" resultType="BillType">
 		SELECT 
 			* 
 		FROM `T_ACCOUNT_BILLTYPE` TABT 
@@ -53,7 +53,7 @@
 	</select>
 	
 	<!-- _查询所有账单(不区分用户) -->
-	<select id="loadAllBillType" resultType="com.sly.accountmanager.account.model.BillType">
+	<select id="loadAllBillType" resultType="BillType">
 		SELECT 
 			* 
 		FROM `T_ACCOUNT_BILLTYPE` TABT 
@@ -64,12 +64,12 @@
 	</select>
 	
 	<!-- 修改账单类型 -->
-	<update id="updateBillType" parameterType="com.sly.accountmanager.account.model.BillType">
+	<update id="updateBillType" parameterType="BillType">
 		UPDATE `T_ACCOUNT_BILLTYPE` SET billTypeName=#{billTypeName} WHERE `T_ACCOUNT_BILLTYPE`.`billTypeId`=#{billTypeId}
 	</update>
 	
 	<!-- 根据账单类型ID查询账单 -->
-	<select id="findBillTypeById" parameterType="string" resultType="com.sly.accountmanager.account.model.BillType">
+	<select id="findBillTypeById" parameterType="string" resultType="BillType">
 		SELECT * FROM `T_ACCOUNT_BILLTYPE` TABT WHERE TABT.`billTypeId`=#{billTypeId}
 	</select>
 	

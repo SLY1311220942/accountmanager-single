@@ -5,13 +5,13 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 /**
- * 用户角色关系mapper
+ * _用户角色关系mapper
  * @author sly
  * @time 2018-11-12
  */
 public interface UserRoleMapper {
 	/**
-	 * 保存用户角色关系
+	 * _保存用户角色关系
 	 * @param userId
 	 * @param roleIds
 	 * @return
@@ -21,7 +21,7 @@ public interface UserRoleMapper {
 	int saveUserRole(@Param("userId") String userId,@Param("roleIds") List<String> roleIds);
 	
 	/**
-	 * 删除用户角色关系
+	 * _删除用户角色关系
 	 * @param userId
 	 * @return
 	 * @author sly

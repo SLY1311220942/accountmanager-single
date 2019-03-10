@@ -15,17 +15,16 @@ import com.sly.accountmanager.common.model.User;
 import com.sly.accountmanager.common.result.BaseResult;
 
 /**
- * 登录拦截器
+ * _登录拦截器
  * 
  * @author sly
  * @time 2018年11月25日
  */
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
-	private static final String ISAJAX = "1";
 	
 	/**
-	 * 访问前拦截
+	 * _访问前拦截
 	 * @param request
 	 * @param response
 	 * @param handler
@@ -49,9 +48,10 @@ public class LoginInterceptor implements HandlerInterceptor {
 		String path = request.getContextPath();
 		String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
 		//未登录
-		String isAjax = request.getParameter("isAjax");
+		String header = request.getHeader("X-Requested-With");  
+		boolean isAjax = "XMLHttpRequest".equals(header) ? true:false;
 		if(user == null){
-			if(isAjax != null && isAjax.equals(ISAJAX)) {
+			if(isAjax) {
 				//ajax请求
 				String evalStr="top.location='"+basePath+"/system/login/toLogin'";
 			    BaseResult result = new BaseResult(ResultStatus.SESSION_OUT, Message.LOGIN_OUTTIME, "evalStr", evalStr);
@@ -69,7 +69,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 	}
 	
 	/**
-	 * 
+	 * _拦截后操作
 	 * @param request
 	 * @param response
 	 * @param handler
@@ -85,7 +85,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 	}
 	
 	/**
-	 * 完成后操作
+	 * _完成后操作
 	 * @param request
 	 * @param response
 	 * @param handler

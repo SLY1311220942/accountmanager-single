@@ -1,7 +1,7 @@
 package com.sly.accountmanager.system.service;
 
 /**
- * 字典service接口
+ * _字典service接口
  * 
  * @author sly
  * @time 2018年11月19日

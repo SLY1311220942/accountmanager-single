@@ -4,7 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,14 +24,14 @@ import com.sly.accountmanager.system.returncode.UserRoleReturnCode;
 import com.sly.accountmanager.system.service.UserRoleService;
 
 /**
- * 用户角色关系service实现
+ * _用户角色关系service实现
  * @author sly
  * @time 2018-11-12
  */
 @Service
 @Transactional(rollbackFor = { Exception.class })
 public class UserRoleServiceImpl implements UserRoleService {
-	private Logger logger = Logger.getLogger(UserRoleService.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserRoleService.class);
 	
 	@Autowired
 	private UserRoleMapper userRoleMapper;
@@ -38,7 +39,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 	private OperateLogMapper operateLogMapper;
 	
 	/**
-	 * 保存用户角色关系
+	 * _保存用户角色关系
 	 * @param roleIds
 	 * @param userId
 	 * @param sessionUser

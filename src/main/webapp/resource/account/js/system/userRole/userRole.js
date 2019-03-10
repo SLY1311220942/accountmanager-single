@@ -40,7 +40,7 @@ function loadUserRoleTree() {
 	});
 }
 
-function saveUserRoleTree() {
+function saveUserRoleTree(w) {
 	var userId = $("#userId").val();
 	var checkNodes = taskZTreeObj.getCheckedNodes(true); //获取所有选中的 节点
 	var roleIdArray = [];
@@ -48,7 +48,8 @@ function saveUserRoleTree() {
 		//alert(checkNodes[i].id);
 		roleIdArray.push(checkNodes[i].id);
 	}
-	
+	var l = Ladda.create(w);
+	l.start();
 	var index = parent.layer.getFrameIndex(window.name);
 	$.ajax({
 		type: 'post',
@@ -63,8 +64,8 @@ function saveUserRoleTree() {
 		success: function(data) {
 			if(data.status == 200) {
 				layer.confirm(data.message, {
-					btn : [ '确定' ]
-				// 按钮
+					btn: ['确定']
+					// 按钮
 				}, function() {
 					//parent.location.reload();
 					parent.layer.close(index);
@@ -74,6 +75,12 @@ function saveUserRoleTree() {
 			} else {
 				layer.alert(data.message, { icon: 2 });
 			}
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			layer.alert(COMMON_REQUEST_RESPONSE_FAIL, { icon: 2 });
+		},
+		complete: function(XMLHttpRequest, textStatus) {
+			l.stop();
 		}
 	});
 }

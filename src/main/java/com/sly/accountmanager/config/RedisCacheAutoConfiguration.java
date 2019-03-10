@@ -21,7 +21,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @AutoConfigureAfter(RedisAutoConfiguration.class)
 public class RedisCacheAutoConfiguration {
 	/**
-	 * 获取redis template
+	 * _获取redis template
 	 * 
 	 * @param redisConnectionFactory
 	 * @return

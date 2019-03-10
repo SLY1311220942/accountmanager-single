@@ -3,7 +3,9 @@ package com.sly.accountmanager.system.service.impl;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +16,7 @@ import com.sly.accountmanager.common.exception.ServiceCustomException;
 import com.sly.accountmanager.common.message.Message;
 import com.sly.accountmanager.common.model.OperateLog;
 import com.sly.accountmanager.common.model.User;
+import com.sly.accountmanager.common.redisHelper.RedisHelper;
 import com.sly.accountmanager.common.result.BaseResult;
 import com.sly.accountmanager.common.utils.DateUtils;
 import com.sly.accountmanager.system.mapper.OperateLogMapper;
@@ -22,7 +25,7 @@ import com.sly.accountmanager.system.returncode.RoleFuncReturnCode;
 import com.sly.accountmanager.system.service.RoleFuncService;
 
 /**
- * 角色功能关系service实现
+ * _角色功能关系service实现
  * @author sly
  * @time 2018-11-12
  */
@@ -30,16 +33,19 @@ import com.sly.accountmanager.system.service.RoleFuncService;
 @Transactional(rollbackFor = { Exception.class })
 public class RoleFuncServiceImpl implements RoleFuncService {
 	
-	private Logger logger = Logger.getLogger(RoleFuncService.class);
+	private static final Logger logger = LoggerFactory.getLogger(RoleFuncService.class);
 	
 	@Autowired
 	private RoleFuncMapper roleFuncMapper;
 	@Autowired
 	private OperateLogMapper operateLogMapper;
 	
+	@Autowired
+	private RedisHelper redisHelper;
+	
 	
 	/**
-	 * 保存角色功能关系
+	 * _保存角色功能关系
 	 * @param funcIds
 	 * @param roleId
 	 * @param sessionUser
@@ -65,9 +71,10 @@ public class RoleFuncServiceImpl implements RoleFuncService {
 			operateLog.setOperatorContent(content);
 			operateLogMapper.saveOperateLog(operateLog);
 			
+			redisHelper.deleteAllUserFunc();
 			return new BaseResult(ResultStatus.SUCCESS, Message.SAVE_SUCCESS);
 		} catch (Exception e) {
-			logger.error(e.getStackTrace());
+			logger.error(ExceptionUtils.getStackTrace(e));
 			throw new ServiceCustomException(RoleFuncReturnCode.ROLEFUNC_SAVE_ROLEFUNC_FAILED, e);
 		}
 	

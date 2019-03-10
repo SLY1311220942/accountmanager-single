@@ -6,7 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import com.sly.accountmanager.common.message.Message;
 import com.sly.accountmanager.common.model.OperateLog;
 import com.sly.accountmanager.common.model.User;
 import com.sly.accountmanager.common.model.ZtreeNode;
+import com.sly.accountmanager.common.redisHelper.RedisHelper;
 import com.sly.accountmanager.common.result.BaseResult;
 import com.sly.accountmanager.common.utils.FeignBeanUtils;
 import com.sly.accountmanager.common.utils.TokenUtils;
@@ -39,7 +41,7 @@ import com.sly.accountmanager.utils.NetWorkUtils;
 @Controller
 @RequestMapping("/system")
 public class FuncController {
-	private Logger logger = Logger.getLogger(FuncController.class);
+	private static final Logger logger = LoggerFactory.getLogger(FuncController.class);
 
 	@Autowired
 	private FuncService funcService;
@@ -48,6 +50,9 @@ public class FuncController {
 	private FuncValidate funcValidate;
 	@Autowired
 	private UserServiceZtreeFactory userServiceZtreeFactory;
+	@Autowired
+	private RedisHelper redisHelper;
+
 	
 	/**
 	 *   获取所有功能ztree树
@@ -134,12 +139,24 @@ public class FuncController {
 			String adminName = "AdminSLY";
 			
 			if (adminName.equals(user.getUsername())) {
-				// 如果是管理员返回所有功能
-				BaseResult result = funcService.findAllFunc();
+				// 如果是超级管理员返回所有功能
+				BaseResult result = redisHelper.findUserFuc(user.getUserId());
+				if(result == null) {
+					result = funcService.findAllFunc();
+					redisHelper.putUserFunc(user.getUserId(),result);
+				}
+				return result;
+			}else {
+				//不是超级管理员
+				BaseResult result = redisHelper.findUserFuc(user.getUserId());
+				if(result == null) {
+					result = funcService.findUserFunc(user.getUserId(), funcType);
+					redisHelper.putUserFunc(user.getUserId(),result);
+				}
 				return result;
 			}
-			BaseResult result = funcService.findUserFunc(user.getUserId(), funcType);
-			return result;
+			
+			
 		} catch (Exception e) {
 			logger.error(ExceptionUtils.getStackTrace(e));
 			return new BaseResult(ResultStatus.FAILED, FuncReturnCode.FUNC_QUERY_USERMEAN_FAILED);
@@ -147,7 +164,7 @@ public class FuncController {
 	}
 
 	/**
-	 * 去功能管理页面
+	 * _去功能管理页面
 	 * 
 	 * @param request
 	 * @param response

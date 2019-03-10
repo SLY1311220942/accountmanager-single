@@ -9,7 +9,7 @@ import java.util.UUID;
  */
 public class TokenUtils {
 	/**
-	 * 生成token
+	 * _生成token
 	 * @return
 	 * @author sly
 	 * @time 2018年11月23日

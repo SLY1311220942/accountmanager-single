@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
- * 文件实体类
+ * _文件实体类
  * 
  * @author sly
  * @time 2018年11月20日

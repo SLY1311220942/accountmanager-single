@@ -10,7 +10,7 @@ import com.sly.accountmanager.common.regex.Regex;
 import com.sly.accountmanager.common.result.BaseResult;
 
 /**
- * 角色功能参数验证
+ * _角色功能参数验证
  * 
  * @author sly
  * @time 2019年1月15日
@@ -19,7 +19,7 @@ import com.sly.accountmanager.common.result.BaseResult;
 public class RoleFuncValidate {
 
 	/**
-	 * 验证角色分配功能参数
+	 * _验证角色分配功能参数
 	 * @param roleId
 	 * @return
 	 * @author sly

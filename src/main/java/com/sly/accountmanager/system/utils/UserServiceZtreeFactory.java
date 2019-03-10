@@ -18,7 +18,7 @@ import com.sly.accountmanager.system.model.Role;
 public class UserServiceZtreeFactory {
 	
 	/**
-	 * 获取完整功能ztree 不带checkbox
+	 * _获取完整功能ztree 不带checkbox
 	 * @param funcList
 	 * @return
 	 * @author sly
@@ -30,7 +30,7 @@ public class UserServiceZtreeFactory {
 		return ztreeNodes;
 	}
 	/**
-	 * 组装完整功能ztree节点list
+	 * _组装完整功能ztree节点list
 	 * @param funcList
 	 * @author sly
 	 * @time 2018年11月14日
@@ -54,7 +54,7 @@ public class UserServiceZtreeFactory {
 	}
 	
 	/**
-	 * 获取用户功能ztree
+	 * _获取用户功能ztree
 	 * @param funcList
 	 * @param userFuncIds
 	 * @return
@@ -68,7 +68,7 @@ public class UserServiceZtreeFactory {
 	}
 	
 	/**
-	 * 组装用户功能ztree节点list
+	 * _组装用户功能ztree节点list
 	 * @param pid
 	 * @param funcList
 	 * @param userFuncIds
@@ -100,7 +100,7 @@ public class UserServiceZtreeFactory {
 	}
 	
 	/**
-	 * 获取角色功能ztree
+	 * _获取角色功能ztree
 	 * @param allFuncs
 	 * @param roleFuncIds
 	 * @return
@@ -114,7 +114,7 @@ public class UserServiceZtreeFactory {
 	}
 	
 	/**
-	 * 组装角色功能ztree节点list
+	 * _组装角色功能ztree节点list
 	 * @param object
 	 * @param allFuncs
 	 * @param roleFuncIds
@@ -147,7 +147,7 @@ public class UserServiceZtreeFactory {
 	}
 	
 	/**
-	 * 获取用户角色ztree
+	 * _获取用户角色ztree
 	 * @param allRoles
 	 * @param userRoleIds
 	 * @return
@@ -161,7 +161,7 @@ public class UserServiceZtreeFactory {
 	}
 	
 	/**
-	 * 组装用户角色ztree节点list
+	 * _组装用户角色ztree节点list
 	 * @param pid
 	 * @param allRoles
 	 * @param userRoleIds

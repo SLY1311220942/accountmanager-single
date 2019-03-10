@@ -3,7 +3,7 @@ package com.sly.accountmanager.system.model;
 import java.io.Serializable;
 
 /**
- * 角色实体类
+ * _角色实体类
  * @author sly
  * @time 2018年11月12日
  */

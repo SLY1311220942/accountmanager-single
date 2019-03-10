@@ -8,5 +8,9 @@
 <script src="${pageContext.request.contextPath}/resource/layer/layer.min.js"></script>
 <!--layer ext-->
 <script src="${pageContext.request.contextPath}/resource/layer/extend/layer.ext.js"></script>
+<!--ladda-->
+<script src="${pageContext.request.contextPath }/resource/ladda/spin.min.js"></script>
+<script src="${pageContext.request.contextPath }/resource/ladda/ladda.min.js"></script>
 <!--公共js-->
 <script src="${pageContext.request.contextPath}/resource/account/js/common/common.js"></script>
+<script src="${pageContext.request.contextPath}/resource/account/js/common/commonMessage.js"></script>

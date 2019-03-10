@@ -6,13 +6,13 @@ import java.util.Map;
 import com.sly.accountmanager.common.model.User;
 
 /**
- * 用户mapper
+ * _用户mapper
  * @author sly
  * @time 2018-11-12
  */
 public interface UserMapper {
 	/**
-	 * 保存用户信息
+	 * _保存用户信息
 	 * @param user
 	 * @return
 	 * @author sly
@@ -21,7 +21,7 @@ public interface UserMapper {
 	int saveUser(User user);
 	
 	/**
-	 * 根据用户id查询用户信息
+	 * _根据用户id查询用户信息
 	 * @param userId
 	 * @return
 	 * @author sly
@@ -30,7 +30,7 @@ public interface UserMapper {
 	User findUserById(String userId);
 	
 	/**
-	 * 根据条件查询用户数量
+	 * _根据条件查询用户数量
 	 * @param params : userId,username,nickname,phone,tel,email,sex,startTime,endTime,userTag,status
 	 * @return
 	 * @author sly
@@ -39,7 +39,7 @@ public interface UserMapper {
 	int countUserList(Map<String, Object> params);
 	
 	/**
-	 * 分页查询用户列表
+	 * _分页查询用户列表
 	 * @param params : userId,username,nickname,phone,tel,email,sex,startTime,endTime,userTag,status,startNum,pageSize
 	 * @return
 	 * @author sly
@@ -48,7 +48,7 @@ public interface UserMapper {
 	List<User> findUserList(Map<String, Object> params);
 	
 	/**
-	 * 逻辑删除用户
+	 * _逻辑删除用户
 	 * @param userId
 	 * @return
 	 * @author sly
@@ -57,7 +57,7 @@ public interface UserMapper {
 	int deleteUser(String userId);
 	
 	/**
-	 * 修改用户信息
+	 * _修改用户信息
 	 * @param user
 	 * @return
 	 * @author sly
@@ -66,7 +66,7 @@ public interface UserMapper {
 	int updateUser(User user);
 	
 	/**
-	 * 根据条件查询用户
+	 * _根据条件查询用户
 	 * @param user
 	 * @return
 	 * @author sly

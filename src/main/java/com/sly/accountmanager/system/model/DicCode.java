@@ -3,7 +3,7 @@ package com.sly.accountmanager.system.model;
 import java.io.Serializable;
 
 /**
- * 字典code实体类
+ * _字典code实体类
  * 
  * @author sly
  * @time 2018年11月19日

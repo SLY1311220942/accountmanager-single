@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.sly.accountmanager.common.constant.UserAgent;
 
 /**
- * 网络工具类
+ * _网络工具类
  * 
  * @author sly
  * @time 2018年12月17日
@@ -16,7 +16,7 @@ public class NetWorkUtils {
 	
 	private static final String UNKOWN = "unkown";
 	/**
-	 * 获取访问ip
+	 * _获取访问ip
 	 * 
 	 * @param request
 	 * @return
@@ -44,7 +44,7 @@ public class NetWorkUtils {
 	}
 
 	/**
-	 * 获取访问浏览器类型
+	 * _获取访问浏览器类型
 	 * 
 	 * @param request
 	 * @return

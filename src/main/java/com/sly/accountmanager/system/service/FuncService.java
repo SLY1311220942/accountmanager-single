@@ -8,7 +8,7 @@ import com.sly.accountmanager.common.result.BaseResult;
 import com.sly.accountmanager.system.model.Func;
 
 /**
- * 功能service接口
+ * _功能service接口
  * 
  * @author sly
  * @time 2018年11月12日
@@ -16,7 +16,7 @@ import com.sly.accountmanager.system.model.Func;
 public interface FuncService {
 
 	/**
-	 * 保存功能信息
+	 * _保存功能信息
 	 * 
 	 * @param func
 	 * @param sessionUser
@@ -28,7 +28,7 @@ public interface FuncService {
 	BaseResult saveFunc(Func func, User sessionUser, OperateLog operateLog);
 
 	/**
-	 * 逻辑删除功能
+	 * _逻辑删除功能
 	 * 
 	 * @param funcId
 	 * @param sessionUser
@@ -40,7 +40,7 @@ public interface FuncService {
 	BaseResult deleteFunc(String funcId, User sessionUser, OperateLog operateLog);
 
 	/**
-	 * 修改功能
+	 * _修改功能
 	 * 
 	 * @param func
 	 * @param sessionUser
@@ -52,7 +52,7 @@ public interface FuncService {
 	BaseResult updateFunc(Func func, User sessionUser, OperateLog operateLog);
 
 	/**
-	 * 根据功能id查询功能
+	 * _根据功能id查询功能
 	 * 
 	 * @param funcId
 	 * @return
@@ -62,7 +62,7 @@ public interface FuncService {
 	BaseResult findFuncById(String funcId);
 
 	/**
-	 * 查询功能树
+	 * _查询功能树
 	 * 
 	 * @param userId
 	 * @return
@@ -72,7 +72,7 @@ public interface FuncService {
 	BaseResult findFuncTree(String userId);
 
 	/**
-	 * 删除功能及其子节点
+	 * _删除功能及其子节点
 	 * 
 	 * @param funcId
 	 * @param sessionUser
@@ -84,7 +84,7 @@ public interface FuncService {
 	BaseResult deleteFuncTree(String funcId, User sessionUser, OperateLog operateLog);
 
 	/**
-	 * 提交删除子节点功能数
+	 * _提交删除子节点功能数
 	 * 
 	 * @param allFuncs
 	 * @param sessionUser
@@ -96,7 +96,7 @@ public interface FuncService {
 	BaseResult commitDeleteFuncTree(List<Func> allFuncs, User sessionUser, OperateLog operateLog);
 
 	/**
-	 * 查询用户功能
+	 * _查询用户功能
 	 * 
 	 * @param userId
 	 * @param funcType
@@ -107,7 +107,7 @@ public interface FuncService {
 	BaseResult findUserFunc(String userId,Integer funcType);
 
 	/**
-	 * 获取全部功能
+	 * _获取全部功能
 	 * 
 	 * @return
 	 * @author sly
@@ -116,7 +116,7 @@ public interface FuncService {
 	BaseResult findAllFunc();
 
 	/**
-	 * 获取全部功能树
+	 * _获取全部功能树
 	 * 
 	 * @return
 	 * @author sly
@@ -125,7 +125,7 @@ public interface FuncService {
 	BaseResult findAllFuncTree();
 
 	/**
-	 * 查询所有顶层功能
+	 * _查询所有顶层功能
 	 * 
 	 * @return
 	 * @author sly
@@ -134,7 +134,7 @@ public interface FuncService {
 	BaseResult findAllTopFunc();
 
 	/**
-	 * 查询所有子功能
+	 * _查询所有子功能
 	 * 
 	 * @param funcId
 	 * @return
@@ -144,7 +144,7 @@ public interface FuncService {
 	BaseResult findAllChildFunc(String funcId);
 
 	/**
-	 * 查询角色功能树
+	 * _查询角色功能树
 	 * 
 	 * @param roleId
 	 * @return

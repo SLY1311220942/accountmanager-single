@@ -13,14 +13,14 @@ import com.sly.accountmanager.common.result.BaseResult;
 import com.sly.accountmanager.system.model.Func;
 
 /**
- * 功能参数验证
+ * _功能参数验证
  * @author sly
  * @time 2018年12月24日
  */
 @Component
 public class FuncValidate {
 	/**
-	 * 验证新增功能参数
+	 * _验证新增功能参数
 	 * @param func
 	 * @return
 	 * @author sly
@@ -97,7 +97,7 @@ public class FuncValidate {
 	}
 	
 	/**
-	 * 验证修改功能参数
+	 * _验证修改功能参数
 	 * @param func
 	 * @return
 	 * @author sly
@@ -174,7 +174,7 @@ public class FuncValidate {
 	}
 	
 	/**
-	 * 验证查询功能详情参数
+	 * _验证查询功能详情参数
 	 * @param funcId
 	 * @return
 	 * @author sly
@@ -188,7 +188,7 @@ public class FuncValidate {
 	}
 	
 	/**
-	 * 验证删除功能参数
+	 * _验证删除功能参数
 	 * @param funcId
 	 * @return
 	 * @author sly
@@ -202,7 +202,7 @@ public class FuncValidate {
 	}
 	
 	/**
-	 * 验证查询角色功能树参数
+	 * _验证查询角色功能树参数
 	 * @param roleId
 	 * @return
 	 * @author sly

@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ import com.sly.accountmanager.common.exception.ServiceCustomException;
 import com.sly.accountmanager.common.message.Message;
 import com.sly.accountmanager.common.model.OperateLog;
 import com.sly.accountmanager.common.model.User;
+import com.sly.accountmanager.common.redisHelper.RedisHelper;
 import com.sly.accountmanager.common.result.BaseResult;
 import com.sly.accountmanager.common.utils.DateUtils;
 import com.sly.accountmanager.common.utils.UUIDUtils;
@@ -27,23 +29,25 @@ import com.sly.accountmanager.system.returncode.RoleReturnCode;
 import com.sly.accountmanager.system.service.RoleService;
 
 /**
- * 角色service实现
+ * _角色service实现
  * @author sly
  * @time 2018-11-12
  */
 @Service
 @Transactional(rollbackFor = { Exception.class })
 public class RoleServiceImpl implements RoleService {
-	private Logger logger = Logger.getLogger(RoleService.class);
+	private static final Logger logger = LoggerFactory.getLogger(RoleService.class);
 	
 	@Autowired
 	private RoleMapper roleMapper;
 	
 	@Autowired
 	private OperateLogMapper operateLogMapper;
+	@Autowired
+	private RedisHelper redisHelper;
 	
 	/**
-	 * 保存角色信息
+	 * _保存角色信息
 	 * @param role
 	 * @param sessionUser
 	 * @param operateLog
@@ -79,7 +83,7 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	/**
-	 * 逻辑删除角色
+	 * _逻辑删除角色
 	 * @param roleId
 	 * @param sessionUser
 	 * @param operateLog
@@ -92,6 +96,7 @@ public class RoleServiceImpl implements RoleService {
 		try {
 			//未完成
 			roleMapper.deleteRole(roleId);
+			redisHelper.deleteAllUserFunc();
 			return new BaseResult(ResultStatus.SUCCESS, Message.DELETE_SUCCESS);
 		} catch (Exception e) {
 			logger.error(ExceptionUtils.getStackTrace(e));
@@ -101,7 +106,7 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	/**
-	 * 修改角色
+	 * _修改角色
 	 * @param role
 	 * @param sessionUser
 	 * @param operateLog
@@ -123,7 +128,7 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	/**
-	 * 根据角色id查询角色
+	 * _根据角色id查询角色
 	 * @param roleId
 	 * @return
 	 * @author sly
@@ -141,7 +146,7 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	/**
-	 * 分页查询角色列表
+	 * _分页查询角色列表
 	 * @param params(page,role)
 	 * @return
 	 * @author sly
@@ -163,7 +168,7 @@ public class RoleServiceImpl implements RoleService {
 	}
 	
 	/**
-	 * 获取全部角色
+	 * _获取全部角色
 	 * @return
 	 * @author sly
 	 * @time 2019年1月16日
@@ -180,7 +185,7 @@ public class RoleServiceImpl implements RoleService {
 	}
 	
 	/**
-	 * 查询用户角色树
+	 * _查询用户角色树
 	 * @param userId
 	 * @return
 	 * @author sly

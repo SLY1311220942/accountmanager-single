@@ -62,7 +62,11 @@
 								</div>
 
 								<div style="margin-left: 46%;margin-bottom: 10px;">
-									<button onclick="saveUserRoleTree()" type="button" class="btn btn-success ladda-button" data-style="zoom-in" data-size="s"><span class="ladda-label">保&nbsp;&nbsp;&nbsp;存</span></button>
+									<button type="button" onclick="saveUserRoleTree(this)" class="btn btn-info ladda-button" data-style="zoom-in" data-size="s" style="margin-bottom: 10px;margin-top: 10px;">
+										<span class="ladda-label">
+											提&nbsp;&nbsp;&nbsp;交
+										</span>
+									</button>
 								</div>
 							</div>
 						</div>

@@ -3,8 +3,8 @@ package com.sly.accountmanager.system.returncode;
 import com.sly.accountmanager.common.returncode.IReturnCode;
 
 /**
- * dicCode返回code 返回码开头为10005000-10005999
- * 
+ * dicCode返回code 
+ * _返回码开头为10005000-10005999
  * @author sly
  * @time 2018年11月14日
  */

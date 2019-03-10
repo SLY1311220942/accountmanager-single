@@ -31,3 +31,13 @@ spring:
         min-idle: 4
         max-idle: 8
     timeout: 30000
+mybatis:
+  type-aliases-package: com.sly.accountmanager.account.model,com.sly.accountmanager.system.model,com.sly.accountmanager.common.model
+logging:
+  level:
+    root: info
+    web: info
+    org.springframework.jdbc: debug
+    org.mybatis.spring: debug
+  file: D:/logs/account/account-single.log
+  

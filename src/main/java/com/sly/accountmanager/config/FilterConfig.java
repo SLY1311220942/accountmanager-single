@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import com.sly.accountmanager.filter.XssFilter;
 
 /**
- * 过滤器配置类
+ * _过滤器配置类
  * @author sly
  * @time 2018年12月12日
  */

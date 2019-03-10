@@ -1,3 +1,5 @@
+<!--引入权限标签-->
+<%@taglib prefix="ams" uri="http://www.ams.com/tags" %>
 <!-- Bootstrap 3.3.5 -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resource/bootstrap-multitabs/demo/plugins/bootstrap/css/bootstrap.min.css" />
 <!-- Font Awesome -->
@@ -12,6 +14,8 @@
         apply the skin class to the body tag so the changes take effect.
 -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resource/account/css/common.css" />
+<!--ladda-->
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resource/ladda/ladda-themeless.min.css" />
 <script type="text/javascript">
 	var webRoot = "${pageContext.request.contextPath }";
 </script>

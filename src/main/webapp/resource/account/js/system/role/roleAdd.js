@@ -1,9 +1,10 @@
-function roleAdd() {
+function roleAdd(w) {
 	var bootstrapValidator = $("#roleAddForm").data('bootstrapValidator');
 	bootstrapValidator.validate();
 	if(bootstrapValidator.isValid()) {
+		var l = Ladda.create(w);
+		l.start();
 		var index = parent.layer.getFrameIndex(window.name);
-		
 		$.ajax({
 			type: "post",
 			url: webRoot + "/system/role/roleAdd",
@@ -29,6 +30,12 @@ function roleAdd() {
 				} else {
 					layer.alert(data.message, { icon: 2 });
 				}
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown){
+				layer.alert(COMMON_REQUEST_RESPONSE_FAIL, { icon: 2 });
+			},
+			complete: function(XMLHttpRequest, textStatus){
+				l.stop();
 			}
 		});
 	}

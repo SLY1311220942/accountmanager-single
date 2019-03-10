@@ -4,7 +4,7 @@ import com.sly.accountmanager.common.returncode.IReturnCode;
 
 /**
  * funcs返回code
- * 返回码开头为10002000-10002999 
+ * _返回码开头为10002000-10002999 
  * @author sly
  * @time 2018年11月14日
  */

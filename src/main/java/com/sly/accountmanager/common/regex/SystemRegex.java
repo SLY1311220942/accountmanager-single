@@ -14,7 +14,7 @@ public class SystemRegex {
 	/**
 	 * 功能-功能Url正则验证
 	 */
-	public static final String FUNCURL_REGEX = "^([a-zA-Z0-9_/]){1,240}$";
+	public static final String FUNCURL_REGEX = "^#$|^([a-zA-Z0-9_/]){1,240}$";
 	/**
 	 * 功能-功能排序正则验证
 	 */

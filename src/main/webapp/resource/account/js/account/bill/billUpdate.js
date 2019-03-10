@@ -1,14 +1,14 @@
-function loadBill(){
+function loadBill() {
 	$.ajax({
-		type:"post",
+		type: "post",
 		url: webRoot + "/account/bill/findBillById",
 		dataType: "json",
 		data: {
 			billId: $.trim($("#billId").val()),
 			isAjax: 1
 		},
-		success:function(data){
-			if(data.status == 200){
+		success: function(data) {
+			if(data.status == 200) {
 				var bill = data.dataMap.bill;
 				$("#revexpType").val(bill.revexpType);
 				$("#billTime").val(bill.billTime);
@@ -16,16 +16,16 @@ function loadBill(){
 				$("#billDetail").val(bill.billDetail);
 				$("#remark").val(bill.remark);
 				loadExistBillType(bill.billTypeId)
-			}else if(data.status == 300){
+			} else if(data.status == 300) {
 				eval(data.dataMap.evalStr);
-			}else{
+			} else {
 				layer.alert(data.message, { icon: 2 });
 			}
 		}
 	});
 }
 
-function loadExistBillType(billTypeId){
+function loadExistBillType(billTypeId) {
 	$.ajax({
 		type: "post",
 		url: webRoot + "/account/billType/findAllTopBillType",
@@ -40,7 +40,7 @@ function loadExistBillType(billTypeId){
 				for(var i = 0; i < data.rows.length; i++) {
 					html.append('<option value="' + data.rows[i].billTypeId + '">' + data.rows[i].billTypeName + '</option>');
 				}
-				
+
 				$("#billTypeId").html(html.toString());
 				$("#billTypeId").val(billTypeId);
 			} else if(data.status == 300) {
@@ -52,10 +52,12 @@ function loadExistBillType(billTypeId){
 	});
 }
 
-function billUpdate() {
+function billUpdate(w) {
 	var bootstrapValidator = $("#billUpdateForm").data('bootstrapValidator');
 	bootstrapValidator.validate();
 	if(bootstrapValidator.isValid()) {
+		var l = Ladda.create(w);
+		l.start();
 		var index = parent.layer.getFrameIndex(window.name);
 		$.ajax({
 			type: "post",
@@ -75,8 +77,8 @@ function billUpdate() {
 			success: function(data) {
 				if(data.status == 200) {
 					layer.confirm(data.message, {
-						btn : [ '确定' ]
-					// 按钮
+						btn: ['确定']
+						// 按钮
 					}, function() {
 						parent.billSearch();
 						parent.layer.close(index);
@@ -86,6 +88,12 @@ function billUpdate() {
 				} else {
 					layer.alert(data.message, { icon: 2 });
 				}
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				layer.alert(COMMON_REQUEST_RESPONSE_FAIL, { icon: 2 });
+			},
+			complete: function(XMLHttpRequest, textStatus) {
+				l.stop();
 			}
 		});
 	}
@@ -117,7 +125,7 @@ function validator() {
 			billAmount: {
 				message: '',
 				validators: {
-					regexp: {	 
+					regexp: {
 						regexp: /(^[\d]{1,10}$)|(^[\d]{1,10}.[\d]{1,2}$)/,
 						message: "账单金额不超过10位整数,最多保留2位小数!"
 					},

@@ -4,7 +4,7 @@ import com.sly.accountmanager.common.returncode.IReturnCode;
 
 /**
  * OperateLog 返回 code
- * 返回码开头为10009000-10009999
+ * _返回码开头为10009000-10009999
  * @author sly
  * @time 2018年12月22日
  */

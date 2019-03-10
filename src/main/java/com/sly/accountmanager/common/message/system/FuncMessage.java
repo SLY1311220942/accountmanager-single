@@ -19,9 +19,9 @@ public class FuncMessage {
 	 */
 	public static final String FUNCURL_IS_NOT_NULL = "功能Url不能为空!";
 	/**
-	 * 功能Url只能输入数字、字母、/、_,长度为1到240个字符
+	 * 功能Url只能输入单个#或数字、字母、/、_,长度为1到240个字符
 	 */
-	public static final String FUNCURL_IS_NOT_VALIDATE = "功能Url只能输入数字、字母、/、_,长度为1到240个字符!";
+	public static final String FUNCURL_IS_NOT_VALIDATE = "功能Url只能输入单个#或数字、字母、/、_,长度为1到240个字符!";
 	/**
 	 * 功能标签不能为空
 	 */

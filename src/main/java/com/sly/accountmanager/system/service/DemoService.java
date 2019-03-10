@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface DemoService {
 	
 	/**
-	 * 测试传图片到controller
+	 * _测试传图片到controller
 	 * @param id
 	 * @return
 	 * @author sly
@@ -23,7 +23,7 @@ public interface DemoService {
 	ResponseEntity<byte[]> testPicture(String id);
 
 	/**
-	 * 上传文件
+	 * _上传文件
 	 * @param file
 	 * @param fileType
 	 * @return
@@ -33,7 +33,7 @@ public interface DemoService {
 	Map<String, Object> uploadFile(MultipartFile file, String fileType);
 
 	/**
-	 * 下载
+	 * _下载
 	 * @return
 	 * @author sly
 	 * @time 2018年11月12日

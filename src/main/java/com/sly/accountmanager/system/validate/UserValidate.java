@@ -12,7 +12,7 @@ import com.sly.accountmanager.common.regex.SystemRegex;
 import com.sly.accountmanager.common.result.BaseResult;
 
 /**
- * 用户参数验证
+ * _用户参数验证
  * @author sly
  * @time 2019年1月3日
  */
@@ -20,7 +20,7 @@ import com.sly.accountmanager.common.result.BaseResult;
 public class UserValidate {
 	
 	/**
-	 * 验证新增用户功能参数
+	 * _验证新增用户功能参数
 	 * @param user
 	 * @return
 	 * @author sly

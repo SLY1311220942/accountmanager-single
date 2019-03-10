@@ -14,7 +14,7 @@ import com.sly.accountmanager.common.result.BaseResult;
  */
 public class FeignBeanUtils {
 	/**
-	 * 获取基础结果中的对象
+	 * _获取基础结果中的对象
 	 * @param key
 	 * @param clazz
 	 * @param baseResult
@@ -29,7 +29,7 @@ public class FeignBeanUtils {
 	};
 	
 	/**
-	 * 获取参数map中的对象
+	 * _获取参数map中的对象
 	 * @param key
 	 * @param clazz
 	 * @param params
@@ -45,7 +45,7 @@ public class FeignBeanUtils {
 	};
 
 	/**
-	 * 获取基础结果中的list对象
+	 * _获取基础结果中的list对象
 	 * @param key
 	 * @param clazz
 	 * @param baseResult
@@ -60,7 +60,7 @@ public class FeignBeanUtils {
 	};
 	
 	/**
-	 * 获取参数map中的list对象
+	 * _获取参数map中的list对象
 	 * @param key
 	 * @param clazz
 	 * @param params

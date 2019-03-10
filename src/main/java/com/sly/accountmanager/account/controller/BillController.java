@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +23,8 @@ import com.sly.accountmanager.account.model.Bill;
 import com.sly.accountmanager.account.returncode.BillReturnCode;
 import com.sly.accountmanager.account.service.BillService;
 import com.sly.accountmanager.account.utils.BillExcelUtils;
-import com.sly.accountmanager.account.utils.ExcelUtils;
 import com.sly.accountmanager.account.validate.BillValidate;
+import com.sly.accountmanager.annotation.PermissionAccess;
 import com.sly.accountmanager.common.constant.CommonConstant;
 import com.sly.accountmanager.common.constant.OperateModel;
 import com.sly.accountmanager.common.constant.ResultStatus;
@@ -44,7 +45,7 @@ import com.sly.accountmanager.utils.NetWorkUtils;
 @Controller
 @RequestMapping("/account")
 public class BillController {
-	private Logger logger = Logger.getLogger(BillController.class);
+	private static final Logger logger = LoggerFactory.getLogger(BillController.class);
 	
 	@Autowired
 	private BillService billService;
@@ -75,6 +76,7 @@ public class BillController {
 	 * @author sly
 	 * @time 2019年1月20日
 	 */
+	@PermissionAccess
 	@ResponseBody
 	@RequestMapping("/bill/findBillList")
 	public BaseResult findBillList(HttpServletRequest request,HttpServletResponse response,Bill bill,Page page) {

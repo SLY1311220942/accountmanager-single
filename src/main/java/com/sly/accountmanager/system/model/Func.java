@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 功能实体类
+ * _功能实体类
  * @author PC
  * @time 2018-11-12
  */

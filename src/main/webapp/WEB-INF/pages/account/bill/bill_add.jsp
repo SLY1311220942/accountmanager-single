@@ -113,7 +113,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								</div>
 
 								<div style="margin-left: 48%;margin-bottom: 10px;">
-									<button type="button" onclick="billAdd()" class="btn btn-info" style="margin-bottom: 10px;margin-top: 10px;">提&nbsp;&nbsp;&nbsp;交</button>
+									<button type="button" onclick="billAdd(this)" class="btn btn-info ladda-button" data-style="zoom-in" data-size="s" style="margin-bottom: 10px;margin-top: 10px;">
+										<span class="ladda-label">
+											提&nbsp;&nbsp;&nbsp;交
+										</span>
+									</button>
 								</div>
 							</div>
 						</div>

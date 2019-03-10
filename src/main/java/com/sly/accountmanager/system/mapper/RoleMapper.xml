@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sly.accountmanager.system.mapper.RoleMapper">
 	<!-- 保存角色信息 -->
-	<insert id="saveRole" parameterType="com.sly.accountmanager.system.model.Role">
+	<insert id="saveRole" parameterType="Role">
 		INSERT INTO T_SYS_ROLE (roleId,userId,username,roleName,createTime,updateTime,isOpen,logicDel,remark) 
 		VALUES (#{roleId},#{userId},#{username},#{roleName},#{createTime},#{updateTime},#{isOpen},#{logicDel},#{remark});
 	</insert>
@@ -13,7 +13,7 @@
 	</update>
 	
 	<!-- 修改角色 -->
-	<update id="updateRole" parameterType="com.sly.accountmanager.system.model.Role">
+	<update id="updateRole" parameterType="Role">
 		UPDATE T_SYS_ROLE TSR
 		<set>
 			<if test="roleName != null and roleName != ''">
@@ -36,7 +36,7 @@
 	</update>
 	
 	<!-- 根据角色id查询角色 -->
-	<select id="findRoleById" parameterType="string" resultType="com.sly.accountmanager.system.model.Role">
+	<select id="findRoleById" parameterType="string" resultType="Role">
 		SELECT * FROM T_SYS_ROLE WHERE T_SYS_ROLE.`roleId`=#{roleId}
 	</select>
 	
@@ -73,7 +73,7 @@
 	</select>
 	
 	<!-- 分页查询角色列表 -->
-	<select id="findRoleList" parameterType="map" resultType="com.sly.accountmanager.system.model.Role">
+	<select id="findRoleList" parameterType="map" resultType="Role">
 		SELECT * FROM T_SYS_ROLE TSR
 		<where>
 			TSR.`logicDel` = 'N'
@@ -107,7 +107,7 @@
 	</select>
 	
 	<!-- 查询所有角色 -->
-	<select id="findAllRole" resultType="com.sly.accountmanager.system.model.Role">
+	<select id="findAllRole" resultType="Role">
 		SELECT * FROM T_SYS_ROLE TSR 
 		<where>
 			TSR.`logicDel` = 'N' 

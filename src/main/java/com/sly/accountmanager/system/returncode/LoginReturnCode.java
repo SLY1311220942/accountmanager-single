@@ -4,7 +4,7 @@ import com.sly.accountmanager.common.returncode.IReturnCode;
 
 /**
  * login返回code
- * 错误码开头10006000-10006999
+ * _错误码开头10006000-10006999
  * @author sly
  * @time 2018年12月14日
  */

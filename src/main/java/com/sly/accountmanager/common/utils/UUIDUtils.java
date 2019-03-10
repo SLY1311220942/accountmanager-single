@@ -10,7 +10,7 @@ import java.util.UUID;
 public class UUIDUtils {
 	
 	/**
-	 * 生成uuid
+	 * _生成uuid
 	 * @return
 	 * @author sly
 	 * @time 2018年11月23日

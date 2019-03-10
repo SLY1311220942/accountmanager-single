@@ -7,13 +7,13 @@ import com.sly.accountmanager.common.model.User;
 import com.sly.accountmanager.common.result.BaseResult;
 
 /**
- * 用户角色关系service接口
+ * _用户角色关系service接口
  * @author sly
  * @time 2018年11月12日
  */
 public interface UserRoleService {
 	/**
-	 * 保存用户角色关系
+	 * _保存用户角色关系
 	 * @param roleIds
 	 * @param userId
 	 * @param sessionUser

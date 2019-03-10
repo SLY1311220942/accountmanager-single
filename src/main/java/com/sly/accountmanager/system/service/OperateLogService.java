@@ -4,13 +4,13 @@ import com.sly.accountmanager.common.model.OperateLog;
 import com.sly.accountmanager.common.result.BaseResult;
 
 /**
- * 操作日志service接口
+ * _操作日志service接口
  * @author sly
  * @time 2018年12月22日
  */
 public interface OperateLogService {
 	/**
-	 * 保存操作日志
+	 * _保存操作日志
 	 * @param operateLog
 	 * @return
 	 * @author sly

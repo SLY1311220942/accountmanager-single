@@ -13,7 +13,7 @@ import com.sly.accountmanager.common.result.BaseResult;
 import com.sly.accountmanager.system.model.Role;
 
 /**
- * 角色参数验证
+ * _角色参数验证
  * 
  * @author sly
  * @time 2019年1月12日
@@ -21,7 +21,7 @@ import com.sly.accountmanager.system.model.Role;
 @Component
 public class RoleValidate {
 	/**
-	 * 验证新增角色功能参数
+	 * _验证新增角色功能参数
 	 * @param role
 	 * @return
 	 * @author sly
@@ -56,7 +56,7 @@ public class RoleValidate {
 	}
 
 	/**
-	 * 验证新增角色功能参数
+	 * _验证新增角色功能参数
 	 * @param userId
 	 * @return
 	 * @author sly

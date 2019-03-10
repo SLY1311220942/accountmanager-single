@@ -7,13 +7,13 @@ import org.apache.ibatis.annotations.Param;
 import com.sly.accountmanager.system.model.Func;
 
 /**
- * 功能mapper
+ * _功能mapper
  * @author sly
  * @time 2018-11-12
  */
 public interface FuncMapper {
 	/**
-	 * 保存功能信息
+	 * _保存功能信息
 	 * @param func
 	 * @return
 	 * @author sly
@@ -22,7 +22,7 @@ public interface FuncMapper {
 	int saveFunc(Func func);
 	
 	/**
-	 * 逻辑删除功能
+	 * _逻辑删除功能
 	 * @param funcId
 	 * @return
 	 * @author sly
@@ -31,7 +31,7 @@ public interface FuncMapper {
 	int deleteFunc(String funcId);
 	
 	/**
-	 * 修改功能
+	 * _修改功能
 	 * @param func
 	 * @return
 	 * @author sly
@@ -40,7 +40,7 @@ public interface FuncMapper {
 	int updateFunc(Func func);
 	
 	/**
-	 * 根据功能id查询功能
+	 * _根据功能id查询功能
 	 * @param funcId
 	 * @return
 	 * @author sly
@@ -49,7 +49,7 @@ public interface FuncMapper {
 	Func findFuncById(String funcId);
 	
 	/**
-	 * 查询顶层功能 
+	 * _查询顶层功能 
 	 * @param funcType 如果是普通类型不查询系统内置,如果是系统内置则查询所有
 	 * @return
 	 * @author sly
@@ -58,7 +58,7 @@ public interface FuncMapper {
 	List<Func> findTopFunc(@Param("funcType") Integer funcType);
 	
 	/**
-	 * 查询子节点
+	 * _查询子节点
 	 * @param funcId
 	 * @param funcType 如果是普通类型不查询系统内置,如果是系统内置则查询所有
 	 * @return
@@ -68,7 +68,7 @@ public interface FuncMapper {
 	List<Func> findChildFunc(@Param("funcId") String funcId,@Param("funcType") Integer funcType);
 	
 	/**
-	 * 查询用户的功能列表父节点
+	 * _查询用户的功能列表父节点
 	 * @param userId
 	 * @param funcType
 	 * @return
@@ -78,7 +78,7 @@ public interface FuncMapper {
 	List<Func> findUserTopFunc(@Param("userId") String userId,@Param("funcType") Integer funcType);
 	
 	/**
-	 * 查询用户子节点
+	 * _查询用户子节点
 	 * @param funcId
 	 * @param funcType
 	 * @param userId
@@ -92,7 +92,7 @@ public interface FuncMapper {
 			@Param("userId") String userId);
 	
 	/**
-	 * 批量删除功能
+	 * _批量删除功能
 	 * @param allFuncs
 	 * @return
 	 * @author sly
@@ -101,7 +101,7 @@ public interface FuncMapper {
 	int deleteFuncList(List<Func> allFuncs);
 
 	/**
-	 *  查询查询角色功能id
+	 *  _查询查询角色功能id
 	 * @param roleId
 	 * @return
 	 * @author sly

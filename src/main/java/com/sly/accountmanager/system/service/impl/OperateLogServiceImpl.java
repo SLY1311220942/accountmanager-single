@@ -1,7 +1,8 @@
 package com.sly.accountmanager.system.service.impl;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,20 +17,20 @@ import com.sly.accountmanager.system.returncode.OperateLogReturnCode;
 import com.sly.accountmanager.system.service.OperateLogService;
 
 /**
- * 操作日志service实现
+ * _操作日志service实现
  * @author sly
  * @time 2018年12月22日
  */
 @Service
 @Transactional(rollbackFor = { Exception.class })
 public class OperateLogServiceImpl implements OperateLogService {
-	private Logger logger = Logger.getLogger(OperateLogService.class);
+	private static final Logger logger = LoggerFactory.getLogger(OperateLogService.class);
 	
 	@Autowired
 	private OperateLogMapper operateLogMapper;
 	
 	/**
-	 * 保存操作日志
+	 * _保存操作日志
 	 * @param operateLog
 	 * @return
 	 * @author sly

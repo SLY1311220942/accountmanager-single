@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +28,7 @@ import com.sly.accountmanager.system.returncode.UserReturnCode;
 import com.sly.accountmanager.system.service.UserService;
 
 /**
- * 用户service实现
+ * _用户service实现
  * 
  * @author sly
  * @time 2018-11-12
@@ -35,7 +36,7 @@ import com.sly.accountmanager.system.service.UserService;
 @Service
 @Transactional(rollbackFor = { Exception.class })
 public class UserServiceImpl implements UserService {
-	private Logger logger = Logger.getLogger(UserService.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
 	@Autowired
 	private UserMapper userMapper;
@@ -43,7 +44,7 @@ public class UserServiceImpl implements UserService {
 	private OperateLogMapper operateLogMapper;
 	
 	/**
-	 * 新增用户信息
+	 * _新增用户信息
 	 * @param user
 	 * @param sessionUser
 	 * @param operateLog
@@ -80,7 +81,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	/**
-	 * 根据用户id查询用户
+	 * _根据用户id查询用户
 	 * @param userId
 	 * @return
 	 * @author sly
@@ -99,7 +100,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * 分页查询用户列表
+	 * _分页查询用户列表
 	 * 
 	 * @param params(page,user)
 	 * @return
@@ -123,7 +124,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * 逻辑删除用户
+	 * _逻辑删除用户
 	 * @param userId
 	 * @param sessionUser
 	 * @param operateLog
@@ -145,7 +146,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	/**
-	 * 修改用户信息
+	 * _修改用户信息
 	 * @param user
 	 * @param sessionUser
 	 * @param operateLog

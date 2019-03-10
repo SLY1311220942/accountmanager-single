@@ -8,13 +8,13 @@ import com.sly.accountmanager.common.result.BaseResult;
 import com.sly.accountmanager.system.model.Role;
 
 /**
- * 角色service接口
+ * _角色service接口
  * @author sly
  * @time 2018年11月12日
  */
 public interface RoleService {
 	/**
-	 * 保存角色信息
+	 * _保存角色信息
 	 * @param role
 	 * @param sessionUser
 	 * @param operateLog
@@ -25,7 +25,7 @@ public interface RoleService {
 	BaseResult saveRole(Role role,User sessionUser,OperateLog operateLog);
 	
 	/**
-	 * 逻辑删除角色
+	 * _逻辑删除角色
 	 * @param roleId
 	 * @param sessionUser
 	 * @param operateLog
@@ -36,7 +36,7 @@ public interface RoleService {
 	BaseResult deleteRole(String roleId,User sessionUser,OperateLog operateLog);
 	
 	/**
-	 * 修改角色
+	 * _修改角色
 	 * @param role
 	 * @param sessionUser
 	 * @param operateLog
@@ -47,7 +47,7 @@ public interface RoleService {
 	BaseResult updateRole(Role role,User sessionUser,OperateLog operateLog);
 	
 	/**
-	 * 根据角色id查询角色
+	 * _根据角色id查询角色
 	 * @param roleId
 	 * @return
 	 * @author sly
@@ -56,7 +56,7 @@ public interface RoleService {
 	BaseResult findRoleById(String roleId);
 	
 	/**
-	 * 分页查询角色列表
+	 * _分页查询角色列表
 	 * @param params(page,role)
 	 * @return
 	 * @author sly
@@ -65,7 +65,7 @@ public interface RoleService {
 	BaseResult findRoleList(Map<String, Object> params);
 	
 	/**
-	 * 获取全部角色
+	 * _获取全部角色
 	 * @return
 	 * @author sly
 	 * @time 2019年1月16日
@@ -73,7 +73,7 @@ public interface RoleService {
 	BaseResult findAllRole();
 
 	/**
-	 * 查询用户角色树
+	 * _查询用户角色树
 	 * @param userId
 	 * @return
 	 * @author sly

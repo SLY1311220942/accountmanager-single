@@ -7,13 +7,13 @@ import com.sly.accountmanager.common.model.User;
 import com.sly.accountmanager.common.result.BaseResult;
 
 /**
- * 用户service接口
+ * _用户service接口
  * @author sly
  * @time 2018年11月12日
  */
 public interface UserService {
 	/**
-	 * 保存用户信息
+	 * _保存用户信息
 	 * @param params(user)
 	 * @return
 	 * @author sly
@@ -22,7 +22,7 @@ public interface UserService {
 	BaseResult saveUser(User user,User sessionUser,OperateLog operateLog);
 	
 	/**
-	 * 根据用户id查询用户
+	 * _根据用户id查询用户
 	 * @param userId
 	 * @return
 	 * @author sly
@@ -31,7 +31,7 @@ public interface UserService {
 	BaseResult findUserById(String userId);
 	
 	/**
-	 * 分页查询用户列表
+	 * _分页查询用户列表
 	 * @param params(page,user)
 	 * @return
 	 * @author sly
@@ -40,7 +40,7 @@ public interface UserService {
 	BaseResult findUserList(Map<String, Object> params);
 	
 	/**
-	 * 逻辑删除用户
+	 * _逻辑删除用户
 	 * @param userId
 	 * @param sessionUser
 	 * @param operateLog
@@ -51,7 +51,7 @@ public interface UserService {
 	BaseResult deleteUser(String userId,User sessionUser,OperateLog operateLog);
 	
 	/**
-	 * 修改用户信息
+	 * _修改用户信息
 	 * @param user
 	 * @param sessionUser
 	 * @param operateLog

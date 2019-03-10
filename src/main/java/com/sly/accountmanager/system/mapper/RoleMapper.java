@@ -6,13 +6,13 @@ import java.util.Map;
 import com.sly.accountmanager.system.model.Role;
 
 /**
- * 角色mapper
+ * _角色mapper
  * @author sly
  * @time 2018-11-12
  */
 public interface RoleMapper {
 	/**
-	 * 保存角色信息
+	 * _保存角色信息
 	 * @param role
 	 * @return
 	 * @author sly
@@ -21,7 +21,7 @@ public interface RoleMapper {
 	int saveRole(Role role);
 	
 	/**
-	 * 逻辑删除角色
+	 * _逻辑删除角色
 	 * @param roleId
 	 * @return
 	 * @author sly
@@ -30,7 +30,7 @@ public interface RoleMapper {
 	int deleteRole(String roleId);
 	
 	/**
-	 * 修改角色
+	 * _修改角色
 	 * @param role
 	 * @return
 	 * @author sly
@@ -39,7 +39,7 @@ public interface RoleMapper {
 	int updateRole(Role role);
 	
 	/**
-	 * 根据角色id查询角色
+	 * _根据角色id查询角色
 	 * @param roleId
 	 * @return
 	 * @author sly
@@ -48,7 +48,7 @@ public interface RoleMapper {
 	Role findRoleById(String roleId);
 	
 	/**
-	 * 统计分页查询角色数量
+	 * _统计分页查询角色数量
 	 * @param params : roleId,userId,username,roleName,isOpen,startTime,endTime,remark
 	 * @return
 	 * @author sly
@@ -57,7 +57,7 @@ public interface RoleMapper {
 	int countRoleList(Map<String, Object> params);
 	
 	/**
-	 * 分页查询角色列表
+	 * _分页查询角色列表
 	 * @param params : roleId,userId,username,roleName,isOpen,startTime,endTime,remark,startNum,pageSize
 	 * @return
 	 * @author sly
@@ -66,7 +66,7 @@ public interface RoleMapper {
 	List<Role> findRoleList(Map<String, Object> params);
 	
 	/**
-	 * 查询所有角色
+	 * _查询所有角色
 	 * @return
 	 * @author sly
 	 * @time 2019年1月16日
@@ -74,7 +74,7 @@ public interface RoleMapper {
 	List<Role> findAllRole();
 	
 	/**
-	 * 查询用户角色id
+	 * _查询用户角色id
 	 * @param userId
 	 * @return
 	 * @author sly

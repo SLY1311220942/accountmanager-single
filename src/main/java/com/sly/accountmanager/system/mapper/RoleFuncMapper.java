@@ -5,14 +5,14 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 /**
- * 角色功能关系mapper
+ * _角色功能关系mapper
  * @author sly
  * @time 2018-11-12
  */
 public interface RoleFuncMapper {
 	
 	/**
-	 * 保存角色功能关系
+	 * _保存角色功能关系
 	 * @param roleId
 	 * @param funcIds
 	 * @return
@@ -22,7 +22,7 @@ public interface RoleFuncMapper {
 	int saveRoleFunc(@Param("roleId") String roleId,@Param("funcIds") List<String> funcIds);
 	
 	/**
-	 * 删除角色功能关系
+	 * _删除角色功能关系
 	 * @param roleId
 	 * @return
 	 * @author sly

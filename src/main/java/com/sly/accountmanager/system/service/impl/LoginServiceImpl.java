@@ -14,7 +14,7 @@ import com.sly.accountmanager.system.mapper.UserMapper;
 import com.sly.accountmanager.system.service.LoginService;
 
 /**
- * 登录service实现
+ * _登录service实现
  * @author sly
  * @time 2018年12月13日
  */
@@ -26,7 +26,7 @@ public class LoginServiceImpl implements LoginService {
 	private UserMapper userMapper;
 	
 	/**
-	 * 登录
+	 * _登录
 	 * @param username
 	 * @param password
 	 * @return

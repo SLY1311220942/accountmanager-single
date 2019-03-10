@@ -6,7 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +36,7 @@ import com.sly.accountmanager.utils.NetWorkUtils;
 @Controller
 @RequestMapping("/system")
 public class RoleFuncController {
-	private Logger logger = Logger.getLogger(RoleFuncController.class);
+	private static final Logger logger = LoggerFactory.getLogger(RoleFuncController.class);
 	
 	@Autowired
 	private RoleFuncService roleFuncService;

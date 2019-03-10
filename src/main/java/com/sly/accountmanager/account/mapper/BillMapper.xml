@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sly.accountmanager.account.mapper.BillMapper">
 	<!-- 保存账单信息 -->
-	<insert id="saveBill" parameterType="com.sly.accountmanager.account.model.Bill">
+	<insert id="saveBill" parameterType="Bill">
 		INSERT INTO `T_ACCOUNT_BILL`(revexpType,billTypeId,billTypeName,billTime,billAmount,
 		billDetail,remark,createTime,updateTime,deleteTime,userId,userName,logicDel) 
 		VALUES(#{revexpType},#{billTypeId},#{billTypeName},#{billTime},#{billAmount},#{billDetail},
@@ -15,7 +15,7 @@
 	</update>
 	
 	<!-- 修改账单信息 -->
-	<update id="updateBill" parameterType="com.sly.accountmanager.account.model.Bill">
+	<update id="updateBill" parameterType="Bill">
 		UPDATE `T_ACCOUNT_BILL` TAB
 		<set>
 			<if test="billTypeId != null and billTypeId != ''">
@@ -50,7 +50,7 @@
 	</update>
 	
 	<!-- 根据账单id查询信息 -->
-	<select id="findBillById" parameterType="int" resultType="com.sly.accountmanager.account.model.Bill">
+	<select id="findBillById" parameterType="int" resultType="Bill">
 		SELECT * FROM `T_ACCOUNT_BILL` TAB WHERE TAB.`billId`=#{billId}
 	</select>
 	
@@ -100,7 +100,7 @@
 	</select>
 	
 	<!-- 分页查询账单列表 -->
-	<select id="findBillList" parameterType="map" resultType="com.sly.accountmanager.account.model.Bill">
+	<select id="findBillList" parameterType="map" resultType="Bill">
 		SELECT * FROM `T_ACCOUNT_BILL` TAB
 		<where>
 			TAB.`userId` = #{bill.userId}
@@ -142,12 +142,12 @@
 				AND UNIX_TIMESTAMP(TAB.`deleteTime`) &lt;= UNIX_TIMESTAMP(#{bill.endDeleteTime})
 			</if>
 		</where>
-		ORDER BY TAB.`createTime` DESC 
+		ORDER BY UNIX_TIMESTAMP(TAB.`billTime`) DESC 
 		LIMIT #{page.startNum},#{page.pageSize}
 	</select>
 	
 	<!-- 修改账单的账单类型名称 -->
-	<update id="updateBillTypeName" parameterType="com.sly.accountmanager.account.model.BillType">
+	<update id="updateBillTypeName" parameterType="BillType">
 		UPDATE `T_ACCOUNT_BILL` SET billTypeName=#{billTypeName} WHERE `T_ACCOUNT_BILL`.`billTypeId`=#{billTypeId}
 	</update>
 	

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sly.accountmanager.system.mapper.UserMapper">
 	<!-- 保存用户信息 -->
-	<insert id="saveUser" parameterType="com.sly.accountmanager.common.model.User">
+	<insert id="saveUser" parameterType="User">
 		INSERT INTO T_SYS_USER (userId,username,password,nickname,realname,phone,tel,email,
 		sex,createTime,updateTime,userTag,status,logicDel,remark) 
 		VALUES (#{userId},#{username},#{password},#{nickname},#{realname},#{phone},#{tel},
@@ -11,7 +11,7 @@
 
 
 	<!-- 根据用户id查询用户信息 -->
-	<select id="findUserById" parameterType="string" resultType="com.sly.accountmanager.common.model.User">
+	<select id="findUserById" parameterType="string" resultType="User">
 		SELECT * FROM T_SYS_USER WHERE T_SYS_USER.`userId`=#{userId}
 	</select>
 	
@@ -57,7 +57,7 @@
 	</select>
 	
 	<!-- 分页查询用户列表 -->
-	<select id="findUserList" parameterType="map" resultType="com.sly.accountmanager.common.model.User">
+	<select id="findUserList" parameterType="map" resultType="User">
 		SELECT * FROM T_SYS_USER TSU
 		<where>
 			TSU.`logicDel` = 'N'
@@ -104,7 +104,7 @@
 		UPDATE T_SYS_USER TSU SET TSU.`logicDel`='N' WHERE TSU.`userId`=#{userId}
 	</update>
 	
-	<update id="updateUser" parameterType="com.sly.accountmanager.common.model.User">
+	<update id="updateUser" parameterType="User">
 		UPDATE T_SYS_USER TSU 
 		<set>
 			<if test="username != null and username != ''">
@@ -148,7 +148,7 @@
 	</update>
 	
 	<!-- 根据条件查询用户 -->
-	<select id="findUserByCondition" parameterType="com.sly.accountmanager.common.model.User" resultType="com.sly.accountmanager.common.model.User">
+	<select id="findUserByCondition" parameterType="User" resultType="User">
 		SELECT * FROM T_SYS_USER TSU 
 		<where>
 			<if test="username != null and username != ''">

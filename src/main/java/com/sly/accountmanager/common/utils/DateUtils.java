@@ -5,13 +5,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * 日期utils
+ * _日期utils
  * @author sly
  * @time 2018年12月22日
  */
 public class DateUtils {
 	/**
-	 * 格式化日期 输出格式: 2006-4-16
+	 * _格式化日期 输出格式: 2006-4-16
 	 * @param date
 	 * @return
 	 * @author sly
@@ -23,7 +23,7 @@ public class DateUtils {
 	}
 	
 	/**
-	 * 格式化时间 输出格式: 2006-01-01 00:00:00
+	 * _格式化时间 输出格式: 2006-01-01 00:00:00
 	 * @param date
 	 * @return
 	 * @author sly

@@ -22,6 +22,7 @@ import javax.crypto.NoSuchPaddingException;
 
 /**
  * rsa加密工具类
+ * 
  * @author sly
  * @time 2018年12月12日
  */
@@ -36,9 +37,11 @@ public class RsaUtils {
 	public static final int KEY_SIZE = 2048;
 
 	/**
-	 * 生成密钥对。注意这里是生成密钥对KeyPair，再由密钥对获取公私钥
+	 * _生成密钥对。注意这里是生成密钥对KeyPair，再由密钥对获取公私钥
 	 * 
 	 * @return
+	 * @author sly
+	 * @time 2019年3月9日
 	 */
 	public static Map<String, byte[]> generateKeyBytes() {
 
@@ -51,9 +54,11 @@ public class RsaUtils {
 
 			Map<String, byte[]> keyMap = new HashMap<String, byte[]>(16);
 			keyMap.put(PUBLIC_KEY, publicKey.getEncoded());
-			//System.out.println("PUBLIC_KEY:" + Base64.encodeBase64String(publicKey.getEncoded()));
+			// System.out.println("PUBLIC_KEY:" +
+			// Base64.encodeBase64String(publicKey.getEncoded()));
 			keyMap.put(PRIVATE_KEY, privateKey.getEncoded());
-			//System.out.println("PRIVATE_KEY:" +Base64.encodeBase64String(privateKey.getEncoded()));
+			// System.out.println("PRIVATE_KEY:"
+			// +Base64.encodeBase64String(privateKey.getEncoded()));
 			return keyMap;
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
@@ -62,10 +67,12 @@ public class RsaUtils {
 	}
 
 	/**
-	 * 还原公钥，X509EncodedKeySpec 用于构建公钥的规范
+	 * _还原公钥，X509EncodedKeySpec 用于构建公钥的规范
 	 * 
 	 * @param keyBytes
 	 * @return
+	 * @author sly
+	 * @time 2019年3月9日
 	 */
 	public static PublicKey restorePublicKey(byte[] keyBytes) {
 		X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(keyBytes);
@@ -81,10 +88,12 @@ public class RsaUtils {
 	}
 
 	/**
-	 * 还原私钥，PKCS8EncodedKeySpec 用于构建私钥的规范
+	 * _还原私钥，PKCS8EncodedKeySpec 用于构建私钥的规范
 	 * 
 	 * @param keyBytes
 	 * @return
+	 * @author sly
+	 * @time 2019年3月9日
 	 */
 	public static PrivateKey restorePrivateKey(byte[] keyBytes) {
 		PKCS8EncodedKeySpec pkcs8EncodedKeySpec = new PKCS8EncodedKeySpec(keyBytes);
@@ -99,11 +108,13 @@ public class RsaUtils {
 	}
 
 	/**
-	 * 加密，三步走。
+	 * _加密
 	 * 
 	 * @param key
 	 * @param plainText
 	 * @return
+	 * @author sly
+	 * @time 2019年3月9日
 	 */
 	public static byte[] rsaEncode(PublicKey key, byte[] plainText) {
 
@@ -120,11 +131,13 @@ public class RsaUtils {
 	}
 
 	/**
-	 * 解密，三步走。
+	 * _解密
 	 * 
 	 * @param key
 	 * @param encodedText
 	 * @return
+	 * @author sly
+	 * @time 2019年3月9日
 	 */
 	public static String rsaDecode(PrivateKey key, byte[] encodedText) {
 

@@ -26,10 +26,12 @@ function loadFunc(){
 	});
 }
 
-function funcUpdate() {
+function funcUpdate(w) {
 	var bootstrapValidator = $("#funcUpdateForm").data('bootstrapValidator');
 	bootstrapValidator.validate();
 	if(bootstrapValidator.isValid()) {
+		var l = Ladda.create(w);
+		l.start();
 		var index = parent.layer.getFrameIndex(window.name);
 		$.ajax({
 			type: "post",
@@ -62,6 +64,12 @@ function funcUpdate() {
 				} else {
 					layer.alert(data.message, { icon: 2 });
 				}
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown){
+				layer.alert(COMMON_REQUEST_RESPONSE_FAIL, { icon: 2 });
+			},
+			complete: function(XMLHttpRequest, textStatus){
+				l.stop();
 			}
 		});
 	}
@@ -108,8 +116,8 @@ function validator() {
 				message: '',
 				validators: {
 					regexp: {	 
-						regexp: /^([a-zA-Z0-9_/]){1,240}$/,
-						message: "功能Url只能输入数字、字母、/、_,长度为1到240个字符!"
+						regexp: /^#$|^([a-zA-Z0-9_/]){1,240}$/,
+						message: "功能Url只能输入单个#或数字、字母、/、_,长度为1到240个字符!"
 					},
 				}
 			},

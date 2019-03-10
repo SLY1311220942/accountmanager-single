@@ -10,7 +10,7 @@ public class IConstants {
 
  
 	/**
-	 * 需要过滤的字符
+	 * _需要过滤的字符
 	 */
 	private final static String[] SQLSTR = { "'", "exec", "execute", "insert",
 			 "delete", "update", "drop", "\\%", "master",
@@ -20,7 +20,7 @@ public class IConstants {
 			"eval\\((.*)\\)"
 			 };
 	/**
-	 * 过滤后的字符
+	 * _过滤后的字符
 	 */
 	private final static String[] NSQLSTR = { "＇", "ｅｘｅｃ", "ｅｘｅｃｕｔｅ", "ｉｎｓｅｒｔ",
 			 "ｄｅｌｅｔｅ", "ｕｐｄａｔｅ", "ｄｒｏｐ", "％", "ｍａｓｔｅｒ",
@@ -30,7 +30,7 @@ public class IConstants {
 			"ｅｖａｌ＼＼（（．＊）＼＼）"};
 
 	/**
-	 * 替换字符
+	 * _替换字符
 	 * @param value
 	 * @return
 	 * @author sly

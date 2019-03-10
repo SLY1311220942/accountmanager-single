@@ -29,7 +29,7 @@ public class RedisHelper {
 	private RedisTemplate<String, Serializable> redisTemplate;
 
 	/**
-	 * 加载所有账单类型到缓存
+	 * _加载所有账单类型到缓存
 	 * 
 	 * @author sly
 	 * @time 2019年2月27日
@@ -52,7 +52,7 @@ public class RedisHelper {
 	}
 
 	/**
-	 * 获取缓存账单类型对象
+	 * _获取缓存账单类型对象
 	 * 
 	 * @param billTypeId
 	 * @return
@@ -65,7 +65,7 @@ public class RedisHelper {
 	}
 
 	/**
-	 * 更新/添加缓存账单类型对象
+	 * _更新/添加缓存账单类型对象
 	 * 
 	 * @param billType
 	 * @author sly
@@ -74,4 +74,39 @@ public class RedisHelper {
 	public void putBillType(BillType billType) {
 		redisTemplate.boundHashOps("SYSTEM_BILLTYPES").put(billType.getBillTypeId(), billType);
 	}
+
+	/**
+	 * _获取用户菜单信息
+	 * 
+	 * @param userId
+	 * @return
+	 * @author sly
+	 * @time 2019年3月10日
+	 */
+	public BaseResult findUserFuc(String userId) {
+		BaseResult result = (BaseResult) redisTemplate.boundHashOps("USER_FUNCMEAN").get("user_mean_" + userId);
+		return result;
+	}
+
+	/**
+	 * _保存用户菜单信息
+	 * 
+	 * @param result
+	 * @author sly
+	 * @time 2019年3月10日
+	 */
+	public void putUserFunc(String userId, BaseResult result) {
+		redisTemplate.boundHashOps("USER_FUNCMEAN").put("user_mean_" + userId, result);
+	}
+	
+	/**
+	 * _清除所有用户的菜单信息
+	 * 
+	 * @author sly
+	 * @time 2019年3月10日
+	 */
+	public void deleteAllUserFunc() {
+		redisTemplate.delete("USER_FUNCMEAN");
+	}
+
 }

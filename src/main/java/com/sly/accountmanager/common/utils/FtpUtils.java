@@ -8,7 +8,8 @@ import java.io.InputStream;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * ftp工具类
@@ -17,8 +18,8 @@ import org.apache.log4j.Logger;
  * @time 2018年11月15日
  */
 public class FtpUtils {
-	@SuppressWarnings("unused")
-	private Logger logger = Logger.getLogger(FtpUtils.class);
+
+	private static final Logger logger = LoggerFactory.getLogger(FtpUtils.class);
 
 	/**
 	 * 用户名

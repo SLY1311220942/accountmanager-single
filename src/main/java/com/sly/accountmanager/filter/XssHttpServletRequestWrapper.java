@@ -3,13 +3,18 @@ package com.sly.accountmanager.filter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
- * 描述 : 跨站请求防范
+ * _描述 : 跨站请求防范
  * 
  * @author SLY
  * 
  */
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
+	private static final Logger logger = LoggerFactory.getLogger(XssHttpServletRequestWrapper.class);
+	
 	HttpServletRequest orgRequest = null;
 
 	public XssHttpServletRequestWrapper(HttpServletRequest request) {
@@ -18,7 +23,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 	}
 
 	/**
-	 * 获取参数
+	 * _获取参数
 	 * 
 	 * @param parameter
 	 * @return
@@ -41,7 +46,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 	}
 
 	/**
-	 * 获取单个参数
+	 * _获取单个参数
 	 * 
 	 * @param parameter
 	 * @return
@@ -58,7 +63,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 	}
 
 	/**
-	 * 获取请求头
+	 * _获取请求头
 	 * 
 	 * @param name
 	 * @return
@@ -75,7 +80,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 	}
 
 	/**
-	 * 替换
+	 * _替换
 	 * @param value
 	 * @return
 	 * @author sly
@@ -85,8 +90,8 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 		String oldValue = new String(value);
 		value = IConstants.replaceStr(value);
 		if (!oldValue.equals(value)) {
-			System.out.println("替换前:" + oldValue);
-			System.out.println("替换后:" + value);
+			logger.info("替换前:" + oldValue);
+			logger.info("替换后:" + value);
 		}
 		return value;
 	}

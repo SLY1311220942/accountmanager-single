@@ -3,14 +3,14 @@ package com.sly.accountmanager.system.service;
 import com.sly.accountmanager.common.result.BaseResult;
 
 /**
- * 登录service
+ * _登录service
  * @author sly
  * @time 2018年12月13日
  */
 public interface LoginService {
 	
 	/**
-	 * 登录
+	 * _登录
 	 * @param username
 	 * @param password
 	 * @return

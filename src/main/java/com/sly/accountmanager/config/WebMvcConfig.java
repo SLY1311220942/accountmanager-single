@@ -8,10 +8,12 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.sly.accountmanager.annotation.PermissionAccess;
 import com.sly.accountmanager.interceptor.LoginInterceptor;
+import com.sly.accountmanager.interceptor.PermissionAccessInterceptor;
 
 /**
- * 默认首页配置
+ * _默认首页配置
  * 
  * @author sly
  * @time 2018年12月9日
@@ -20,9 +22,11 @@ import com.sly.accountmanager.interceptor.LoginInterceptor;
 public class WebMvcConfig implements WebMvcConfigurer {
 	@Autowired
 	private LoginInterceptor loginInterceptor;
+	@Autowired
+	private PermissionAccessInterceptor permissionAccessInterceptor;
 
 	/**
-	 * 注册登录拦截器
+	 * _注册登录拦截器
 	 * 
 	 * @param registry
 	 * @author sly
@@ -33,6 +37,22 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		// addPathPatterns("/**") 表示拦截所有的请求，
 		// excludePathPatterns("/login", "/register") 表示除了登陆与注册之外，因为登陆注册不需要登陆也可以访问
 		registry.addInterceptor(loginInterceptor).addPathPatterns("/**").excludePathPatterns(
+				//静态资源放行
+				"/resource/**",
+				//放行页面及请求连接
+				"/error", 
+				"/system/login/toLogin",
+				"/system/login/login",
+				"/system/validate/getJPGCode",
+				"/system/validate/getGifCode",
+				"/register/toRegister",  
+				"/index.jsp", 
+				//swagger放行
+				"/swagger-resources/**", "/webjars/**", "/v2/**",
+				"/swagger-ui.html/**"
+				);
+		
+		registry.addInterceptor(permissionAccessInterceptor).addPathPatterns("/**").excludePathPatterns(
 				//静态资源放行
 				"/resource/**",
 				//放行页面及请求连接
@@ -62,7 +82,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	}
 
 	/**
-	 * 添加视图
+	 * _添加视图
 	 * 
 	 * @param registry
 	 * @author sly
