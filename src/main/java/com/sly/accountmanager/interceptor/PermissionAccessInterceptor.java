@@ -84,15 +84,16 @@ public class PermissionAccessInterceptor implements HandlerInterceptor {
 				funcType = 0;
 			}
 
+			// 获取用户所有URL
 			BaseResult result = redisHelper.findUserFuc(sessionUser.getUserId());
+			List<String> urls = new ArrayList<>();
 			if (result == null) {
 				result = funcService.findUserFunc(sessionUser.getUserId(), funcType);
+				redisHelper.putUserFunc(sessionUser.getUserId(), result);
 			}
 			List<Func> funcs = (List<Func>) result.getValue("funcs");
-
-			// 获取用户所有URL
-			List<String> urls = new ArrayList<>();
 			urls = getAllUserUrl(funcs, urls);
+			
 			if (urls.contains(requestPage)) {
 				// 有权限放行
 				return true;
@@ -101,7 +102,7 @@ public class PermissionAccessInterceptor implements HandlerInterceptor {
 				String header = request.getHeader("X-Requested-With");
 				boolean isAjax = "XMLHttpRequest".equals(header) ? true : false;
 				if (isAjax) {// 说明是发出的ajax 请求
-					String evalStr = "top.location='" + basePath + "/system/login/toLogin'";
+					String evalStr = "location='" + basePath + "/index/noPermission'";
 					BaseResult baseResult = new BaseResult(ResultStatus.SESSION_OUT, Message.LOGIN_OUTTIME, "evalStr", evalStr);
 					response.getWriter().write(JSON.toJSONString(baseResult));
 					return false;

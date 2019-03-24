@@ -40,9 +40,9 @@ public class RoleFuncController {
 	
 	@Autowired
 	private RoleFuncService roleFuncService;
-	
 	@Autowired
 	private RoleFuncValidate roleFuncValidate;
+	
 	
 	/**
 	 * 去分配角色功能页面

@@ -92,13 +92,14 @@ public class RedisHelper {
 	 * _保存用户菜单信息
 	 * 
 	 * @param result
+	 * @param userId
 	 * @author sly
 	 * @time 2019年3月10日
 	 */
 	public void putUserFunc(String userId, BaseResult result) {
 		redisTemplate.boundHashOps("USER_FUNCMEAN").put("user_mean_" + userId, result);
 	}
-	
+
 	/**
 	 * _清除所有用户的菜单信息
 	 * 
@@ -107,6 +108,29 @@ public class RedisHelper {
 	 */
 	public void deleteAllUserFunc() {
 		redisTemplate.delete("USER_FUNCMEAN");
+	}
+
+	/**
+	 * 保存用户本次登录ID
+	 * @param key
+	 * @param value
+	 * @author sly
+	 * @time 2019年3月24日
+	 */
+	public void putLoginIdValue(String userId, String loginId) {
+		redisTemplate.opsForValue().append("LOGIN_ID:" + userId, loginId);
+	}
+	
+	/**
+	 * 获取用户本次登录ID
+	 * @param userId
+	 * @return
+	 * @author sly
+	 * @time 2019年3月24日
+	 */
+	public String getLoginIdValue(String userId) {
+		String loginId = (String) redisTemplate.opsForValue().get("LOGIN_ID:" + userId);
+		return loginId;
 	}
 
 }

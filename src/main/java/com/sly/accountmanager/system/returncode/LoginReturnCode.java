@@ -9,10 +9,10 @@ import com.sly.accountmanager.common.returncode.IReturnCode;
  * @time 2018年12月14日
  */
 public enum LoginReturnCode implements IReturnCode {
-	/**
-	 * 登录失败
-	 */
-	LOGIN_FAILE(10006000,"登录失败!")
+	/** 登录失败 */
+	LOGIN_FAILE(10006000,"登录失败!"), 
+	/** 登出失败 */
+	LOGOUT_FAILE(10006001,"登出失败!"),
 	;
 
 	/**

@@ -16,6 +16,7 @@ import com.sly.accountmanager.common.exception.ServiceCustomException;
 import com.sly.accountmanager.common.message.Message;
 import com.sly.accountmanager.common.model.OperateLog;
 import com.sly.accountmanager.common.model.User;
+import com.sly.accountmanager.common.redisHelper.RedisHelper;
 import com.sly.accountmanager.common.result.BaseResult;
 import com.sly.accountmanager.common.utils.DateUtils;
 import com.sly.accountmanager.system.mapper.OperateLogMapper;
@@ -37,6 +38,8 @@ public class UserRoleServiceImpl implements UserRoleService {
 	private UserRoleMapper userRoleMapper;
 	@Autowired
 	private OperateLogMapper operateLogMapper;
+	@Autowired
+	private RedisHelper redisHelper;
 	
 	/**
 	 * _保存用户角色关系
@@ -64,7 +67,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 			operateLog.setOperatorContent(content);
 			operateLogMapper.saveOperateLog(operateLog);
 			
-			
+			redisHelper.deleteAllUserFunc();
 			return new BaseResult(ResultStatus.SUCCESS, Message.SAVE_SUCCESS);
 		} catch (Exception e) {
 			logger.error(ExceptionUtils.getStackTrace(e));

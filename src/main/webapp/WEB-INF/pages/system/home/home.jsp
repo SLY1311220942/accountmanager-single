@@ -70,6 +70,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 								</ul>
 							</li>
+
+							<li class="dropdown notifications-menu">
+								<a href="#" class="dropdown-toggle" onclick="logout();" data-toggle="dropdown" title="登出">
+									<i class="fa fa-sign-out"></i>
+									<span class="label label-warning"></span>
+								</a>
+								<ul class="dropdown-menu">
+
+								</ul>
+							</li>
 						</ul>
 					</div>
 
@@ -129,6 +139,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$(".mt-dropdown").addClass("open");
 			});
 		});
+
+		function logout() {
+			layer.confirm('确定登出?', {
+				btn: ['確定', '取消'] //按钮
+			}, function() {
+				$.ajax({
+					type: "post",
+					url: webRoot + "/system/login/logout",
+					dataType: "json",
+					data: {
+
+					},
+					success: function(data) {
+						if(data.status == 200) {
+							top.location = webRoot + '/system/login/toLogin';
+						} else if(data.status == 300) {
+							eval(data.evalCode);
+						} else {
+							layer.alert(data.message, { icon: 2 });
+						}
+					}
+				});
+			}, function() {
+
+			});
+
+		}
 
 		loadMean();
 	</script>

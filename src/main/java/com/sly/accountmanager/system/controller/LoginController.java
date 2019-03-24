@@ -16,11 +16,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.sly.accountmanager.common.WebRedisHelper;
 import com.sly.accountmanager.common.constant.CommonConstant;
 import com.sly.accountmanager.common.constant.ResultStatus;
 import com.sly.accountmanager.common.message.Message;
 import com.sly.accountmanager.common.model.User;
+import com.sly.accountmanager.common.redisHelper.RedisHelper;
 import com.sly.accountmanager.common.result.BaseResult;
 import com.sly.accountmanager.common.utils.FeignBeanUtils;
 import com.sly.accountmanager.common.utils.RsaUtils;
@@ -41,7 +41,7 @@ public class LoginController {
 	@Autowired
 	private LoginService loginService;
 	@Autowired
-	private WebRedisHelper webRedisHelper;
+	private RedisHelper redisHelper;
 	
 	/**
 	 * _去登陆页面
@@ -103,7 +103,7 @@ public class LoginController {
 				User existUser = FeignBeanUtils.getBaseResultObject("existUser", User.class, result);
 				request.getSession().setAttribute(CommonConstant.LOGIN_ID, loginId);
 				request.getSession().setAttribute(CommonConstant.SESSION_USER,existUser);
-				webRedisHelper.putValue(existUser.getUserId(),CommonConstant.LOGIN_ID);
+				redisHelper.putLoginIdValue(existUser.getUserId(), loginId);
 			}else {
 				//重新生成公钥和私钥
 				Map<String, byte[]> keyMap = RsaUtils.generateKeyBytes();
@@ -118,6 +118,28 @@ public class LoginController {
 		} catch (Exception e) {
 			logger.error(ExceptionUtils.getStackTrace(e));
 			return new BaseResult(ResultStatus.FAILED, LoginReturnCode.LOGIN_FAILE);
+		}
+	}
+	
+	/**
+	 * 登出系统
+	 * @param request
+	 * @param response
+	 * @return
+	 * @author sly
+	 * @time 2019年3月24日
+	 */
+	@ResponseBody
+	@RequestMapping("/login/logout")
+	public BaseResult logout(HttpServletRequest request,HttpServletResponse response) {
+		try {
+			//登出清除session中的登录信息
+			request.getSession().removeAttribute(CommonConstant.SESSION_USER);
+			
+			return new BaseResult(ResultStatus.SUCCESS);
+		} catch (Exception e) {
+			logger.error(ExceptionUtils.getStackTrace(e));
+			return new BaseResult(ResultStatus.FAILED, LoginReturnCode.LOGOUT_FAILE);
 		}
 	}
 	

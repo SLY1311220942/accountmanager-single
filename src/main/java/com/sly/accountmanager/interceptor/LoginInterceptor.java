@@ -34,14 +34,8 @@ public class LoginInterceptor implements HandlerInterceptor {
 	 * @time 2018年11月25日
 	 */
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		User user = (User) request.getSession().getAttribute(CommonConstant.SESSION_USER);
-		
-		//请求链接
-		//String contextPath=request.getContextPath();
-		//String uri=request.getRequestURI();
-		//String requestPage=uri.replaceFirst(contextPath, "").replaceAll("/+", "/");
 		
 		response.setCharacterEncoding("UTF-8");
 		
