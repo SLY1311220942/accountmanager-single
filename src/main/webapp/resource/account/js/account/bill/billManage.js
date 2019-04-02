@@ -143,7 +143,7 @@ window.operateEvents = {
 	},
 	'click .delete': function(e, value, row, index) {
 		layer.confirm('确定删除该账单?', {
-			btn: ['確定', '取消'] //按钮
+			btn: ['确定', '取消'] //按钮
 		}, function() {
 			$.ajax({
 				type: "post",

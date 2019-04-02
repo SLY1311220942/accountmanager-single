@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sly.accountmanager.account.mapper.BillReportMapper">
+	<!-- 获取按日期统计的财务报表list数量 -->
+	<select id="findDateReportCount" resultType="int">
+		SELECT COUNT(1) FROM
+			(SELECT 
+				COUNT(1) AS billCount 
+			FROM T_ACCOUNT_BILL TAB
+			<where>
+				TAB.`logicDel`='N'
+				AND TAB.`userId`=#{billReport.userId}
+				<if test="billReport.billTypeId != null and billReport.billTypeId != ''">
+					AND TAB.`billTypeId`=#{billReport.billTypeId}
+				</if>
+				<if test="billReport.beginTime != null and billReport.beginTime != ''">
+					AND unix_timestamp(TAB.`billTime`) &gt;=unix_timestamp(#{billReport.beginTime})
+				</if>
+				<if test="billReport.endTime != null and billReport.endTime != ''">
+					AND unix_timestamp(TAB.`billTime`) &lt;=unix_timestamp(#{billReport.endTime})
+				</if>
+			</where> 
+			<if test="billReport.statisticType == '0'.toString()">
+				GROUP BY DATE_FORMAT(billTime, #{billReport.dataTimeType})
+			</if>
+			<if test="billReport.statisticType != '0'.toString()">
+				GROUP BY TAB.`billTypeId`
+			</if>
+			) a
+	</select>
+	
+	<!-- 获取按日期统计的财务报表list -->
+	<select id="findDateReportList" resultType="BillReport">
+		SELECT 
+			<if test="billReport.statisticType == '0'.toString()">
+				DATE_FORMAT(TAB.`billTime`, #{billReport.dataTimeType}) AS dateTime,
+			</if>
+			<if test="billReport.statisticType != '0'.toString()">
+				TABT.`billTypeName`,
+			</if>
+			SUM((CASE TAB.`revexpType` WHEN '1' THEN -TAB.`billAmount` ELSE TAB.`billAmount` END)) AS billAmount, 
+			COUNT(1) AS billCount 
+		FROM T_ACCOUNT_BILL TAB
+		LEFT JOIN `T_ACCOUNT_BILLTYPE` TABT ON TAB.`billTypeId`=TABT.`billTypeId`
+		<where>
+			TAB.`logicDel`='N'
+			AND TAB.`userId`=#{billReport.userId}
+			<if test="billReport.billTypeId != null and billReport.billTypeId != ''">
+				AND TAB.`billTypeId`=#{billReport.billTypeId}
+			</if>
+			<if test="billReport.beginTime != null and billReport.beginTime != ''">
+				AND unix_timestamp(TAB.`billTime`) &gt;=unix_timestamp(#{billReport.beginTime})
+			</if>
+			<if test="billReport.endTime != null and billReport.endTime != ''">
+				AND unix_timestamp(TAB.`billTime`) &lt;=unix_timestamp(#{billReport.endTime})
+			</if>
+		</where> 
+		<if test="billReport.statisticType == '0'.toString()">
+			GROUP BY DATE_FORMAT(TAB.`billTime`, #{billReport.dataTimeType})
+		</if>
+		<if test="billReport.statisticType != '0'.toString()">
+			GROUP BY TAB.`billTypeId`
+		</if>
+		LIMIT #{page.startNum},#{page.pageSize}
+	</select>
+	
+</mapper>

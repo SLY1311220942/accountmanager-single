@@ -1,0 +1,11 @@
+用户错误码			UserReturnCode				10000000-10000999
+角色错误码			RoleReturnCode				10001000-10001999
+功能错误码			FuncReturnCode				10002000-10002999
+角色功能关系错误码	RoleFuncReturnCode			10003000-10003999
+用户角色关系错误码	UserRoleReturnCode			10004000-10004999
+字典错误码			DicCodeReturnCode			10005000-10005999
+登录错误码			LoginReturnCode				10006000-10006999
+账单错误码			BillReturnCode				10007000-10007999
+账单类型错误码		BillTypeReturnCode			10008000-10008999
+操作日志错误码		OperateLogReturnCode		10009000-10009999
+财务报表错误码		BillReportReturnCode		10010000-10010999
