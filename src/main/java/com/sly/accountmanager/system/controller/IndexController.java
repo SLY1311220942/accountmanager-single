@@ -23,6 +23,19 @@ public class IndexController {
 	private FuncService funcService;
 	
 	/**
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 * @author sly
+	 * @time 2019年4月3日
+	 */
+	@RequestMapping("/index")
+	public String index(HttpServletRequest request,HttpServletResponse response) {
+		return "/index.jsp";
+	}
+	
+	/**
 	 * _跳转至系统管理主页
 	 * @return
 	 * @author sly

@@ -39,6 +39,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		registry.addInterceptor(loginInterceptor).addPathPatterns("/**").excludePathPatterns(
 				//静态资源放行
 				"/resource/**",
+				"/",
 				//放行页面及请求连接
 				"/error", 
 				"/system/login/toLogin",
@@ -90,7 +91,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	 */
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/").setViewName("forward:/index.jsp");
+		registry.addViewController("/").setViewName("forward:/index");
 		registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
 		WebMvcConfigurer.super.addViewControllers(registry);
 	}

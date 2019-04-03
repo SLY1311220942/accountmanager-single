@@ -59,6 +59,12 @@ public class PermissionAccessInterceptor implements HandlerInterceptor {
 			throws Exception {
 		String path = request.getContextPath();
 		String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
+		String contextPath = request.getContextPath();
+		String uri = request.getRequestURI();
+		String requestPage = uri.replaceFirst(contextPath, "").replaceAll("/+", "/");
+		if(requestPage.equals("/")) {
+			return true;
+		}
 
 		HandlerMethod handlerMethod = (HandlerMethod) handler;
 		PermissionAccess permissionAccess = handlerMethod.getMethodAnnotation(PermissionAccess.class);
@@ -73,9 +79,7 @@ public class PermissionAccessInterceptor implements HandlerInterceptor {
 				return true;
 			}
 
-			String contextPath = request.getContextPath();
-			String uri = request.getRequestURI();
-			String requestPage = uri.replaceFirst(contextPath, "").replaceAll("/+", "/");
+			
 
 			// 获取用户权限
 			int funcType = 1;

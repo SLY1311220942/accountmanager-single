@@ -27,7 +27,7 @@ function genMean(funcs, subStr) {
 		var func = funcs[i];
 		if(func.childrenFunc){
 			subStr.append('<li class="treeview">');
-			subStr.append('<a href="#"><i class="' + func.funcIcon + '"></i> <span>' + func.funcName + '</span>');
+			subStr.append('<a href="javascript：void(0);"><i class="' + func.funcIcon + '"></i> <span>' + func.funcName + '</span>');
 			subStr.append('<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>');
 			subStr.append('</a>');
 			subStr.append('<ul class="treeview-menu">');
@@ -42,7 +42,7 @@ function genMean(funcs, subStr) {
 				subStr.append('</a></li>');
 			}else{
 				subStr.append('<li class="treeview">');
-				subStr.append('<a href="#"><i class="' + func.funcIcon + '"></i> <span>' + func.funcName + '</span>');
+				subStr.append('<a href="javascript：void(0);"><i class="' + func.funcIcon + '"></i> <span>' + func.funcName + '</span>');
 				subStr.append('<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>');
 				subStr.append('</a>');
 				subStr.append('<ul class="treeview-menu">');
