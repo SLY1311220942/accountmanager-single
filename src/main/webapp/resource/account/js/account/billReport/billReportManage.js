@@ -2,6 +2,12 @@ function billReportSearch() {
 	var bootstrapValidator = $("#billReportSearch").data('bootstrapValidator');
 	bootstrapValidator.validate();
 	if(bootstrapValidator.isValid()) {
+		$("#statisticType1").val($.trim($("#statisticType").val()));
+		$("#beginTime1").val($.trim($("#beginTime").val()));
+		$("#endTime1").val($.trim($("#endTime").val()));
+		$("#billTypeId1").val($.trim($("#billTypeId").val()));
+		$("#dataTimeType1").val($.trim($("#dataTimeType").val()));
+		
 		if($("#statisticType").val() == $("#statisticTypeTemp").val()){
 			//没有切换类型
 			$('#dataTable').bootstrapTable('removeAll');
@@ -133,13 +139,30 @@ function loadBillReportList() {
 function operateFormatter(value, row, index) {
 	return [
 		'<a class="btn btn-xs btn-info detail" type="button" href="javaScript:void(0)" > <span>&nbsp;详情</span></a>',
-		//'<a class="btn btn-xs btn-warning update" type="button" href="javaScript:void(0)" style="margin-left: 5px;"> <span>&nbsp;修改</span></a>',
 	].join('');
 }
 
 window.operateEvents = {
 	'click .detail': function(e, value, row, index) {
-		var Jurl = webRoot + "/account/billReport/toReportDetail";
+		var statisticType = $.trim($("#statisticType1").val())
+		var beginTime = $.trim($("#beginTime1").val());
+		var endTime = $.trim($("#endTime1").val());
+		var billTypeId = $.trim($("#billTypeId1").val());
+		var dataTimeType = $.trim($("#dataTimeType1").val());
+		
+		if(statisticType == "0"){
+			//时间
+			statisticType = "1";
+		}else{
+			//类型
+			statisticType = "0";
+			billTypeId = row.billTypeId;
+		}
+		
+		
+		var Jurl = webRoot + "/account/billReport/toReportDetail?statisticType=" + statisticType 
+			+ "&dataTimeType=" + dataTimeType + "&billTypeId=" + billTypeId + "&beginTime=" + beginTime
+			+ "&endTime=" + endTime + "&dateTime=" + row.dateTime + "&billTypeName=" + row.billTypeName;
 		layer.open({
 			type: 2,
 			skin: 'layui-layer-rim', //加上边框

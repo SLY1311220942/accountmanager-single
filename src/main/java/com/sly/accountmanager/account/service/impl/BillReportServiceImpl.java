@@ -1,6 +1,10 @@
 package com.sly.accountmanager.account.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
@@ -35,7 +39,7 @@ public class BillReportServiceImpl implements BillReportService {
 	private BillReportMapper billReportMapper;
 
 	/**
-	 * 按日期查询财务报表
+	 * 查询财务报表
 	 * 
 	 * @param billReport
 	 * @param page
@@ -56,6 +60,56 @@ public class BillReportServiceImpl implements BillReportService {
 		} catch (Exception e) {
 			logger.error(ExceptionUtils.getStackTrace(e));
 			throw new ServiceCustomException(BillReportReturnCode.BILLREPORT_QUERY_DATE_FAILED, e);
+		}
+	}
+
+	/**
+	 * 查询财务图表详情数据
+	 * @param billReport
+	 * @return
+	 * @author sly
+	 * @time 2019年4月5日
+	 */
+	@Override
+	public BaseResult findBillReportChartDetail(BillReport billReport) {
+		try {
+			//查询
+			List<BillReport> billReports = billReportMapper.findBillReportChartDetail(billReport);
+			
+			//提取x轴名称
+			List<String> xAxisDatas = new ArrayList<String>();
+			if("0".equals(billReport.getStatisticType())) {
+				xAxisDatas = billReports.stream().map(b -> b.getDateTime()).collect(Collectors.toList());
+			}else if("1".equals(billReport.getStatisticType())){
+				xAxisDatas = billReports.stream().map(b -> b.getBillTypeName()).collect(Collectors.toList());
+			}
+			
+			//组装数据
+			List<Map<String, Object>> series = new ArrayList<>();
+			List<String> billAmounts = billReports.stream().map(b -> b.getBillAmount()).collect(Collectors.toList());
+			List<String> billCount = billReports.stream().map(b -> b.getBillCount()).collect(Collectors.toList());
+			Map<String, Object> billAmountMap = new HashMap<String, Object>(16);
+			billAmountMap.put("name", "金额");
+			billAmountMap.put("data", billAmounts);
+			Map<String, Object> billCountMap = new HashMap<String, Object>(16);
+			billCountMap.put("name", "数量");
+			billCountMap.put("data", billCount);
+			series.add(billAmountMap);
+			series.add(billCountMap);
+			List<String> lengedData = new ArrayList<>();
+			lengedData.add("金额");
+			lengedData.add("数量");
+			
+			//返回结果
+			BaseResult result = new BaseResult(ResultStatus.SUCCESS, Message.QUERY_SUCCESS);
+			result.setValue("xAxisDatas", xAxisDatas);
+			result.setValue("series", series);
+			result.setValue("lengedData", lengedData);
+			
+			return result;
+		} catch (Exception e) {
+			logger.error(ExceptionUtils.getStackTrace(e));
+			throw new ServiceCustomException(BillReportReturnCode.BILLREPORT_QUERY_DETAIL_FAILED, e);
 		}
 	}
 

@@ -31,5 +31,14 @@ public interface BillReportMapper {
 	 * @time 2019年3月30日
 	 */
 	List<BillReport> findDateReportList(@Param("billReport") BillReport billReport,@Param("page") Page page);
+	
+	/**
+	 * 查询财务图表详情数据
+	 * @param billReport
+	 * @return
+	 * @author sly
+	 * @time 2019年4月5日
+	 */
+	List<BillReport> findBillReportChartDetail(BillReport billReport);
 
 }

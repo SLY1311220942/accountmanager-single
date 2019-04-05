@@ -42,8 +42,12 @@ public class BillReport implements Serializable {
 	public String getDateTime() {
 		return dateTime;
 	}
-
+	
 	public String getDataTimeType() {
+		return dataTimeType;
+	}
+
+	public String getDataTimeTypeStr() {
 		if("0".equals(dataTimeType)) {
 			//年
 			return "%Y";

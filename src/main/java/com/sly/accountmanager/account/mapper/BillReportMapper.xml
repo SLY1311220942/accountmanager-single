@@ -21,7 +21,7 @@
 				</if>
 			</where> 
 			<if test="billReport.statisticType == '0'.toString()">
-				GROUP BY DATE_FORMAT(billTime, #{billReport.dataTimeType})
+				GROUP BY DATE_FORMAT(billTime, #{billReport.dataTimeTypeStr})
 			</if>
 			<if test="billReport.statisticType != '0'.toString()">
 				GROUP BY TAB.`billTypeId`
@@ -33,10 +33,11 @@
 	<select id="findDateReportList" resultType="BillReport">
 		SELECT 
 			<if test="billReport.statisticType == '0'.toString()">
-				DATE_FORMAT(TAB.`billTime`, #{billReport.dataTimeType}) AS dateTime,
+				DATE_FORMAT(TAB.`billTime`, #{billReport.dataTimeTypeStr}) AS dateTime,
 			</if>
 			<if test="billReport.statisticType != '0'.toString()">
 				TABT.`billTypeName`,
+				TABT.`billTypeId`,
 			</if>
 			SUM((CASE TAB.`revexpType` WHEN '1' THEN -TAB.`billAmount` ELSE TAB.`billAmount` END)) AS billAmount, 
 			COUNT(1) AS billCount 
@@ -56,12 +57,53 @@
 			</if>
 		</where> 
 		<if test="billReport.statisticType == '0'.toString()">
-			GROUP BY DATE_FORMAT(TAB.`billTime`, #{billReport.dataTimeType})
+			GROUP BY DATE_FORMAT(TAB.`billTime`, #{billReport.dataTimeTypeStr})
 		</if>
 		<if test="billReport.statisticType != '0'.toString()">
 			GROUP BY TAB.`billTypeId`
 		</if>
 		LIMIT #{page.startNum},#{page.pageSize}
+	</select>
+	
+	<!-- 查询财务图表详情数据 -->
+	<select id="findBillReportChartDetail" parameterType="BillReport" resultType="BillReport">
+		SELECT 
+			<if test="statisticType == '0'.toString()">
+				DATE_FORMAT(TAB.`billTime`, #{dataTimeTypeStr}) AS dateTime,
+			</if>
+			<if test="statisticType != '0'.toString()">
+				TABT.`billTypeName`,
+				TABT.`billTypeId`,
+			</if>
+			SUM((CASE TAB.`revexpType` WHEN '1' THEN -TAB.`billAmount` ELSE TAB.`billAmount` END)) AS billAmount, 
+			COUNT(1) AS billCount 
+		FROM T_ACCOUNT_BILL TAB
+		LEFT JOIN `T_ACCOUNT_BILLTYPE` TABT ON TAB.`billTypeId`=TABT.`billTypeId`
+		<where>
+			TAB.`logicDel`='N'
+			AND TAB.`userId`=#{userId}
+			<if test="billTypeId != null and billTypeId != ''">
+				AND TAB.`billTypeId`=#{billTypeId}
+			</if>
+			<if test="statisticType == '0'.toString()">
+				<if test="beginTime != null and beginTime != ''">
+					AND unix_timestamp(TAB.`billTime`) &gt;=unix_timestamp(#{beginTime})
+				</if>
+				<if test="endTime != null and endTime != ''">
+					AND unix_timestamp(TAB.`billTime`) &lt;=unix_timestamp(#{endTime})
+				</if>
+			</if>
+			<if test="statisticType != '0'.toString()">
+				AND DATE_FORMAT(TAB.`billTime`, #{dataTimeTypeStr}) = #{dateTime}
+			</if>
+			
+		</where> 
+		<if test="statisticType == '0'.toString()">
+			GROUP BY DATE_FORMAT(TAB.`billTime`, #{dataTimeTypeStr})
+		</if>
+		<if test="statisticType != '0'.toString()">
+			GROUP BY TAB.`billTypeId`
+		</if>
 	</select>
 	
 </mapper>

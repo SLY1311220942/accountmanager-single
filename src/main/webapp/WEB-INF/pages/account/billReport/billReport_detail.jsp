@@ -40,6 +40,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <body>
     	<section class="content">
 			<div class="row">
+				<input type="hidden" id="statisticType" name="statisticType" value="${billReport.statisticType}" />
+				<input type="hidden" id="dataTimeType" name="dataTimeType" value="${billReport.dataTimeType}" />
+				<input type="hidden" id="dateTime" name="dateTime" value="${billReport.dateTime}" />
+				<input type="hidden" id="billTypeName" name="billTypeName" value="${billReport.billTypeName}" />
+				<input type="hidden" id="billTypeId" name="billTypeId" value="${billReport.billTypeId}" />
+				<input type="hidden" id="beginTime" name="beginTime" value="${billReport.beginTime}" />
+				<input type="hidden" id="endTime" name="endTime" value="${billReport.endTime}" />
 				<div class="col-xs-12 ui-sortable">
 					<div class="box">
 						<div class="row" style="margin-top: 10px; margin-bottom: 8px;">

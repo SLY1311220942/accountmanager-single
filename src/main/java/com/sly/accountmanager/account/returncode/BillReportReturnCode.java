@@ -9,8 +9,10 @@ import com.sly.accountmanager.common.returncode.IReturnCode;
  * @time 2018年11月19日
  */
 public enum BillReportReturnCode implements IReturnCode {
-	/** 按日期查询报表失败! */
-	BILLREPORT_QUERY_DATE_FAILED(10010000,"按日期查询报表失败!"),
+	/** 按日期查询报表失败 */
+	BILLREPORT_QUERY_DATE_FAILED(10010000,"按日期查询报表失败!"), 
+	/** 获取财务图表详情数据失败 */
+	BILLREPORT_QUERY_DETAIL_FAILED(10010001,"获取财务图表详情数据失败!"),
 
 	
 	

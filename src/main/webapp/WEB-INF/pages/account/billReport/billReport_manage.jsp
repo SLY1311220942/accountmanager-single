@@ -64,12 +64,16 @@
 								</h4>
 								<div class="col-md-12 column ui-sortable" style="margin-top: 20px;">
 									<form class="form-horizontal required-validate" id="billReportSearch">
+										<input type="hidden" id="statisticType1" name="statisticType1" value="0" />
+										<input type="hidden" id="beginTime1" name="beginTime1" value="" />
+										<input type="hidden" id="endTime1" name="endTime1" value="" />
+										<input type="hidden" id="billTypeId1" name="billTypeId1" value="" />
+										<input type="hidden" id="dataTimeType1" name="dataTimeType1" value="2" />
 										<div class="view">
 											<div class="row">
 												<div class="form-group col-md-6  column ui-sortable">
 													<label for="billTypeName" class="col-sm-4 control-label" style="text-align: right; float: left;">统计方式：</label>
 													<div class="col-sm-6">
-														<!--<input type="text" class="form-control " id="statisticType" name="statisticType">-->
 														<input type="hidden" id="statisticTypeTemp" name="statisticTypeTemp" value="0" />
 														<select class="form-control" id="statisticType" name="statisticType">
 															<option value="0">时间</option>	
@@ -80,7 +84,6 @@
 												<div class="form-group col-md-6  column ui-sortable">
 													<label for="billTypeName" class="col-sm-4 control-label" style="text-align: right; float: left;">时间：</label>
 													<div class="col-sm-6">
-														<!--<input type="text" class="form-control " id="statisticType" name="statisticType">-->
 														<select class="form-control" id="dataTimeType" name="dataTimeType">
 															<option value="0">年</option>
 															<option value="2" selected="selected">月</option>
@@ -96,7 +99,6 @@
 												<div class="form-group col-md-6  column ui-sortable">
 													<label for="billTypeName" class="col-sm-4 control-label" style="text-align: right; float: left;">类型：</label>
 													<div class="col-sm-6">
-														<!--<input type="text" class="form-control " id="statisticType" name="statisticType">-->
 														<select class="form-control" id="billTypeId" name="billTypeId">
 															<option value="">请选择</option>
 														</select>

@@ -83,7 +83,36 @@ public class BillReportController {
 	 * @time 2019年3月31日
 	 */
 	@RequestMapping("/billReport/toReportDetail")
-	public String toReportDetail(HttpServletRequest request,HttpServletResponse response) {
+	public String toReportDetail(HttpServletRequest request, HttpServletResponse response, BillReport billReport) {
+		request.setAttribute("billReport", billReport);
 		return "/account/billReport/billReport_detail.jsp";
+	}
+	
+	
+	/**
+	 * 获取财务图表详情数据
+	 * @param request
+	 * @param response
+	 * @param billReport
+	 * @return
+	 * @author sly
+	 * @time 2019年4月5日
+	 */
+	@ResponseBody
+	@RequestMapping("/billReport/findBillReportChartDetail")
+	public BaseResult findBillReportChartDetail(HttpServletRequest request, HttpServletResponse response, BillReport billReport) {
+		try {
+			if(StringUtils.isNotBlank(billReport.getEndTime())) {
+				billReport.setEndTime(billReport.getEndTime() + " 23:59:59.999");
+			}
+			
+			User user = (User) request.getSession().getAttribute(CommonConstant.SESSION_USER);
+			billReport.setUserId(user.getUserId());
+			BaseResult result = billReportService.findBillReportChartDetail(billReport);
+			return result;
+		} catch (Exception e) {
+			logger.error(ExceptionUtils.getStackTrace(e));
+			return new BaseResult(ResultStatus.FAILED, BillReportReturnCode.BILLREPORT_QUERY_DETAIL_FAILED);
+		}
 	}
 }

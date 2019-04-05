@@ -11,7 +11,7 @@ import com.sly.accountmanager.common.result.BaseResult;
  */
 public interface BillReportService {
 	/**
-	 * 按日期查询财务报表
+	 * 查询财务报表
 	 * @param billReport
 	 * @param page
 	 * @return
@@ -19,5 +19,14 @@ public interface BillReportService {
 	 * @time 2019年3月30日
 	 */
 	BaseResult findReportList(BillReport billReport, Page page);
+	
+	/**
+	 * 查询财务图表详情数据
+	 * @param billReport
+	 * @return
+	 * @author sly
+	 * @time 2019年4月5日
+	 */
+	BaseResult findBillReportChartDetail(BillReport billReport);
 
 }
